@@ -37,8 +37,8 @@
                   <td class="one wide">{{$value->order}}</td>
                   <td>{{ $title[$value->parent_id] }}</td>
                   <td class="two wide">
-                      <a href = '/dashboard/menu/{{$value->id}}/edit' class="ui left blue mini attached edit_form button icon"><i class="edit icon"></i></a>
-                      <a href = "/dashboard/menu/{{$value->id}}/delete"  class="ui right red mini attached delete_form button icon"><i class="trash icon"></i></a>
+                      <a href = "{{'/dashboard/menu/' . $value->id}}/edit" class="ui left blue mini attached edit_form button icon"><i class="edit icon"></i></a>
+                      <a href = "{{'/dashboard/menu/' . $value->id}}/delete"  class="ui right red mini attached delete_form button icon"><i class="trash icon"></i></a>
                   </td>
                 </tr>
                 @if ( ! $value->children->isEmpty() )
@@ -49,8 +49,8 @@
                       <td>{{$subMenuItem->order}}</td>
                       <td>{{ $title[$subMenuItem->parent_id] }}</td>
                       <td class="two wide">
-                        <a href = '/dashboard/menu/{{$subMenuItem->id}}/edit'  class="ui left blue mini attached edit_form button icon"><i class="edit icon"></i></a>
-                        <a href = "/dashboard/menu/{{$subMenuItem->id}}/delete"  class="ui right red mini attached delete_form button icon"><i class="trash icon"></i></a>
+                        <a href = "{{'/dashboard/menu/' . $subMenuItem->id}}/edit"  class="ui left blue mini attached edit_form button icon"><i class="edit icon"></i></a>
+                        <a href = "{{'/dashboard/menu/' . $subMenuItem->id}}/delete"  class="ui right red mini attached delete_form button icon"><i class="trash icon"></i></a>
                       </td>
                     </tr>
                   @endforeach
@@ -64,12 +64,22 @@
                 <th>
                 </th>
                 <th colspan="4">
-                    <button class="ui right floated small primary labeled icon form button">
+                    <a  href = "{{'/dashboard/menu/create'}}" class="ui right floated small primary labeled icon form button">
                         <i class="user icon"></i> رابط جديد
-                    </button>
+                    </a>
                 </th>
             </tr>
         </tfoot>
     </table>
+
+
+
+    @push('scripts')
+        {{-- <script type="text/javascript">
+            $('.aeform.modal')
+              .modal('attach events', '.form.button')
+            ;
+        </script> --}}
+    @endpush
 
 @endsection

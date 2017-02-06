@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers\Auth;
 
+use Auth;
+use Socialite;
 use App\User;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
@@ -48,9 +51,11 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => 'required|max:255',
+            'first_name' => 'required|max:255',
+            'last_name' => 'required|max:255',
             'email' => 'required|email|max:255|unique:users',
             'password' => 'required|min:6|confirmed',
+            'term' => 'accepted'
         ]);
     }
 
@@ -63,9 +68,54 @@ class RegisterController extends Controller
     protected function create(array $data)
     {
         return User::create([
-            'name' => $data['name'],
+            'first_name' => $data['first_name'],
+            'last_name' => $data['last_name'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
         ]);
     }
+
+    public function getSocialAuth($provider=null)
+    {
+      if(!config("services.$provider")) abort('404');
+      return Socialite::driver($provider)->redirect();
+    }
+
+
+    public function getSocialAuthCallback($provider=null, Request $request)
+    {
+        try {
+            $user = Socialite::driver($provider)->user();
+        } catch (Exception $e) {
+            return redirect('login/$provider');
+        }
+        $authUser = $this->findOrCreateUser($user);
+        Auth::login($authUser, true);
+        return redirect('/');
+    }
+    /**
+     * Return user if exists; create and return if doesn't
+     *
+     * @param $githubUser
+     * @return User
+     */
+    private function findOrCreateUser($socialUser)
+    {
+        if ($authUser = User::where('social_id', $socialUser->id)->first()) {
+            return $authUser;
+        }
+        // dd($socialUser);
+
+        $name = explode(" ", $socialUser->name);
+        return User::create([
+            'first_name' => $name[0],
+            'last_name' => $name[1],
+            'email' => $socialUser->getEmail(),
+            'social_id' => $socialUser->getId()
+        ]);
+    }
+
+
+
+
 }

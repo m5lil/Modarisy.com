@@ -26,19 +26,14 @@
                 </div>
 
                 <div class="field">
-                    <label>العنوان</label>
-                    <input name="slug" type="text" placeholder="العنوان فى الرابط">
-                </div>
-
-                <div class="field">
                     <label>المحتوى</label>
                     <textarea name="body" id="textarea"></textarea>
                 </div>
                 <div class="field">
-                    <label>الحالة</label>
-                    <div class="ui fitted toggle checkbox">
-                        <input name="statue" type="checkbox">
-                    </div>
+                    <select name="statue" class="ui dropdown">
+                      <option value="1">منشورة</option>
+                      <option value="0">غير منشورة</option>
+                    </select>
                 </div>
                 <div class="field">
                     <label>عنوان الـ SEO</label>
@@ -77,19 +72,15 @@
                 </div>
 
                 <div class="field">
-                    <label>العنوان</label>
-                    <input name="slug" id="slug" type="text" placeholder="العنوان فى الرابط">
-                </div>
-
-                <div class="field">
                     <label>المحتوى</label>
                     <textarea name="body" id="body"></textarea>
                 </div>
                 <div class="field">
-                    <label>الحالة</label>
-                    <div class="ui fitted toggle checkbox">
-                        <input name="statue" id="statue" type="checkbox">
-                    </div>
+                    <select name="statue" id="statue" class="ui dropdown">
+                      <option value="">الحالة</option>
+                      <option value="1">منشورة</option>
+                      <option value="0">غير منشورة</option>
+                    </select>
                 </div>
                 <div class="field">
                     <label>عنوان الـ SEO</label>
@@ -130,24 +121,24 @@
         </thead>
 
         <tbody>
-            @foreach($pages as $page)
-            <tr class="item-{{$page->id}}">
+            @foreach($pages as $value)
+            <tr class="item-{{$value->id}}">
                 <td class="collapsing">
-                    {{ $page->id }}
+                    {{ $value->id }}
                 </td>
-                <td><strong class="content-{{$page->id}}">{{ $page->title }}</strong><br />{{ str_limit(strip_tags($page->body), 150, '...') }}</td>
+                <td><strong class="content-{{$value->id}}">{{ $value->title }}</strong><br />{{ str_limit(strip_tags($value->body), 150, '...') }}</td>
                 <td>
-                    @if ($page->statue)
-                        <i class="circle icon green" ></i>
-                    @else
-                        <i class="circle icon grey" ></i>
+                    <i class="circle icon
+                    @if ($value->statue)
+                        green
                     @endif
+                    "></i>
                 </td>
-                <td>{{ \Date::parse($page->created_at)->diffForHumans() }}</td>
+                <td>{{ \Date::parse($value->created_at)->diffForHumans() }}</td>
                 <td>
                     <div class="ui tiny buttons">
-                        <a href="/dashboard/pages/{{$page->id}}" class="ui left blue mini attached edit_form button icon"><i class="edit icon"></i></a>
-                        <a href="{{$page->id}}" class="ui right red mini attached delete_form button icon"><i class="trash icon"></i></a>
+                        <a href="{{url('/dashboard/pages/' . $value->id)}}" class="ui left blue mini attached edit_form button icon"><i class="edit icon"></i></a>
+                        <a href="{{$value->id}}" class="ui right red mini attached delete_form button icon"><i class="trash icon"></i></a>
                     </div>
                 </td>
             </tr>
@@ -201,7 +192,6 @@
 
                            $('#id').val(data.id);
                            $('#title').val(data.title);
-                           $('#slug').val(data.slug);
                            setTimeout(function(){
                                tinymce.activeEditor.setContent(data.body)
                             }, 10)
@@ -218,9 +208,8 @@
                         _token : $("input[name='_token']").val(),
                         id : $('#id').val(),
                         title : $('#title').val(),
-                        slug : $('#slug').val(),
                         body : tinymce.activeEditor.getContent(),
-                        statue : 1,
+                        statue : $('#statue').val(),
                         seo_title : $('#seo_title').val(),
                         seo_keywords : $('#seo_keywords').val(),
                         seo_description : $('#seo_description').val() };

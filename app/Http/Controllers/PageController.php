@@ -41,10 +41,8 @@ class PageController extends Controller
      */
     public function store(Request $request)
     {
-
         $rules = array(
             'title'       => 'required',
-            'slug'      => 'required',
             'body' => 'required'
         );
         $validator = Validator::make($request->all(), $rules);
