@@ -12,11 +12,15 @@ const { mix } = require('laravel-mix');
  */
 
 mix.js('resources/assets/js/app.js', 'public/js')
-    .combine(['resources/assets/js/admin.js','./bower_components/sweetalert2/dist/sweetalert2.js'], 'public/js/admin.js')
+    .combine([
+        'resources/assets/js/admin.js',
+        'resources/assets/js/select2.min.js',
+        './bower_components/sweetalert2/dist/sweetalert2.js'], 'public/js/admin.js')
     .sass('resources/assets/sass/app.scss', 'public/css')
     .sass('resources/assets/sass/admin.scss', 'public/css')
     .combine([
         './bower_components/sweetalert2/dist/sweetalert2.css',
+        'resources/assets/sass/select2.min.css'
     ],  'public/css/all.css')
 
     .copy('resources/assets/images', 'public/images')

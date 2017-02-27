@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Menu extends Model
 {
     public $timestamps = false;
-    
+
     protected $fillable = array('parent_id','title','url','order');
 
     public function parent()

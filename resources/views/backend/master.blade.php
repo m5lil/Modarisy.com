@@ -4,14 +4,21 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0" />
     <title> لوحة التحكم </title>
-
     <link href="{{ url('plugins/semantic/dist/semantic.rtl.css') }}" rel='stylesheet' type='text/css'>
     <link href="{{ mix('css/admin.css') }}" rel='stylesheet' type='text/css'>
     <meta name="csrf" value="{{ csrf_token() }}">
+    <meta charset="utf-8">
     <link rel="stylesheet" href="{{url('css/all.css')}}">
+    <style>
+        .item{border: 1px solid #f0f0f0;}
+    </style>
 </head>
 
 <body>
+    <div class="ui icon primary basic open button" style="position:fixed; top:15px; right:20px; z-index: 102;">
+        <i class="left blue content icon"></i>
+    </div>
+
         <div class="ui vertical sidebar menu left accordion pointing" id="toc">
             <a href="#" class="ui medium image borderless">
                 <img src="{{url('images/3.png')}}" />
@@ -73,33 +80,50 @@
                     <div class=" ui container">
                         <div class="ui basic segment">
                             <div class="ui secondary pointing labeled icon menu">
-                                <div class="ui icon open button item">
-                                    <i class="left blue content icon"></i>
-                                </div>
-                                <a href="/dashboard/settings" class="item">
-                                    <i class="inbox icon blue"></i> الإعدادات العامة
-                                </a>
-                                <a href="/dashboard/pages" class="item">
-                                    <i class="file icon blue"></i> الصفحات
-                                </a>
-                                <a href="/dashboard/menu" class="item">
-                                    <i class="ellipsis horizontal icon blue"></i> القائمة
-                                </a>
-                                <div class="ui dropdown item">
-                                    <i class="options icon blue"></i> الأعضاء
+                                <div class="ui dropdown item border1">
+                                    <i class="inbox icon blue"></i> لوحة التحكم
                                     <div class="menu">
-                                        <a href="/dashboard/users" class="item">
-                                            <i class="inbox icon blue"></i> الأعضاء
+                                        <a href="/dashboard/" class="item">
+                                            <i class="user icon blue"></i> الرئيسية
                                         </a>
-                                        <a href="/dashboard/roles" class="item">
-                                            <i class="inbox icon blue"></i> الصلاحيات
+                                        <a href="/dashboard/settings" class="item">
+                                            <i class="user icon blue"></i> إعدادت الموقع
                                         </a>
                                     </div>
                                 </div>
-                                <a href="/dashboard/inbox" class="item">
-                                    <i class="inbox icon blue"></i> {{App\Inbox::where('read', 0)->count()}} غير مقروءه
+                                <a href="/dashboard/pages" class="item border1">
+                                    <i class="file icon blue"></i> الصفحات
                                 </a>
-                                <a href="/dashboard/bar" class="item">
+                                <a href="/dashboard/menu" class="item border1">
+                                    <i class="ellipsis horizontal icon blue"></i> القائمة
+                                </a>
+                                <div class="ui dropdown item border1">
+                                    <i class="users icon blue"></i> الأعضاء
+                                    <div class="menu">
+                                        <a href="/dashboard/users" class="item">
+                                            <i class="user icon blue"></i> الأعضاء
+                                        </a>
+                                        <a href="/dashboard/users/members/teachers" class="item">
+                                            <i class="user icon blue"></i> المدرسين
+                                        </a>
+                                        <a href="/dashboard/users/members/students" class="item">
+                                            <i class="user icon blue"></i> الطلبه
+                                        </a>
+                                        <a href="/dashboard/abilities" class="item">
+                                            <i class="user icon blue"></i> الصلاحيات
+                                        </a>
+                                    </div>
+                                </div>
+                                <a href="/dashboard/inbox" class="item border1">
+                                    <i class="inbox icon
+                                    @if (App\Inbox::where('read', 0)->count() > 0)
+                                        teal"><div class="floating ui circular teal label">{{App\Inbox::where('read', 0)->count()}}</div>
+                                    @else
+                                        blue">
+                                    @endif
+                                    </i> البريد الوارد
+                                </a>
+                                <a href="/dashboard/bar" class="item border1">
                                     <i class="area chart icon blue"></i> تقارير
                                 </a>
                                 <div class="right menu">
@@ -109,9 +133,12 @@
                                             <i class="dropdown icon"></i>
                                         </div>
                                         <div class="menu">
-                                            <div class="item">
-                                                <i class="file icon"></i> الملف الشخصى
-                                            </div>
+                                            @if (Auth::check())
+                                                <a href="{{'/dashboard/users/' . Auth::user()->id}}/edit" class="item">
+                                                    <i class="file icon"></i> الملف الشخصى
+                                                </a>
+
+                                            @endif
                                             <div class="item">
                                                 <i class="file icon"></i> تغير كلمة المرور
                                             </div>
@@ -122,11 +149,11 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="ui clearing divider"></div>
                             @if (Session::has('message'))
                                 <div class="ui teal segment">{{ Session::get('message') }}</div>
+                                <div class="ui clearing divider"></div>
                             @endif
-
+                            <br />
                             @yield('content')
 
 

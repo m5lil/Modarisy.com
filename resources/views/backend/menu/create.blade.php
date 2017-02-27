@@ -2,6 +2,7 @@
 
 @section('content')
 
+{{ Html::ul($errors->all(),['class' => 'ui error message']) }}
 
 {!! Form::open(array('action' => 'MenuController@store', 'class' => 'ui form')) !!}
         <div class="field">

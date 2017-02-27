@@ -10,10 +10,9 @@
 
 
     <h4 class="ui horizontal divider">
-        <h2>الصفحات</h2>
+        الصفحات
     </h4>
 
-    <hr />
 
     {{ Html::ul($errors->all(),['class' => 'ui error message']) }}
 
@@ -121,6 +120,7 @@
         </thead>
 
         <tbody>
+            @if (count($pages))
             @foreach($pages as $value)
             <tr class="item-{{$value->id}}">
                 <td class="collapsing">
@@ -143,6 +143,11 @@
                 </td>
             </tr>
             @endforeach
+        @else
+            <tr>
+                <td colspan="6" class="ui center aligned"> لا يوجد بيانات </td>
+            </tr>
+        @endif
         </tbody>
 
         <tfoot class="full-width">

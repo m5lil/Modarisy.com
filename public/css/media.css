@@ -1,0 +1,524 @@
+@media (min-width:0px)and (max-width:458px){
+   
+    .bootom ul.list-inline {
+    display: block;
+
+    margin-top: 11px;
+}
+    .header {
+    text-align: center;
+}
+    .heder-top-right {
+    float: none;
+}
+    .heder-top-right p {
+    display: block;
+    font-family: JF Flat regular;
+    float: none;
+    text-align: center;
+}
+    button.slid-but-1 {
+    width: 80%;
+    margin: auto;
+        margin-bottom: 20px
+    }
+     button.slid-but-2 {
+    width: 80%;
+    margin: auto;
+    }
+    a.navbar-brand {
+    width: 100%;
+        }
+    img.img-logo-top-1.wow.fadeInDown {
+    margin: 0 auto;
+}
+    .navbar-toggle {
+    float: none;
+    width: 100%;
+    margin-top: 75px;
+}
+
+    .bottom-headre {
+    margin-top: 31px;
+    text-align: center;
+}
+    .navbar-toggle .icon-bar {
+    display: block;
+    width: 50px;
+    height: 4px;
+    border-radius: 1px;
+    margin: auto;
+}
+    div#bs-example-navbar-collapse-1 {
+    margin-top: 0px;
+}
+    section.slider {
+    height: auto;
+    text-align: center;
+}
+   
+  .cors {
+    width: 100%;
+    height: 400px;
+    overflow: hidden;
+    padding: 44px 10px;
+    margin-bottom: 50px;
+}
+    button.btn.dropdown-toggle.btn-info {
+    width: 100%;
+    text-align: center;
+}
+    div.slid {
+    background: rgba(0, 0, 0, 0.75);
+    height: auto;
+    width: 100%;
+}
+    .Details h2 {
+
+    line-height: 2;
+}
+    .Details p {
+    color: #fff;
+    font-size: 14px;
+    text-align: center;
+    margin: 0 auto;
+    width: 92%;
+    margin-bottom: 34px;
+    line-height: 36px;
+}
+    .Details {
+    height: auto;
+    width: 100%;
+}
+    .Detail {
+    height: auto;
+}
+    
+    .bootstrap-select:not([class*=col-]):not([class*=form-control]):not(.input-group-btn) {
+    width: 100%;
+    text-align: center;
+}
+    
+    .cors-1 {
+    width: 96% !important;
+    margin: auto;
+    overflow: hidden;
+    background: #165666;
+    border-radius: 7px;
+    position: initial;
+    top: 0;
+    padding: 44px 10px;
+    margin-bottom: 0px;
+    margin-top: 25px;
+}
+    p.cors-right-1 {
+    text-align: center;
+    margin-bottom: 25px;
+}
+    button.se {
+    width: 100%;
+    }
+    .dropdown-menu.open {
+    width: 100%;
+}
+    .clint-right {
+    width: auto;
+}
+
+    p.first {
+    margin-top: 20px;
+}
+    .footer-bottom {
+    text-align: center;
+}
+    .footer-bottom-img {
+    float: none;
+    margin-top: 5px;
+}
+    .segin.wow.fadeInDown {
+    float: none;
+    margin-bottom: 20px;
+}
+    .bot-com-2 {
+
+    display: block;
+    width: 100%;
+}
+    
+    .col-md-4.col-sm-6.col-xs-12.wow.fadeInUp {
+    text-align: center;
+}
+    span.tit-icon i
+    {
+        display: block;
+    }
+    span.tit-icon i {
+    margin: auto;
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+    .tit {
+    margin-bottom: 27px;
+    text-align: center;
+}
+    .tit-p p
+    {
+        text-align: center;
+    }
+    .map-map-cors {
+    margin-bottom: 20px;
+}
+    .list-23 .bootom {
+    margin: auto;
+    text-align: center;
+}
+     .SEND button.hvr-float-shadow
+    {
+        width: 100%;
+    }
+    .slid {
+    height: auto !important;
+    padding: 40px 0px;
+    margin: auto;
+    text-align: center;
+}
+    .slid-detils-img {
+
+    float: none; 
+}
+    section.title.tit-tit {
+    margin-top: 220px;
+}
+    a.send-mas {
+    float: left;
+    width: 100%;
+    }
+    section.title.tit-1-tit-1 {
+    margin-top: 50px;
+}
+}
+
+
+
+
+/*Smart phone and tablets*/
+@media (min-width:459px) and (max-width:767px)
+{
+
+        .header {
+    text-align: center;
+}
+    .heder-top-right {
+    float: none;
+    margin-bottom: 20px;
+}
+    .segin.wow.fadeInDown {
+    float: none;
+    margin-bottom: 20px;
+}
+    .heder-top-right p {
+
+    float: none;
+}
+    a.navbar-brand {
+    width: 100%;
+}
+    img.img-logo-top-1.wow.fadeInDown {
+    margin: 0 auto;
+}
+    p.cors-right-1 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+    .navbar-toggle {
+    float: none;
+    width: 100%;
+    margin-top: 75px;
+}
+
+    .bottom-headre {
+    margin-top: 31px;
+    text-align: center;
+}
+    .navbar-toggle .icon-bar {
+    display: block;
+    width: 50px;
+    height: 4px;
+    border-radius: 1px;
+    margin: auto;
+}
+    div#bs-example-navbar-collapse-1 {
+    margin-top: 0px;
+}
+    section.slider {
+    height: auto;
+    text-align: center;
+}
+   
+  .cors {
+    width: 100%;
+    height: 400px;
+    overflow: hidden;
+    padding: 44px 10px;
+    margin-bottom: 50px;
+}
+    button.btn.dropdown-toggle.btn-info {
+    width: 100%;
+    text-align: center;
+}
+    div.slid {
+    background: rgba(0, 0, 0, 0.75);
+    height: auto;
+    width: 100%;
+}
+    .Details h2 {
+
+    line-height: 2;
+}
+    .Details p {
+    color: #fff;
+    font-size: 14px;
+    text-align: center;
+    margin: 0 auto;
+    width: 92%;
+    margin-bottom: 34px;
+    line-height: 36px;
+}
+    .Details {
+    height: auto;
+    width: 100%;
+}
+    .Detail {
+    height: auto;
+}
+    
+    .bootstrap-select:not([class*=col-]):not([class*=form-control]):not(.input-group-btn) {
+    width: 100%;
+    text-align: center;
+}
+    
+    .cors-1 {
+    width: 96% !important;
+    margin: auto;
+    overflow: hidden;
+    background: #165666;
+    border-radius: 7px;
+    position: initial;
+    top: 0;
+    padding: 44px 10px;
+    margin-bottom: 0px;
+    margin-top: 25px;
+}
+    p.cors-right-1 {
+    text-align: center;
+    margin-bottom: 25px;
+}
+    button.se {
+    width: 100%;
+    }
+    .dropdown-menu.open {
+    width: 100%;
+}
+    .clint-right {
+    width: auto;
+}
+
+    p.first {
+    margin-top: 20px;
+}
+    .footer-bottom {
+    text-align: center;
+}
+    .footer-bottom-img {
+    float: none;
+    margin-top: 5px;
+}
+    heder-top-right p {
+
+    float: none;
+}
+        .bot-com-2 {
+
+    display: block;
+    width: 100%;
+}
+    .col-md-4.col-sm-6.col-xs-12.wow.fadeInUp {
+    text-align: center;
+}
+    span.tit-icon i
+    {
+        display: block;
+    }
+    span.tit-icon i {
+    margin: auto;
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+    .tit {
+    margin-bottom: 27px;
+    text-align: center;
+}
+    .tit-p p
+    {
+        text-align: center;
+    }
+    .map-map-cors {
+    margin-bottom: 20px;
+}
+    .list-23 .bootom {
+    margin: auto;
+    text-align: center;
+}
+    .SEND button.hvr-float-shadow
+    {
+        width: 100%;
+    }
+    
+        .slid {
+    height: auto !important;
+    padding: 40px 0px;
+    margin: auto;
+    text-align: center;
+}
+    .slid-detils-img {
+
+    float: none; 
+}
+    section.title.tit-tit {
+    margin-top: 220px;
+}
+    a.send-mas {
+    float: left;
+    width: 100%;
+    }
+    section.title.tit-1-tit-1 {
+    margin-top: 50px;
+}
+}
+
+
+/*Small Screen*/
+@media (min-width:768px) and (max-width:991px)
+{
+
+
+ 
+    .bottom-headre {
+    margin-top: 20px;
+    margin-bottom: 21px;
+}
+    div.slid {
+    height: auto;
+}
+    section.slider {
+    height: auto;
+}
+    .cors {
+    margin: auto;
+    margin-top: 49px;
+    margin-bottom: 50px;
+}
+    .slider-but {
+    text-align: center;
+}
+    section.title {
+    text-align: center;
+}
+    .tit {
+    margin-bottom: 27px;
+    margin-top: 30px;
+}
+    .Details p {
+    width: auto;
+    }
+    .clint-right {
+    width: auto;
+    }
+    p.cors-right-1 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+.bootstrap-select:not([class*=col-]):not([class*=form-control]):not(.input-group-btn) {
+    width: 100%;
+    text-align: center;
+}
+.cors-1 {
+    width: 96% !important;
+    margin: auto;
+    overflow: hidden;
+    background: #165666;
+    border-radius: 7px;
+    position: initial;
+    top: 0;
+    padding: 44px 10px;
+    margin-bottom: 0px;
+    margin-top: 25px;
+    }
+    button.btn.dropdown-toggle.btn-info {
+    width: 100%;
+    text-align: center;
+}
+button.se {
+    width: 100%;
+}
+.map-map-cors {
+    margin-bottom: 20px;
+}
+}
+
+/*Medium Screen*/
+@media (min-width:992px) and (max-width:1199px)
+{
+
+    .bottom-headre {
+    margin-top: -43px;
+    margin-bottom: 21px;
+}
+    div.slid {
+    height: auto;
+}
+    section.slider {
+    height: auto;
+}
+    .cors {
+    margin: auto;
+    margin-top: 49px;
+    margin-bottom: 50px;
+}
+    .slider-but {
+    text-align: center;
+}
+    .tit {
+    margin-bottom: 27px;
+    margin-top: 30px;
+}
+    .clint-right {
+    width: auto;
+    }
+    
+       .fot-im {
+    width: auto;
+    }
+p.cors-right-1 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+    .slider-right {
+    margin-top: 135px;
+        }
+}
+
+/*Large Screen*/
+@media (min-width:1200px)
+{
+    p.cors-right-1 {
+    text-align: center;
+    margin-bottom: 20px;
+    }
+        .slider-right {
+    margin-top: 135px;
+        }
+
+}

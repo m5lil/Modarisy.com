@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Http\Request;
 use App\User;
+use Bouncer;
 class UserController extends Controller
 {
     /**
@@ -14,7 +15,17 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::all();
+        $users = User::where('type', 1)->paginate(20);
+        return view('backend.user.index',compact('users'));
+    }
+
+    public function members($type)
+    {
+        if ($type == 'students') {
+            $users = User::where('type', 2)->paginate(20);
+        }elseif ($type == 'teachers') {
+            $users = User::where('type', 3)->paginate(20);
+        }
         return view('backend.user.index',compact('users'));
     }
 
@@ -71,9 +82,28 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $input = $request->all();
-        User::findOrFail($id)->update($input);
-        return Redirect::to('dashboard/users');
+        $rules = array(
+            'title'       => 'required',
+            'body' => 'required'
+        );
+        $validator = Validator::make($request->all(), $rules);
+        if ($validator->fails()) {
+            return Redirect::to('dashboard/users')
+                ->withErrors($validator);
+        } else {
+            $user = User::findOrFail($id);
+            Bouncer::retract($user->roles()->pluck('name'))->from($user);
+            Bouncer::assign($request->role)->to($user);
+            $input = $request->all();
+            if(!empty($input['password'])){
+                $input['password'] =  bcrypt($input['password']);
+            }else{
+                $input = array_except($input,array('password'));
+            }
+            $user->update($input);
+            Session::flash('message', 'تم بنجاح!');
+            return Redirect::to('dashboard/users');
+        }
 
     }
 

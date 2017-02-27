@@ -4,10 +4,19 @@ namespace App;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Silber\Bouncer\Database\HasRolesAndAbilities;
 
 class User extends Authenticatable
 {
     use Notifiable;
+    use HasRolesAndAbilities;
+
+
+
+    public function fullName() {
+        return $this->first_name . ' ' . $this->last_name;
+    }
+
 
     /**
      * The attributes that are mass assignable.
@@ -15,7 +24,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'first_name', 'last_name', 'email', 'password', 'activated', 'role', 'social_id',
+        'first_name', 'last_name', 'email', 'password', 'activated', 'social_id', 'city', 'address', 'phone'
         // 'avatar','social_id',
     ];
 
@@ -28,10 +37,25 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
-    // public function posts()
-    // {
-    //       return $this->hasMany('App\Posts','author_id');
-    // }
+    public function profile()
+	{
+		return $this->hasOne('App\Profile');
+	}
+
+    // public function messages()
+	// {
+	// 	return $this->hasMany('App\Message');
+	// }
+    //
+    // public function applicatns()
+	// {
+	// 	return $this->hasMany('App\User');
+	// }
+    //
+	// public function requests()
+	// {
+	// 	return $this->hasMany('App\Request');
+	// }
     //
     //   // user has many comments
     // public function comments()

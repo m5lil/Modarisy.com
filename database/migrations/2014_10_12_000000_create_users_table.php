@@ -21,7 +21,10 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->bigInteger('social_id')->nullable();
             $table->tinyInteger('activated')->default('0');
-            $table->tinyInteger('role')->default('0');
+            $table->tinyInteger('type')->default('1');
+            $table->smallInteger('city');
+			$table->string('address');
+			$table->bigInteger('phone');
             $table->rememberToken();
             $table->timestamps();
         });

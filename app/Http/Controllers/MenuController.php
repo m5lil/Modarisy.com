@@ -8,6 +8,10 @@ use App\Page;
 
 class MenuController extends Controller
 {
+
+
+
+
     /**
      * Display a listing of the resource.
      *
@@ -19,7 +23,9 @@ class MenuController extends Controller
         $title = Menu::pluck('title', 'id');
         $title = array_add($title, '0', 'بدون');
         // dd($title);
-        return view('backend.menu.index',compact('menus','title'));
+        $parents_menu = array_add(Menu::pluck('title', 'id'), '0', 'بدون');
+
+        return view('backend.menu.index',compact('menus','title','parents_menu'));
     }
 
     /**
@@ -29,9 +35,7 @@ class MenuController extends Controller
      */
     public function create()
     {
-        $menus = Menu::pluck('title', 'id');
-        $menus = array_add($menus, '0', 'بدون');
-        return view('backend.menu.create',compact('menus'));
+
     }
 
     /**
@@ -42,12 +46,12 @@ class MenuController extends Controller
      */
     public function store(Request $request)
     {
-        $input = $request->except('_token');
         $menu = new Menu();
-        $menu->parent_id = $input['parent_id'];
-        $menu->title = $input['title'];
-        $menu->url = in_array( $input['url'] , Page::pluck('title','slug')->toArray()) ?  'page/'.$input['url'] : $input['url'] ;
-        $menu->order = $input['order'];
+        $menu->parent_id = $request->parent_id ? $request->parent_id : 0;
+        $menu->title = $request->title;
+        // $menu->url = in_array( $request->url , Page::pluck('title','slug')->toArray()) ?  'page/'.$request->url : $request->url ;
+        $menu->url = $request->url;
+        $menu->order = $request->order;
         $menu->save();
 
         return redirect('dashboard/menu');

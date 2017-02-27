@@ -79,7 +79,7 @@ class PageController extends Controller
     public function edit($id)
     {
         $page = Page::find($id);
-        return view('dashboard.page.edit', compact('page'));
+        return view('backend.page.edit', compact('page'));
     }
 
     /**

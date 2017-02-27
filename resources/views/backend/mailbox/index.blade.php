@@ -10,9 +10,9 @@
 
 
     <h4 class="ui horizontal divider">
-        <h2>الرسائل</h2>
+        الرسائل
     </h4>
-    <hr />
+
     <div class="ui modal eshow">
       <div class="header">محتوى الرساله</div>
       <div class="content">
