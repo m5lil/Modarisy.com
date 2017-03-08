@@ -3,10 +3,26 @@
 @section('content')
 
 {!! Form::model($menu, ['method' => 'PATCH','route' => ['menu.update', $menu->id], 'class' => 'ui form']) !!}
+<div class="ui top attached tabular menu">
+    <?php  $count = 0; ?>
+    @foreach(config('app.locals') as $local)
+        <?php $count++; ?>
+        <a class="<?php  if($count == 1){echo ' active';} ?> item" data-tab="{{$local}}">{{$local}}</a>
+    @endforeach
+</div>
+<?php  $count2 = 0; ?>
+
+@foreach(config('app.locals') as $local)
+    <?php $count2++; ?>
+
+    <div class="ui bottom attached <?php  if($count2 == 1){echo ' active';} ?> tab segment" data-tab="{{$local}}">
+
         <div class="field">
             <label>الاسم</label>
-            {!! Form::text('title', old('title'), array('class'=>'form-control')) !!}
+            <input name="title[{{$local}}]" value="{{$menu->translateOrNew($local)->title}}" class="form-control" type="text" placeholder="العنوان">
         </div>
+</div>
+@endforeach
 
         <div class="fields">
             <div class="twelve wide field  ">
@@ -15,7 +31,7 @@
             </div>
             <div class="four wide field">
                 <label>رابط من صفحة</label>
-                {!! Form::select('url',  \App\Page::pluck('title','slug'), null, array('id'=>'b', 'class'=>'form-control')) !!}
+                {!! Form::select('url',  \App\Page::translatedIn('en')->get()->pluck('title','id'), null, array('id'=>'b', 'class'=>'form-control')) !!}
             </div>
         </div>
 
@@ -26,7 +42,7 @@
         <div class="field">
             {!! Form::select('parent_id', $menus , null, array('class'=>'form-control')) !!}
         </div>
-</div>
+
 <div class="actions">
     <a onClick="window.history.back()" class="ui black deny button">
         إلغاء

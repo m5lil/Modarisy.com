@@ -8,6 +8,7 @@ use Session;
 use App\Page;
 use Jenssegers\Date\Date;
 use Validator;
+
 class PageController extends Controller
 {
     /**
@@ -19,7 +20,7 @@ class PageController extends Controller
     {
         //
         $pages = Page::all();
-        return view('backend.page.index',compact('pages'));
+        return view('backend.pages.index', compact('pages'));
 
     }
 
@@ -36,22 +37,31 @@ class PageController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        $rules = array(
-            'title'       => 'required',
-            'body' => 'required'
-        );
-        $validator = Validator::make($request->all(), $rules);
+        $validator = Validator::make($request->all(), [
+            'statue' => 'required',
+            'title.*' => 'required',
+            'body.*' => 'required'
+        ]);
         if ($validator->fails()) {
             return Redirect::to('dashboard/pages')
                 ->withErrors($validator);
         } else {
-            Page::create($request->all());
-
+            $page = New Page();
+            $request->has('statue') ? $page->statue = 1 : $page->statue = 0;
+            $page->save();
+            foreach (config('app.locals') as $locale) {
+                $page->translateOrNew($locale)->title = $request->title[$locale];
+                $page->translateOrNew($locale)->body = $request->body[$locale];
+                $page->translateOrNew($locale)->seo_title = $request->seo_title[$locale];
+                $page->translateOrNew($locale)->seo_keywords = $request->seo_keywords[$locale];
+                $page->translateOrNew($locale)->seo_description = $request->seo_description[$locale];
+            }
+            $page->save();
             // redirect
             Session::flash('message', 'تم بنجاح!');
             return Redirect::to('dashboard/pages');
@@ -62,7 +72,7 @@ class PageController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -73,27 +83,51 @@ class PageController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
         $page = Page::find($id);
-        return view('backend.page.edit', compact('page'));
+        return view('backend.pages.edit', compact('page'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request $request
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
-        $input = $request->all();
-        Page::findOrFail($id)->update($input);
+        $validator = Validator::make($request->all(), [
+            'statue' => 'required',
+            'title.*' => 'required',
+            'body.*' => 'required'
+        ]);
+        if ($validator->fails()) {
+            return Redirect::to('dashboard/pages')
+                ->withErrors($validator);
+        } else {
+            $page = Page::findOrFail($id);
+            $page->statue = $request->statue;
+            $page->save();
+            foreach (config('app.locals') as $locale) {
+                $page->translateOrNew($locale)->title = $request->title[$locale];
+                $page->translateOrNew($locale)->body = $request->body[$locale];
+                $page->translateOrNew($locale)->seo_title = $request->seo_title[$locale];
+                $page->translateOrNew($locale)->seo_keywords = $request->seo_keywords[$locale];
+                $page->translateOrNew($locale)->seo_description = $request->seo_description[$locale];
+            }
+            $page->save();
+            // redirect
+            Session::flash('message', 'تم بنجاح!');
+            return Redirect::to('dashboard/pages');
+        }
+
     }
+
     public function ajax(Request $request)
     {
         // ($request);
@@ -107,20 +141,21 @@ class PageController extends Controller
         $page->seo_description = $request->seo_description;
 
         $page->save();
-        $msg ='message';
+        $msg = 'message';
         return response()->json($msg);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
         return Page::destroy($id);
     }
+
     public function delete(Request $request)
     {
         Page::find($request->id)->delete();

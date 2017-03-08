@@ -1,4 +1,12 @@
 <?php
+use Illuminate\Support\Facades\Input;
+
+/*-----------------------------------------------------------------------------
+| LARAVEL AUTH
+|----------------------------------------------------------------------------*/
+Auth::routes();
+/*
+|----------------------------------------------------------------------------*/
 
 
 /*-----------------------------------------------------------------------------
@@ -27,8 +35,10 @@ Route::group(['prefix' => 'dashboard','middleware' => 'admin'], function () {
 
     // -------------------------------- Pages ------------------------------ //
     Route::resource('/pages', 'PageController');
-    Route::post('/pages/ajax', 'PageController@ajax');
-    Route::post('/pages/delete', 'PageController@delete');
+    Route::get('/pages/{id}/delete','PageController@destroy');
+
+//    Route::post('/pages/ajax', 'PageController@ajax');
+//    Route::post('/pages/delete', 'PageController@delete');
 
     // ------------------------------- Setings ----------------------------- //
     Route::get('/settings', 'SettingController@index');
@@ -37,6 +47,26 @@ Route::group(['prefix' => 'dashboard','middleware' => 'admin'], function () {
     // --------------------------------- Menu ------------------------------ //
     Route::resource('/menu','MenuController');
     Route::get('/menu/{id}/delete','MenuController@destroy');
+    Route::post('/menu/order', function()
+    {
+//        dd(Input::get('item'));
+        if(Input::has('item'))
+        {
+            $i = 0;
+            foreach(Input::get('item') as $id)
+            {
+                $i++;
+                $item = App\Menu::find($id);
+                $item->order = $i;
+                $item->save();
+            }
+            return Response::json(array('success' => true));
+        }
+        else
+        {
+            return Response::json(array('success' => false));
+        }
+    });
 
     // -------------------------------- User ------------------------------- //
     Route::resource('/users', 'UserController');
@@ -51,10 +81,19 @@ Route::group(['prefix' => 'dashboard','middleware' => 'admin'], function () {
     // ------------------------------- Profile ----------------------------- //
     Route::resource('/profiles', 'ProfileController');
 
-    // ------------------------------- Profile ----------------------------- //
+    // ------------------------------- Subscribe ----------------------------- //
+    Route::resource('/subscribers', 'SubscribersController');
+    Route::post('/subscribers/submit', 'SubscribersController@Submit');
 
+    // ------------------------------- Blog ----------------------------- //
+    Route::resource('/blog/categories', 'CategoryController');
+    Route::get('/blog/categories/{id}/delete','CategoryController@destroy');
 
-    // ------------------------------- Profile ----------------------------- //
+    Route::resource('/blog/posts', 'PostController');
+    Route::get('/blog/posts/{id}/delete','PostController@destroy');
+
+    Route::resource('/blog/comments', 'CommentController');
+    Route::get('/blog/comments/{id}/delete','CommentController@destroy');
 
 
     // ------------------------------- Profile ----------------------------- //
@@ -81,14 +120,7 @@ Route::get('/', function () {
 // Route::get('/home', 'HomeController@index');
 
 
-
-/*-----------------------------------------------------------------------------
-| LARAVEL AUTH
-|----------------------------------------------------------------------------*/
-Auth::routes();
 /*
 |----------------------------------------------------------------------------*/
 
 
-/*
-|----------------------------------------------------------------------------*/

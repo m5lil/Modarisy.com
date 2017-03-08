@@ -12,6 +12,7 @@
     <style>
         .item{border: 1px solid #f0f0f0;}
     </style>
+    @stack('css')
 </head>
 
 <body>
@@ -126,6 +127,9 @@
                                 <a href="/dashboard/bar" class="item border1">
                                     <i class="area chart icon blue"></i> تقارير
                                 </a>
+                                <a href="/dashboard/subscribers" class="item border1">
+                                    <i class="area chart icon blue"></i> القائمة البريدية
+                                </a>
                                 <div class="right menu">
                                     <div class="ui inline dropdown item">
                                         <div class="text">
@@ -153,6 +157,7 @@
                                 <div class="ui teal segment">{{ Session::get('message') }}</div>
                                 <div class="ui clearing divider"></div>
                             @endif
+                            {{ Html::ul($errors->all(),['class' => 'ui error message']) }}
                             <br />
                             @yield('content')
 
@@ -177,9 +182,10 @@
         </div>
     </div>
     <script type="text/javascript">
+
     window.Laravel = <?php echo json_encode([
-        'csrfToken' => csrf_token(),
-    ]); ?>
+            'csrfToken' => csrf_token(),
+        ]); ?>
 
     </script>
     {{-- <script src="https://code.jquery.com/jquery-3.1.1.min.js"

@@ -15,11 +15,24 @@ class CreateMenusTable extends Migration
     {
         Schema::create('menus', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('title', 30);
             $table->string('url');
             $table->integer('parent_id');
             $table->integer('order');
+
         });
+
+        Schema::create('menu_translations', function (Blueprint $table) {
+            $table->increments('id');
+            $table->integer('menu_id')->unsigned();
+            $table->string('locale')->index();
+
+            $table->string('title', 30);
+
+            $table->unique(['menu_id','locale']);
+            $table->foreign('menu_id')->references('id')->on('menus')->onDelete('cascade');
+        });
+
+
     }
 
     /**
@@ -29,6 +42,7 @@ class CreateMenusTable extends Migration
      */
     public function down()
     {
+        Schema::dropIfExists('menu_translations');
         Schema::dropIfExists('menus');
     }
 }

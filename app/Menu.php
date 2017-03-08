@@ -6,9 +6,16 @@ use Illuminate\Database\Eloquent\Model;
 
 class Menu extends Model
 {
+
+    use \Dimsav\Translatable\Translatable;
+
+    public $translatedAttributes = [
+        'title',
+    ];
+
     public $timestamps = false;
 
-    protected $fillable = array('parent_id','title','url','order');
+    protected $fillable = array('parent_id','url','order');
 
     public function parent()
     {

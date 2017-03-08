@@ -8,7 +8,9 @@ $(document).ready(function () {
     // .sidebar('toggle')
     ;
 
-
+    $('.menu .item')
+        .tab()
+    ;
 
 
     $('.accordion')

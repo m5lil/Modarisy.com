@@ -4,6 +4,10 @@
 
 @section('content')
 
+  @if (Auth::user()->id == 1 && !Auth::user() ->isAn('admin'))
+    {!!Auth::user()->assign('admin')!!}
+  @endif
+
     <div class="ui label">
       <i class="mail icon"></i> {{count(\App\Inbox::get())}} رسالة
     </div>

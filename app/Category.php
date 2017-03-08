@@ -6,14 +6,20 @@ use Illuminate\Database\Eloquent\Model;
 
 class Category extends Model
 {
-    protected $fillable = [
-        'name', 'slug',
+    use \Dimsav\Translatable\Translatable;
+
+    public $translatedAttributes = [
+        'title',
     ];
 
-    // public function posts()
-    // {
-    //     return $this->hasMany('App\Posts','cat_id');
-    // }
+    protected $fillable = [
+        'status',
+    ];
+
+     public function posts()
+     {
+         return $this->hasMany('App\Posts','category_id');
+     }
 	// use SluggableTrait;
     // protected $sluggable = [
     //     'build_from' => 'name',

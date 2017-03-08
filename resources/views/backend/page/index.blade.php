@@ -19,33 +19,51 @@
     <div class="ui modal aeform">
         <div class="content">
             {{ Form::open(array('route' => 'pages.store', 'class' => 'ui form', 'id' => 'formpage')) }}
+
+            <div class="ui top attached tabular menu">
+                <?php  $count = 0; ?>
+                @foreach(config('app.locals') as $local)
+                    <?php $count++; ?>
+                    <a class="<?php  if($count == 1){echo ' active';} ?> item" data-tab="{{$local}}">{{$local}}</a>
+                @endforeach
+            </div>
+            <?php  $count2 = 0; ?>
+
+            @foreach(config('app.locals') as $local)
+                <?php $count2++; ?>
+
+                <div class="ui bottom attached <?php  if($count2 == 1){echo ' active';} ?> tab segment" data-tab="{{$local}}">
                 <div class="field">
                     <label>العنوان</label>
-                    <input name="title" type="text" placeholder="العنوان">
+                    <input name="title[{{$local}}]" type="text" placeholder="العنوان">
                 </div>
 
                 <div class="field">
                     <label>المحتوى</label>
-                    <textarea name="body" id="textarea"></textarea>
+                    <textarea name="body[{{$local}}]" id="textarea"></textarea>
                 </div>
                 <div class="field">
                     <select name="statue" class="ui dropdown">
-                      <option value="1">منشورة</option>
-                      <option value="0">غير منشورة</option>
+                        <option value="1">منشورة</option>
+                        <option value="0">غير منشورة</option>
                     </select>
                 </div>
                 <div class="field">
                     <label>عنوان الـ SEO</label>
-                    <input name="seo_title"  type="text" placeholder="العنوان فى محركات البحث">
+                    <input name="seo_title[{{$local}}]"  type="text" placeholder="العنوان فى محركات البحث">
                 </div>
                 <div class="field">
                     <label>كلمات مفتاحية للـ SEO</label>
-                    <input name="seo_keywords"  type="text" placeholder="الكلمات المفتاحية">
+                    <input name="seo_keywords[{{$local}}]"  type="text" placeholder="الكلمات المفتاحية">
                 </div>
                 <div class="field">
                     <label>وصف الـ SEO</label>
-                    <input name="seo_description"  type="text" placeholder="الوصف فى محركات البحث">
+                    <input name="seo_description[{{$local}}]"  type="text" placeholder="الوصف فى محركات البحث">
                 </div>
+            </div>
+            @endforeach
+
+
         </div>
         <div class="actions">
             <button class="ui black deny button">
@@ -58,9 +76,24 @@
         </div>
         {{ Form::close() }}
     </div>
+
     <div class="ui modal eform">
         <div class="content">
             {{ Form::open(array('class' => 'ui form', 'id' => 'formpage')) }}
+            <div class="ui top attached tabular menu">
+                <?php  $count = 0; ?>
+                @foreach(config('app.locals') as $local)
+                    <?php $count++; ?>
+                    <a class="<?php  if($count == 1){echo ' active';} ?> item" data-tab="{{$local}}">{{$local}}</a>
+                @endforeach
+            </div>
+            <?php  $count2 = 0; ?>
+
+            @foreach(config('app.locals') as $local)
+                <?php $count2++; ?>
+
+                <div class="ui bottom attached <?php  if($count2 == 1){echo ' active';} ?> tab segment" data-tab="{{$local}}">
+
                 <div class="field">
                     <input name="id" id="id" type="text" placeholder="#" hidden="hidden">
                 </div>
@@ -93,6 +126,10 @@
                     <label>وصف الـ SEO</label>
                     <input name="seo_description" id="seo_description" type="text" placeholder="الوصف فى محركات البحث">
                 </div>
+            </div>
+        @endforeach
+
+
             {{ Form::close() }}
         </div>
         <div class="actions">
@@ -138,7 +175,7 @@
                 <td>
                     <div class="ui tiny buttons">
                         <a href="{{url('/dashboard/pages/' . $value->id)}}" class="ui left blue mini attached edit_form button icon"><i class="edit icon"></i></a>
-                        <a href="{{$value->id}}" class="ui right red mini attached delete_form button icon"><i class="trash icon"></i></a>
+                        <a href="{{url('/dashboard/pages/' .$value->id)}}" class="ui right red mini attached delete_form button icon"><i class="trash icon"></i></a>
                     </div>
                 </td>
             </tr>
@@ -239,7 +276,7 @@
            });
 
 
-           $('.delete_form').on('click', function(e) {
+               $('.delete_form').on('click', function(e) {
                e.preventDefault();
                var target = $(this).attr("href");
                var self = $(this)

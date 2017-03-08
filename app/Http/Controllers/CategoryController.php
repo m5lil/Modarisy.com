@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\Http\Request;
+use App\Category;
+use Session;
+use Validator;
 
 class CategoryController extends Controller
 {
@@ -13,7 +17,9 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        //
+        $categories = Category::all();
+        return view('backend.blog.categories',compact('categories'));
+
     }
 
     /**
@@ -23,7 +29,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        //
+//        return view('backend.blog.categories_create');
     }
 
     /**
@@ -34,7 +40,25 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'title.*'      => 'required',
+        ]);
+        if ($validator->fails()) {
+            return Redirect::to('dashboard/blog/categories')
+                ->withErrors($validator);
+        } else {
+            $category = new Category();
+            $category->statue = $request->statue ? $request->statue : 0;
+            $category->save();
+            foreach ( config('app.locals') as $locale)
+            {
+                $category->translateOrNew($locale)->title = $request->title[$locale];
+            }
+            $category->save();
+            // redirect
+            Session::flash('message', 'تم بنجاح!');
+            return Redirect::to('dashboard/blog/categories');
+        }
     }
 
     /**
@@ -45,7 +69,9 @@ class CategoryController extends Controller
      */
     public function show($id)
     {
-        //
+        $category = Category::find($id);
+        $posts = $category->posts;
+        return view('category',compact('posts'));
     }
 
     /**
@@ -56,7 +82,8 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
-        //
+        $category = Category::find($id);
+        return view('backend.blog.categories_edit', compact('category'));
     }
 
     /**
@@ -68,7 +95,25 @@ class CategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'title.*'      => 'required',
+        ]);
+        if ($validator->fails()) {
+            return Redirect::to('dashboard/blog/categories')
+                ->withErrors($validator);
+        } else {
+            $category = Category::findOrFail($id);
+            $category->statue = $request->statue ? $request->statue : 0;
+            $category->save();
+            foreach ( config('app.locals') as $locale)
+            {
+                $category->translateOrNew($locale)->title = $request->title[$locale];
+            }
+            $category->save();
+            // redirect
+            Session::flash('message', 'تم بنجاح!');
+            return Redirect::to('dashboard/blog/categories');
+        }
     }
 
     /**
@@ -79,6 +124,9 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $category = Category::findOrFail($id);
+        $category->delete();
+        Session::flash('message', 'تم بنجاح!');
+        return redirect('/dashboard/blog/categories');
     }
 }

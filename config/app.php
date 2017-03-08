@@ -78,6 +78,7 @@ return [
     */
 
     'locale' => 'ar',
+    'locals' => ['ar','en'],
 
     /*
     |--------------------------------------------------------------------------
@@ -172,6 +173,8 @@ return [
         Collective\Html\HtmlServiceProvider::class,
         Laravel\Socialite\SocialiteServiceProvider::class,
         Silber\Bouncer\BouncerServiceProvider::class,
+        Dimsav\Translatable\TranslatableServiceProvider::class,
+
         /*
          * Application Service Providers...
          */

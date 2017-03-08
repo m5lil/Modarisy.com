@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\Http\Request;
+use App\Post;
+use Session;
+use Validator;
 
 class PostController extends Controller
 {
@@ -13,7 +17,9 @@ class PostController extends Controller
      */
     public function index()
     {
-        //
+        $posts = Post::all();
+        return view('backend.blog.posts',compact('posts'));
+
     }
 
     /**
@@ -23,7 +29,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        //
+//        return view('backend.blog.posts_create');
     }
 
     /**
@@ -34,7 +40,25 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'title.*'      => 'required',
+        ]);
+        if ($validator->fails()) {
+            return Redirect::to('dashboard/blog/posts')
+                ->withErrors($validator);
+        } else {
+            $post = new Post();
+            $post->statue = $request->statue ? $request->statue : 0;
+            $post->save();
+            foreach ( config('app.locals') as $locale)
+            {
+                $post->translateOrNew($locale)->title = $request->title[$locale];
+            }
+            $post->save();
+            // redirect
+            Session::flash('message', 'تم بنجاح!');
+            return Redirect::to('dashboard/blog/posts');
+        }
     }
 
     /**
@@ -45,7 +69,9 @@ class PostController extends Controller
      */
     public function show($id)
     {
-        //
+        $post = Post::find($id);
+        $posts = $post->posts;
+        return view('category',compact('posts'));
     }
 
     /**
@@ -56,7 +82,8 @@ class PostController extends Controller
      */
     public function edit($id)
     {
-        //
+        $post = Post::find($id);
+        return view('backend.blog.posts_edit', compact('category'));
     }
 
     /**
@@ -68,7 +95,25 @@ class PostController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'title.*'      => 'required',
+        ]);
+        if ($validator->fails()) {
+            return Redirect::to('dashboard/blog/posts')
+                ->withErrors($validator);
+        } else {
+            $post = Post::findOrFail($id);
+            $post->statue = $request->statue ? $request->statue : 0;
+            $post->save();
+            foreach ( config('app.locals') as $locale)
+            {
+                $post->translateOrNew($locale)->title = $request->title[$locale];
+            }
+            $post->save();
+            // redirect
+            Session::flash('message', 'تم بنجاح!');
+            return Redirect::to('dashboard/blog/posts');
+        }
     }
 
     /**
@@ -79,6 +124,9 @@ class PostController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $post = Post::findOrFail($id);
+        $post->delete();
+        Session::flash('message', 'تم بنجاح!');
+        return redirect('/dashboard/blog/posts');
     }
 }

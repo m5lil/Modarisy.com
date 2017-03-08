@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\Http\Request;
 use App\Menu;
+use Session;
 use App\Page;
+use Validator;
+
 
 class MenuController extends Controller
 {
@@ -20,12 +24,12 @@ class MenuController extends Controller
     public function index()
     {
         $menus = Menu::orderBy('parent_id','asc')->orderBy('order','asc')->get();
-        $title = Menu::pluck('title', 'id');
+        $title = Menu::translated()->get()->pluck('title','id');
         $title = array_add($title, '0', 'بدون');
-        // dd($title);
-        $parents_menu = array_add(Menu::pluck('title', 'id'), '0', 'بدون');
+        $parents_menu = array_add(Menu::translated()->get()->pluck('title','id'), '0', 'بدون');
 
-        return view('backend.menu.index',compact('menus','title','parents_menu'));
+        $pages = Page::translated()->get()->pluck('title','id');
+        return view('backend.menu.index',compact('menus','title','parents_menu','pages'));
     }
 
     /**
@@ -46,15 +50,30 @@ class MenuController extends Controller
      */
     public function store(Request $request)
     {
-        $menu = new Menu();
-        $menu->parent_id = $request->parent_id ? $request->parent_id : 0;
-        $menu->title = $request->title;
-        // $menu->url = in_array( $request->url , Page::pluck('title','slug')->toArray()) ?  'page/'.$request->url : $request->url ;
-        $menu->url = $request->url;
-        $menu->order = $request->order;
-        $menu->save();
 
-        return redirect('dashboard/menu');
+        $validator = Validator::make($request->all(), [
+            'title.*'      => 'required',
+        ]);
+        if ($validator->fails()) {
+            return Redirect::to('dashboard/menu')
+                ->withErrors($validator);
+        } else {
+            $menu = new Menu();
+            $menu->parent_id = $request->parent_id ? $request->parent_id : 0;
+            // $menu->url = in_array( $request->url , Page::pluck('title','slug')->toArray()) ?  'page/'.$request->url : $request->url ;
+            $menu->url = $request->url;
+            $menu->order = $request->order;
+            $menu->save();
+            foreach ( config('app.locals') as $locale)
+            {
+                $menu->translateOrNew($locale)->title = $request->title[$locale];
+            }
+            $menu->save();
+            // redirect
+            Session::flash('message', 'تم بنجاح!');
+            return Redirect::to('dashboard/menu');
+        }
+
     }
 
     /**
@@ -77,7 +96,7 @@ class MenuController extends Controller
     public function edit($id)
     {
         $menu = Menu::findOrfail($id);
-        $menus = Menu::where('id', '!=', $menu->id)->pluck('title', 'id');
+        $menus = Menu::translated()->get()->where('id', '!=', $menu->id)->pluck('title', 'id');
         $menus = array_add($menus, '0', 'بدون');
         return view('backend.menu.edit',compact('menu','menus'));
     }
@@ -91,15 +110,30 @@ class MenuController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $input = $request->except('_token');
-        $menu = Menu::findOrfail($id);
-        $menu->parent_id = $input['parent_id'];
-        $menu->title = $input['title'];
-        $menu->url = in_array( $input['url'], Page::pluck('title','slug')->toArray()) ?  'page/'.$input['url'] : $input['url'] ;
-        $menu->order = $input['order'];
-        $menu->save();
 
-        return redirect('dashboard/menu');
+        $validator = Validator::make($request->all(), [
+            'title.*'      => 'required',
+        ]);
+        if ($validator->fails()) {
+            return Redirect::to('dashboard/menu')
+                ->withErrors($validator);
+        } else {
+            $menu = Menu::findOrFail($id);
+            $menu->parent_id = $request->parent_id ? $request->parent_id : 0;
+            // $menu->url = in_array( $request->url , Page::pluck('title','slug')->toArray()) ?  'page/'.$request->url : $request->url ;
+            $menu->url = $request->url;
+            $menu->order = $request->order;
+            $menu->save();
+            foreach ( config('app.locals') as $locale)
+            {
+                $menu->translateOrNew($locale)->title = $request->title[$locale];
+            }
+            $menu->save();
+            // redirect
+            Session::flash('message', 'تم بنجاح!');
+            return Redirect::to('dashboard/menu');
+        }
+
     }
 
     /**
@@ -113,6 +147,7 @@ class MenuController extends Controller
         $menu = Menu::findOrfail($id);
         $menu->delete();
      	$menu->children()->delete();
+        Session::flash('message', 'تم بنجاح!');
         return redirect('dashboard/menu');
     }
 }

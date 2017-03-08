@@ -50,7 +50,11 @@ class InboxController extends Controller
      */
     public function show($id)
     {
-        return Inbox::findOrFail($id);
+
+        $user = Inbox::findOrFail($id);
+        $user->read = 1;
+        $user->save();
+        return $user;
     }
 
     /**

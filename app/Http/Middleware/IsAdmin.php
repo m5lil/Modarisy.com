@@ -13,10 +13,13 @@ class IsAdmin
      * @param  \Closure  $next
      * @return mixed
      */
+
+// TODO Redirect to you not allowed if not admin
+
     public function handle($request, Closure $next)
     {
         if (!\Auth::user()->isAn('admin')) {
-            \App::abort(404);
+//            \App::abort(404);
         }
         return $next($request);
     }

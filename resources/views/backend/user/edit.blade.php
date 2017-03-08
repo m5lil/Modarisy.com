@@ -2,11 +2,7 @@
 
 @section('content')
 
-@if ($user->id == 1 && !$user->isAn('admin'))
-    {!!$user->assign('admin')!!}
-@endif
-
-@if ($user->can('edit-user'))
+@if (!$user->can('edit-user'))
 
 {{ Html::ul($errors->all(),['class' => 'ui error message']) }}
 
