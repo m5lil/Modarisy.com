@@ -73,7 +73,7 @@
         </div>
     </div>
 
-    <table class="ui compact celled definition  table">
+    <table class="ui compact celled definition   table">
         <tbody id="sortable">
         @if (count($menus))
 
@@ -83,7 +83,13 @@
                     <tr id="item_{{$value->id}}">
                         <td class="collapsing"><a class="handle"><i class="sort icon"></i></a></td>
                         <td class="one wide">{{$value->order}}</td>
-                        <td><strong>{{$value->title}}</strong><br/>{{$value->url}}</td>
+                        <td><strong>{{$value->title}}</strong><br/>
+                            @if(is_numeric($value->url))
+                                &nbsp;&nbsp;&nbsp;صفحة : <small>{{App\Page::find($value->url)->title}}</small>
+                            @else
+                                &nbsp;&nbsp;&nbsp; http://{{$value->url}}
+                            @endif
+                        </td>
                         <td class="two wide">
                             <a href="{{'/dashboard/menu/' . $value->id}}/edit"
                                class="ui left blue mini attached edit_form button icon"><i class="edit icon"></i></a>
@@ -162,7 +168,7 @@
                 $('tbody tr').css('min-width', $('tbody').width());
             });
 
-            $("#sortable").disableSelection();
+//            $("#sortable").disableSelection();
         });
 
         $('.aeform.modal')

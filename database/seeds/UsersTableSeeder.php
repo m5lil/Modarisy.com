@@ -15,7 +15,7 @@ class UsersTableSeeder extends Seeder
             'first_name' => 'Mahmoud',
             'last_name' => 'Khalil',
             'email' => 'mkhlil1288@gmail.com',
-            'password' => bcrypt('00007121988'),
+            'password' => bcrypt('123qweasdzxc'),
             'activated' => '1',
             'city' => '1',
             'type' => '1',

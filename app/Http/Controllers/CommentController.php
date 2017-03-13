@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Comment;
 
 class CommentController extends Controller
 {
@@ -13,7 +14,8 @@ class CommentController extends Controller
      */
     public function index()
     {
-        //
+        $comments = Comment::all();
+        return view('backend.blog.comments',compact('comments'));
     }
 
     /**
@@ -45,7 +47,14 @@ class CommentController extends Controller
      */
     public function show($id)
     {
-        //
+        $data = Comment::findOrFail($id);
+        $user_name = \App\User::findOrFail($data->user_id)->first_name;
+        $post_name = \App\Post::findOrFail($data->post_id)->title;
+        return response()->json([
+            'data' => $data,
+            'user_name' => $user_name,
+            'post_name' => $post_name
+        ]);
     }
 
     /**
@@ -79,6 +88,9 @@ class CommentController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $comment = Comment::findOrFail($id);
+        $comment->delete();
+        Session::flash('message', 'تم بنجاح!');
+        return redirect('/dashboard/blog/comments');
     }
 }

@@ -78,7 +78,6 @@ return [
     */
 
     'locale' => 'ar',
-    'locals' => ['ar','en'],
 
     /*
     |--------------------------------------------------------------------------
@@ -174,6 +173,7 @@ return [
         Laravel\Socialite\SocialiteServiceProvider::class,
         Silber\Bouncer\BouncerServiceProvider::class,
         Dimsav\Translatable\TranslatableServiceProvider::class,
+        Intervention\Image\ImageServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -237,7 +237,24 @@ return [
         'Html' => Collective\Html\HtmlFacade::class,
         'Socialite' => Laravel\Socialite\Facades\Socialite::class,
         'Bouncer' => Silber\Bouncer\BouncerFacade::class,
+        'Image' => Intervention\Image\Facades\Image::class,
+
 
     ],
+
+    /*
+     * Added by Mahmoud Khalil...
+     */
+
+
+//    'offlineAccessList' => [
+//        '127.0.0.1',
+//        '41.232.40.230'
+//    ],
+
+    'locals' => [
+        'ar', 'en'
+    ],
+
 
 ];

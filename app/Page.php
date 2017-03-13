@@ -11,6 +11,8 @@ class Page extends Model
         'title', 'body', 'seo_title', 'seo_keywords', 'seo_description',
     ];
 
-    protected $fillable = ['statue'];
+    protected $fillable = ['statue',
+//        'photo'
+    ];
 
 }

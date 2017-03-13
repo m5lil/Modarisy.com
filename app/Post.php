@@ -13,7 +13,8 @@ class Post extends Model
     ];
 
     protected $fillable = [
-        'user_id', 'statue', 'category_id', 'photo',
+        'user_id', 'statue', 'category_id',
+//        'photo',
     ];
 
 

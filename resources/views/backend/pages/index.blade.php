@@ -13,7 +13,7 @@
 
     <div class="ui modal aeform">
         <div class="content">
-            {{ Form::open(array('route' => 'pages.store', 'class' => 'ui form', 'id' => 'formpage')) }}
+            {{ Form::open(array('route' => 'pages.store', 'class' => 'ui form', 'id' => 'formpage','files' => true)) }}
 
             <div class="ui top attached tabular menu">
                 <?php  $count = 0; ?>
@@ -57,11 +57,19 @@
             @endforeach
 
             <div class="field">
-                <select name="statue" class="ui dropdown">
-                    <option value="1">منشورة</option>
-                    <option value="0">غير منشورة</option>
-                </select>
+                {!! Form::label('photo', 'الصورة*', array('class'=>'col-sm-2 control-label')) !!}
+                    {!! Form::file('photo') !!}
+                    {!! Form::hidden('photo_w', 4096) !!}
+                    {!! Form::hidden('photo_h', 4096) !!}
             </div>
+
+            <div class="inline  field">
+                <div class="ui toggle checkbox">
+                    {!! Form::checkbox('statue', 1)  !!}
+                    {!! Form::label('statue', 'منشور') !!}
+                </div>
+            </div>
+
 
         </div>
         <div class="actions">
@@ -147,11 +155,11 @@
         tinymce.init({
             selector: '.textarea'
         });
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
+//        $.ajaxSetup({
+//            headers: {
+//                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+//            }
+//        });
 
     </script>
     @endpush

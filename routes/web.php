@@ -112,7 +112,7 @@ Route::group(['prefix' => 'dashboard','middleware' => 'admin'], function () {
 /*-----------------------------------------------------------------------------
 | WEB VIEW
 |----------------------------------------------------------------------------*/
-Route::get('/home', 'HomeController@index');
+Route::get('/home', 'HomeController@index')->middleware('mode');
 Route::get('/', function () {
     return view('index');
 });

@@ -9,6 +9,7 @@ use App\Page;
 use Jenssegers\Date\Date;
 use Validator;
 
+
 class PageController extends Controller
 {
     /**
@@ -43,7 +44,6 @@ class PageController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'statue' => 'required',
             'title.*' => 'required',
             'body.*' => 'required'
         ]);
@@ -51,8 +51,10 @@ class PageController extends Controller
             return Redirect::to('dashboard/pages')
                 ->withErrors($validator);
         } else {
+            $request = $this->saveFiles($request);
             $page = New Page();
             $request->has('statue') ? $page->statue = 1 : $page->statue = 0;
+            $page->photo = $request->photo;
             $page->save();
             foreach (config('app.locals') as $locale) {
                 $page->translateOrNew($locale)->title = $request->title[$locale];
@@ -102,7 +104,6 @@ class PageController extends Controller
     public function update(Request $request, $id)
     {
         $validator = Validator::make($request->all(), [
-            'statue' => 'required',
             'title.*' => 'required',
             'body.*' => 'required'
         ]);
@@ -110,8 +111,11 @@ class PageController extends Controller
             return Redirect::to('dashboard/pages')
                 ->withErrors($validator);
         } else {
+            $request = $this->saveFiles($request);
+
             $page = Page::findOrFail($id);
-            $page->statue = $request->statue;
+            $request->has('statue') ? $page->statue = 1 : $page->statue = 0;
+            $request->has('photo') ? $page->photo = $request->photo : null;
             $page->save();
             foreach (config('app.locals') as $locale) {
                 $page->translateOrNew($locale)->title = $request->title[$locale];

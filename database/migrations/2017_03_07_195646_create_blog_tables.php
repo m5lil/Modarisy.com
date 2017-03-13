@@ -32,7 +32,7 @@ class CreateBlogTables extends Migration
 
         Schema::create('posts', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('photo');
+            $table->string('photo')->nullable();
             $table->integer('statue')->default(1);
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users')
@@ -49,9 +49,9 @@ class CreateBlogTables extends Migration
 
             $table->string('title', 170);
             $table->longText('body');
-            $table->string('seo_title', 70);
-            $table->string('seo_keywords');
-            $table->string('seo_description', 170);
+            $table->string('seo_title', 70)->nullable();
+            $table->string('seo_keywords')->nullable();
+            $table->string('seo_description', 170)->nullable();
 
             $table->unique(['post_id','locale']);
             $table->foreign('post_id')->references('id')->on('posts')->onDelete('cascade');
