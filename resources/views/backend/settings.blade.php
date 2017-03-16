@@ -20,7 +20,7 @@
             @elseif($setting->set_name == 'direction')
                 {!! Form::select($setting->set_name,['rtl' => 'Right to left', 'ltr' => 'Left To Right'] , $setting->value , ['class' => 'form-control']) !!}
 
-            @elseif($setting->set_name == 'fav_icon')
+            @elseif($setting->set_name == 'ddd')
                 {!! Form::file($setting->set_name) !!}
                 <img src="{{url('/uploads/thumb/' . $setting->value)}}" alt="thumbnail">
 

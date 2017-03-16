@@ -5629,7 +5629,7 @@ $.fn.dropdown = function(parameters) {
                   event.preventDefault();
                 }
 
-                // page down (show next page)
+                // lecture down (show next lecture)
                 if(pressedKey == keys.pageUp) {
                   module.scrollPage('up');
                   event.preventDefault();
@@ -9249,7 +9249,7 @@ $.fn.modal = function(parameters) {
               $body.css('height', '');
             }
             else {
-              module.debug('Modal is taller than page content, resizing page height');
+              module.debug('Modal is taller than lecture content, resizing lecture height');
               $body
                 .css('height', module.cache.height + (settings.padding * 2) )
               ;

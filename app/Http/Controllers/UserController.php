@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Profile;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Http\Request;
 use App\User;
@@ -23,10 +24,11 @@ class UserController extends Controller
     {
         if ($type == 'students') {
             $users = User::where('type', 2)->paginate(20);
+            return view('backend.user.index',compact('users'));
         }elseif ($type == 'teachers') {
-            $users = User::where('type', 3)->paginate(20);
+            $teachers = Profile::paginate(20);
+            return view('backend.user.index',compact('teachers'));
         }
-        return view('backend.user.index',compact('users'));
     }
 
     /**

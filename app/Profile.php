@@ -20,6 +20,8 @@ class Profile extends Model
         'dbirth',
         'age',
         'hear',
+        'statue',
+        'specialty',
         'lang',
         'level'
     ];

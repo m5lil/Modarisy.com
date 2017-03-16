@@ -2946,9 +2946,9 @@
 	}
 
 	/**
-	 * Slides to the specified item or page.
+	 * Slides to the specified item or lecture.
 	 * @public
-	 * @param {Number} position - The position of the item or page.
+	 * @param {Number} position - The position of the item or lecture.
 	 * @param {Number} [speed] - The time in milliseconds for the transition.
 	 * @param {Boolean} [standard=false] - Whether to use the standard behaviour or not.
 	 */

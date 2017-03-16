@@ -42,15 +42,16 @@ trait FileUploadTrait
                         });
                     }
                     $image->save(public_path('uploads') . '/' . $filename);
-                    $request = new Request(array_merge($request->all(), [$key => $filename]));
+                    $array[$key] = $filename;
                 } else {
                     $filename = time() . rand(00,99) . '-' . $request->file($key)->getClientOriginalName();
-                    Image::make($file)->resize(50, 50)->save(public_path('uploads/thumb') . '/' . $filename);
+                    Image::make($request->file($key))->resize(50, 50)->save(public_path('uploads/thumb') . '/' . $filename);
                     $request->file($key)->move(public_path('uploads'), $filename);
-                    $request = new Request(array_merge($request->all(), [$key => $filename]));
+                    $array[$key] = $filename;
                 }
             }
         }
+        $request = new Request(array_merge($request->all(), $array));
         return $request;
     }
 }

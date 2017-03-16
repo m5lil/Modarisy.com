@@ -24,6 +24,8 @@
 
     <table class="ui compact celled definition table">
         <thead class="full-width">
+        @if(isset($users))
+
             <tr>
                 <th>
                     #
@@ -34,10 +36,23 @@
                 <th>الصلاحية</th>
                 <th>عمليات</th>
             </tr>
+        @elseif (isset($teachers))
+            <tr>
+                <th>
+                    #
+                </th>
+                <th>الإسم</th>
+                <th>التخصص</th>
+                <th>المرحلة</th>
+                <th>الحالة</th>
+                <th>عمليات</th>
+            </tr>
+        @endif
+
         </thead>
         <tbody>
-            @if (count($users))
-                @foreach($users as $value)
+        @if (isset($users) AND count($users))
+            @foreach($users as $value)
                     <tr>
                       <td class="collapsing">{{$value->id}}</td>
                       <td>{{$value->first_name}} {{$value->last_name}}</td>
@@ -56,6 +71,26 @@
                       </td>
                     </tr>
                 @endforeach
+            @elseif (isset($teachers) AND count($teachers))
+                @foreach($teachers as $value)
+                    <tr>
+                      <td class="collapsing">{{$value->id}}</td>
+                      <td>{{$value->user->first_name}} {{$value->user->last_name}}</td>
+                      <td>{{$value->specialty}}</td>
+                      <td>{{$value->level}}</td>
+                      <td>
+                          <i class="circle icon
+                          @if ($value->statue)
+                              green
+                          @endif
+                          "></i>
+                      </td>
+                      <td class="two wide">
+                          <a href = "{{'/dashboard/users/' . $value->id}}/edit" class="ui left blue mini attached edit_form button icon"><i class="edit icon"></i></a>
+                          <a href = "{{'/dashboard/users/' . $value->id}}/delete"  class="ui right red mini attached delete_form button icon"><i class="trash icon"></i></a>
+                      </td>
+                    </tr>
+                @endforeach
             @else
                 <tr>
                     <td colspan="6" class="ui center aligned"> لا يوجد بيانات </td>
@@ -64,14 +99,18 @@
         </tbody>
 
     </table>
+@if(isset($users))
+    {{ $users->links() }}
+@elseif (isset($teachers))
+    {{ $teachers->links() }}
+@endif
 
-{{ $users->links() }}
-    @push('scripts')
-        {{-- <script type="text/javascript">
-            $('.aeform.modal')
-              .modal('attach events', '.form.button')
-            ;
-        </script> --}}
-    @endpush
+   @push('scripts')
+       {{-- <script type="text/javascript">
+           $('.aeform.modal')
+             .modal('attach events', '.form.button')
+           ;
+       </script> --}}
+   @endpush
 
 @endsection

@@ -96,7 +96,9 @@ Route::group(['prefix' => 'dashboard','middleware' => 'admin'], function () {
     Route::get('/blog/comments/{id}/delete','CommentController@destroy');
 
 
-    // ------------------------------- Profile ----------------------------- //
+    // ------------------------------- Lectures ----------------------------- //
+    Route::resource('/lectures', 'LectureController');
+    Route::get('/lectures/statue/{type}', 'LectureController@statue');
 
 
     // ------------------------------- Profile ----------------------------- //

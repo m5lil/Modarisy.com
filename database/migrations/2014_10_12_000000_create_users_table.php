@@ -23,6 +23,7 @@ class CreateUsersTable extends Migration
             $table->tinyInteger('activated')->default('0');
             $table->tinyInteger('type')->default('1');
             $table->smallInteger('city');
+            $table->smallInteger('rate')->default(0);
 			$table->string('address');
 			$table->bigInteger('phone');
             $table->rememberToken();

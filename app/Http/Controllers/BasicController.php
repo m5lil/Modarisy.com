@@ -26,7 +26,7 @@ class BasicController extends Controller
     public function index()
     {
         $pages = Page::all();
-        return view('backend.page.index',compact('pages'));
+        return view('backend.lecture.index',compact('pages'));
     }
 
     /**
@@ -85,7 +85,7 @@ class BasicController extends Controller
     public function edit($id)
     {
         $page = Page::find($id);
-        return view('backend.page.edit', compact('page'));
+        return view('backend.pages.edit', compact('page'));
     }
 
     /**

@@ -2,7 +2,7 @@
 
 @section('content')
 
-    @if (!\Auth::user()->can('edit-page'))
+    @if (!\Auth::user()->can('lecture'))
 
         {{ Html::ul($errors->all(),['class' => 'ui error message']) }}
 

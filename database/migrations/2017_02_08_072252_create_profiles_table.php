@@ -26,8 +26,10 @@ class CreateProfilesTable extends Migration
 			$table->integer('user_id')->unique();
 			$table->date('dbirth');
 			$table->smallInteger('age');
+			$table->smallInteger('statue');
+			$table->string('specialty');
 			$table->text('hear');
-			$table->string('lang')->default('ar');
+			$table->string('lang')->default('arabic');
 			$table->smallInteger('level');
         });
     }
