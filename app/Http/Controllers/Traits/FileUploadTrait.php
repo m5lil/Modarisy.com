@@ -7,8 +7,10 @@
  */
 
 namespace App\Http\Controllers\Traits;
+
 use Illuminate\Http\Request;
 use Intervention\Image\Facades\Image;
+
 trait FileUploadTrait
 {
     /**
@@ -24,11 +26,11 @@ trait FileUploadTrait
             if ($request->hasFile($key)) {
                 if ($request->has($key . '_w') && $request->has($key . '_h')) {
                     // Check file width
-                    $filename = time() . rand(00,99) . '-' . $request->file($key)->getClientOriginalName();
-                    $file     = $request->file($key);
-                    $image    = Image::make($file);
+                    $filename = time() . rand(00, 99) . '-' . $request->file($key)->getClientOriginalName();
+                    $file = $request->file($key);
+                    $image = Image::make($file);
                     Image::make($file)->resize(50, 50)->save(public_path('uploads/thumb') . '/' . $filename);
-                    $width  = $image->width();
+                    $width = $image->width();
                     $height = $image->height();
                     if ($width > $request->{$key . '_w'} && $height > $request->{$key . '_h'}) {
                         $image->resize($request->{$key . '_w'}, $request->{$key . '_h'});
@@ -42,16 +44,18 @@ trait FileUploadTrait
                         });
                     }
                     $image->save(public_path('uploads') . '/' . $filename);
-                    $array[$key] = $filename;
+                    $array[ $key ] = $filename;
                 } else {
-                    $filename = time() . rand(00,99) . '-' . $request->file($key)->getClientOriginalName();
+                    $filename = time() . rand(00, 99) . '-' . $request->file($key)->getClientOriginalName();
                     Image::make($request->file($key))->resize(50, 50)->save(public_path('uploads/thumb') . '/' . $filename);
                     $request->file($key)->move(public_path('uploads'), $filename);
-                    $array[$key] = $filename;
+                    $array[ $key ] = $filename;
                 }
             }
         }
-        $request = new Request(array_merge($request->all(), $array));
+        if (isset($array)) {
+            $request = new Request(array_merge($request->all(), $array));
+        }
         return $request;
     }
 }
