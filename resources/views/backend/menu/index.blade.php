@@ -143,7 +143,13 @@
     {{ HTML::script('plugins/jquery-ui/jquery-ui.min.js') }}
 
     <script type="text/javascript">
+
         $(function () {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf"]').attr('content')
+                }
+            })
             $("#sortable").sortable({
                 'containment': 'parent',
                 'revert': true,
