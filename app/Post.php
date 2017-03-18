@@ -17,6 +17,9 @@ class Post extends Model
 //        'photo',
     ];
 
+    protected $casts = [
+        'photo' => 'array',
+    ];
 
      public function comments()
 	 {
