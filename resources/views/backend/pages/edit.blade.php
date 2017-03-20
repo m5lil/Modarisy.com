@@ -4,8 +4,6 @@
 
     @if (!\Auth::user()->can('lecture'))
 
-        {{ Html::ul($errors->all(),['class' => 'ui error message']) }}
-
         {{ Form::model($page, array('method' => 'PATCH','route' =>['pages.update', $page->id], 'class' => 'ui form', 'id' => 'formpage','files' => true)) }}
         <div class="ui top attached tabular menu">
             <?php  $count = 0; ?>
@@ -53,6 +51,12 @@
                 </div>
             </div>
         @endforeach
+
+        <div class="field">
+            <label>العنوان</label>
+            <input name="slug" id="title" type="text"
+                   value="{{$page->slug}}" placeholder="إسم الصفحة أو إختصار معبر لها باللغةالإنجليزية">
+        </div>
 
         <div class="fields">
             <div class="fourteen wide field">

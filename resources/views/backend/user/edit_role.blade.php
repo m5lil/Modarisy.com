@@ -10,8 +10,6 @@
             ]) !!}
     @endif --}}
 
-    {{ Html::ul($errors->all(),['class' => 'ui error message']) }}
-
     {!! Form::model($role, array('route' => ['abilities.update',$role->id], 'method' => 'PATCH', 'class' => 'ui form')) !!}
     		<div class="field">
     			{!! Form::label('name', 'الإسم (Eng & W/out spaces):') !!}

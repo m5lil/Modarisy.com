@@ -13,28 +13,6 @@
         الرسائل
     </h4>
 
-    <div class="ui modal eshow">
-      <div class="header">محتوى الرساله</div>
-      <div class="content">
-          <div class="ui header" id="subject"></div>
-          <p id="name"></p>
-          <p id="body"></p>
-          <hr />
-          <p id="phone"></p>
-          <p id="email"></p>
-      </div>
-    </div>
-    <div class="ui modal ereply">
-      <div class="header">محتوى الرساله</div>
-      <div class="content">
-          <div class="ui header" id="subject"></div>
-          <p id="name"></p>
-          <p id="body"></p>
-          <hr />
-          <p id="phone"></p>
-          <p id="email"></p>
-      </div>
-    </div>
     <table class="ui compact basic table">
         <thead class="full-width">
             <tr>
@@ -70,7 +48,7 @@
         </tbody>
     </table>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+
 <select name="select1" id="select1">
     <option value="1">Fruit</option>
     <option value="2">Animal</option>
@@ -94,59 +72,10 @@
 
 
 
-{{Form::open(array('action' => 'SubscribersController@Submit','method' => 'post'))}}
-    <p>Simple Newsletter Subscription</p>
-    {{Form::text('name',null,array('placeholder'=>'Type your Name here'))}}
-    {{Form::text('email',null,array('placeholder'=>'Type your E-mail address here'))}}
-    {{Form::submit('Submit!')}}
 
-{{Form::close()}}
-
-<div class="content"></div>
 
 @push('scripts')
     <script type="text/javascript">
-        $(function(){
-            $('div.content').hide();
-            $('input[type="submit"]').click(function(e){
-                e.preventDefault();
-                $.post('/dashboard/subscribers/submit', {
-                _token: $('input[name="_token"]').val(),
-                    name: $('input[name="name"]').val(),
-                    email: $('input[name="email"]').val()
-                }, function($data){
-                    if($data=='1') {
-                        $('div.content').hide().removeClass('success error').addClass('success').html('You\'ve successfully subscribed to ournewsletter').fadeIn('fast');
-                    } else {
-                        $('div.content').hide().removeClass('success error').addClass('error').html('There has been an error occurred:<br /><br />'+$data).fadeIn('fast');
-                    }
-                });
-            });
-            $('form').submit(function(e){
-                e.preventDefault();
-                $('input[type="submit"]').click();
-            });
-        });
-
-        $('.show_msg').on('click',function(e){
-            e.preventDefault();
-            var url = $(this).attr("href");
-            $.get(url, function (data) {
-                //success data
-                console.log(data.id);
-                $('.eshow.modal').modal({
-                    onShow : function() {
-                        $('#id').empty().append(data.id);
-                        $('#subject').empty().append(data.subject);
-                        $('#name').empty().append(data.name);
-                        $('#phone').empty().append(data.phone);
-                        $('#email').empty().append(data.email);
-                        $('#body').empty().append(data.body);
-                    }
-                }).modal('show');
-            });
-        });
-
 
        $('.delete_msg').on('click', function(e) {
            e.preventDefault();

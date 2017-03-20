@@ -13,8 +13,6 @@
         الصلاحيات
     </h4>
 
-    {{ Html::ul($errors->all(),['class' => 'ui error message']) }}
-
     <div class="ui modal aeform">
         <div class="content">
             {!! Form::open(array('action' => 'AbilityController@store', 'class' => 'ui form')) !!}

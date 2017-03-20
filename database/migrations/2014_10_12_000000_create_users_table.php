@@ -22,7 +22,7 @@ class CreateUsersTable extends Migration
             $table->bigInteger('social_id')->nullable();
             $table->tinyInteger('activated')->default('0');
             $table->tinyInteger('type')->default('1');
-            $table->smallInteger('city');
+            $table->string('city');
             $table->smallInteger('rate')->default(0);
 			$table->string('address');
 			$table->bigInteger('phone');

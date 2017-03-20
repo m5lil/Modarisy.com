@@ -45,7 +45,8 @@ class PageController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'title.*' => 'required',
-            'body.*' => 'required'
+            'body.*' => 'required',
+            'slug' => 'required'
         ]);
         if ($validator->fails()) {
             return Redirect::to('dashboard/pages')
@@ -55,6 +56,8 @@ class PageController extends Controller
             $page = New Page();
             $request->has('statue') ? $page->statue = 1 : $page->statue = 0;
             $page->photo = $request->photo;
+            $page->slug = $request->slug;
+
             $page->save();
             foreach (config('app.locals') as $locale) {
                 $page->translateOrNew($locale)->title = $request->title[$locale];
@@ -77,9 +80,11 @@ class PageController extends Controller
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($slug)
     {
-        return Page::findOrFail($id);
+        $page = Page::where('slug', $slug)->first();
+//        dd($page);
+        return view('frontend.page', compact('page'));
     }
 
     /**
@@ -105,7 +110,8 @@ class PageController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'title.*' => 'required',
-            'body.*' => 'required'
+            'body.*' => 'required',
+            'slug' => 'required'
         ]);
         if ($validator->fails()) {
             return Redirect::to('dashboard/pages')
@@ -114,8 +120,10 @@ class PageController extends Controller
             $request = $this->saveFiles($request);
 
             $page = Page::findOrFail($id);
-            $request->has('statue') ? $page->statue = 1 : $page->statue = 0;
-            $request->has('photo') ? $page->photo = $request->photo : null;
+//            dd($request);
+            $page->statue = $request->has('statue') ? 1 : 0;
+            !$request->has('photo') ?: $page->photo = $request->photo;
+            !$request->has('slug') ?: $page->slug = $request->slug;
             $page->save();
             foreach (config('app.locals') as $locale) {
                 $page->translateOrNew($locale)->title = $request->title[$locale];

@@ -23,7 +23,8 @@ class Profile extends Model
         'statue',
         'specialty',
         'lang',
-        'level'
+        'level',
+        'photo',
     ];
 
 	public function user()

@@ -44,7 +44,8 @@ class PostController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'title.*' => 'required',
-            'body.*' => 'required'
+            'body.*' => 'required',
+            'category_id' => 'required',
         ]);
         if ($validator->fails()) {
             return Redirect::to('dashboard/blog/posts')
@@ -108,7 +109,9 @@ class PostController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'title.*' => 'required',
-            'body.*' => 'required'
+            'body.*' => 'required',
+            'category_id' => 'required',
+
         ]);
         if ($validator->fails()) {
             return Redirect::to('dashboard/blog/posts')

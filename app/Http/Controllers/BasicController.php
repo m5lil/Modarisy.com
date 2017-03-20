@@ -20,6 +20,8 @@ class BasicController extends Controller
          $this->middleware('log')->only('index');
 
          $this->middleware('subscribed')->except('store');
+         $this->middleware('auth', ['only' => ['create', 'store', 'edit', 'delete']]);
+
      }
 
 

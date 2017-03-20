@@ -20,17 +20,18 @@ class CreateProfilesTable extends Migration
 			$table->tinyInteger('teach_time')->nullable();
 			$table->smallInteger('teach_hours')->nullable();
 			$table->integer('hour_rate')->nullable();
-			$table->text('intro')->nullable();
+			$table->text('intro');
 			$table->tinyInteger('gender');
 			$table->string('school');
 			$table->integer('user_id')->unique();
 			$table->date('dbirth');
 			$table->smallInteger('age');
 			$table->smallInteger('statue');
-			$table->string('specialty');
+            $table->string('photo')->nullable();
+            $table->string('specialty')->nullable();
 			$table->text('hear');
 			$table->string('lang')->default('arabic');
-			$table->smallInteger('level');
+			$table->smallInteger('level')->nullable();
         });
     }
 

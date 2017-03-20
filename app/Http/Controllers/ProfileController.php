@@ -7,6 +7,12 @@ use App\Profile;
 
 class ProfileController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth', ['only' => ['create', 'store', 'edit', 'delete']]);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -15,7 +21,7 @@ class ProfileController extends Controller
     public function index()
     {
         $profiles = Profile::all();
-        return view('backend.settings', compact('profiles'));
+        return view('frontend.new_profile', compact('profiles'));
     }
 
     /**
@@ -25,24 +31,77 @@ class ProfileController extends Controller
      */
     public function create()
     {
-        //
+        if (\Auth::user()->statue == 0){
+            return view('frontend.new_profile');
+        }else{
+            return \Redirect::to('/');
+        }
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        //
+        $rules = array(
+            'sch_exp'     => 'required',
+            'gen_exp'     => 'nullable',
+            'teach_time'  => 'nullable',
+            'teach_hours' => 'max:10',
+            'hour_rate'   => 'nullable',
+            'intro'       => 'required',
+            'gender'      => 'required',
+            'school'      => 'required',
+            'dbirth'      => 'required|date',
+            'age'         => 'required',
+            'photo'       => 'nullable',
+            'specialty'   => 'nullable',
+            'hear'        => 'required',
+            'lang'        => 'required',
+            'level'       => 'nullable'
+        );
+
+        $validator = \Validator::make($request->all(), $rules);
+
+        if ($validator->fails()) {
+            return Redirect::to('/')
+                ->withErrors($validator);
+        } else {
+            $request = $this->saveFiles($request);
+            $profile = new Profile();
+            $profile->user_id = \Auth::user()->id;
+            $profile->statue = 0;
+            $profile->gen_exp = $request->gen_exp;
+            $profile->sch_exp = $request->sch_exp;
+            $profile->teach_time = $request->teach_time;
+            $profile->teach_hours = $request->teach_hours;
+            $profile->hour_rate = $request->hour_rate;
+            $profile->intro = $request->intro;
+            $profile->gender = $request->gender;
+            $profile->school = $request->school;
+            $profile->dbirth = $request->dbirth;
+            $profile->age = $request->age;
+            $profile->hear = $request->hear;
+            $profile->specialty = $request->specialty;
+            $profile->lang = $request->lang;
+            $profile->level = $request->level;
+            $profile->photo = $request->photo;
+            $profile->save();
+
+            // redirect
+            \Session::flash('message', 'تم بنجاح!');
+            return \Redirect::to('/home');
+
+        }
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -53,7 +112,7 @@ class ProfileController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -64,8 +123,8 @@ class ProfileController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request $request
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -76,7 +135,7 @@ class ProfileController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)

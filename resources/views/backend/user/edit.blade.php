@@ -4,8 +4,6 @@
 
 @if (!$user->can('edit-user'))
 
-{{ Html::ul($errors->all(),['class' => 'ui error message']) }}
-
     {!! Form::model($user, array('route' => ['users.update',$user->id], 'method' => 'PATCH', 'class' => 'ui form')) !!}
     		<div class="field">
     			{!! Form::label('first_name', 'الإسم الأول:') !!}

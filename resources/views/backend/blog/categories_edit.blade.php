@@ -9,9 +9,6 @@
 الأقسام
     </h4>
 
-    {{ Html::ul($errors->all(),['class' => 'ui error message']) }}
-
-
         {{ Form::model($category, array('method' => 'PATCH','route' => ['categories.update', $category->id], 'class' => 'ui form', 'id' => 'formpage')) }}
 
         <div class="ui top attached tabular menu">

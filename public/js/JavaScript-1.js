@@ -6,7 +6,12 @@ jQuery(document).ready(function ($) {
         size: 4 
     });
   
-    
+    $('#Container').mixItUp({
+        load: {
+            filter: '.category-1'
+        }
+    });
+	
     $('.owl-carousel').owlCarousel({
         loop: true,
         autoplayTimeout: 6000,

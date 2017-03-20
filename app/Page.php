@@ -12,7 +12,7 @@ class Page extends Model
     ];
 
     protected $fillable = ['statue',
-//        'photo'
+        'slug','photo'
     ];
 
 }

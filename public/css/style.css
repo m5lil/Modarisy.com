@@ -73,11 +73,15 @@ span i {
     margin-top: 12px;
     font-family:JFFlatregular;
 }
+#Container .mix {
+    display: none;
+}
 .heder-top-left a {
     color: #000;
     font-size: 14.22px;
     text-decoration: none;
 }
+
 
 nav.navbar.navbar-default {
     background: #fff;
@@ -821,4 +825,291 @@ a.contanact-map {
     text-align: center;
     margin-top: 32px;
     text-decoration: none;
+}
+.modarsyy-1 .form {
+    width: 492px;
+    margin: auto;
+    overflow: hidden;
+    padding: 44px 48px;
+	background: #fff;
+		margin-bottom: 66px;
+	    border-radius: 10px;
+}
+section.modarsy-2 {
+    background: #f4f4f4;
+
+}
+.modarsyy-1 .form input {
+    width: 100%;
+    border: 1px solid #eee;
+    background: #fff;
+    padding: 0px 10px;
+    height: 44px;
+    margin-bottom: 30px;
+    outline: none;
+    border-radius: 47px;
+    text-align: center;
+}
+.modarsyy-1 .form select {
+    width: 100%;
+    border: 1px solid #eee;
+    background: #fff;
+    padding: 0px 10px;
+    height: 44px;
+    margin-bottom: 30px;
+    outline: none;
+    border-radius: 47px;
+    text-align: center;
+}
+.modarsyy-1 .form radio {
+    border: 1px solid #eee;
+    background: #fff;
+    padding: 0px 10px;
+    height: 44px;
+    margin-bottom: 30px;
+    outline: none;
+    border-radius: 47px;
+}
+.modarsyy-1 .form textarea {
+    width: 100%;
+    border: 1px solid #eee;
+    background: #fff;
+    padding: 10px 10px;
+    height: 169px;
+    margin-bottom: 30px;
+    outline: none;
+    border-radius: 8px;
+    text-align: center;
+}
+.modarsyy-1 .form label {
+    width: 50%;
+    text-align: center;
+    float: right;
+}
+.modarsyy-1 .form label input {
+    width: 18px !important;
+    height: 15px !important;
+	margin-bottom: 65px !important;;
+}
+.modarsyy-1 .form button {
+    width: 150px;
+    height: 40px;
+    border-radius: 40px;
+    border: none;
+    display: -webkit-box;
+    outline: none;
+    margin: auto;
+    text-align: center;
+    float: none;
+	background: #165666;
+	color: #fff;
+}
+.modarsy-2 section.with-us a:after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 108%;
+    background: #165666;
+    width: 45px;
+    height: 2px;
+    transform: translate(-50%,-50%);
+}
+secrion.mod-arsy .col-md-4.dede:first-child {
+    padding: 20px;
+    border: 1px solid #eee;
+    background: #fff;
+    margin-top: -170px;
+}
+.dede .slid-detils-wright h2 {
+    font-size: 18px;
+    font-weight: bold;
+    color: #eaaa15;
+    margin-bottom: 17px;
+}
+.dede .slid-detils-wright p {
+    font-size: 14px;
+    color: #165666;
+    line-height: 23px;
+}
+.dede span {
+    font-size: 14px;
+    color: #eaaa15;
+}
+.dede hr {
+    margin-top: 12px;
+    margin-bottom: 12px;
+    border: 0;
+    border-top: 1px solid #eee;
+}
+.first-mod-arsy {
+    margin-bottom: 190px;
+}
+.dede h2.dede-h2 {
+    text-align: center;
+    font-size: 16px;
+    margin-top: 70px;
+    font-weight: bold;
+    margin-bottom: 40px;
+    color: #165666;
+    position: relative;
+}
+.dede h2.dede-h2:after {
+    position: absolute;
+    content: "";
+    width: 50px;
+    height: 2px;
+    background: #ddd;
+    left: 50%;
+    top: 154%;
+    transform: translate(-50%,-50%);
+}
+.dede input {
+    width: 100%;
+    outline: none;
+    padding: 0px 15px;
+    height: 40px;
+    border-radius: 30px;
+    border: 1px solid #ddd;
+}
+.dede textarea {
+    width: 100%;
+    outline: none;
+    padding: 0px 10px;
+    height: 170px;
+    border-radius: 7px;
+    border: 1px solid #ddd;
+    margin: 30px 0px;
+}
+.dede input[type="number"] {
+    width: 90px;
+    display: block;
+    margin-bottom: 30px;
+}
+.dede input[type="checkbox"] {
+    width: 15px;
+    height: 15px;
+}
+.dede button
+{
+	display: block;
+    margin: auto;
+    margin-top: 40px;
+    margin-bottom: 20px;
+    width: 160px;
+    background: #165666;
+    color: #fff;
+}
+.last-mod-arsy .about-teatcher h2 {
+    font-size: 18px;
+    color: #165666;
+    font-weight: bold;
+    position: relative;
+    margin-top: 40px;
+    margin-bottom: 35px;
+}
+.last-mod-arsy .about-teatcher h2:after {
+    position: absolute;
+    content: "";
+    width: 50px;
+    height: 2px;
+    background: #ddd;
+    top: 154%;
+    right: 12px;
+}
+.last-mod-arsy .about-teatcher p {
+    line-height: 24px;
+    text-align: justify;
+    font-size: 13px;
+    margin-bottom: 60px;
+}
+.last-mod-arsy .advertising2-car-2 .caarss {
+    padding: 15px;
+    margin-top: 25px;
+    background: #fff;
+}
+.last-mod-arsy .Request button {
+    width: initial;
+    background: none;
+    color: #165666;
+    font-size: 14px;
+    border-radius: 0px;
+    font-weight: bold;
+    padding-right: 15px;
+    padding-bottom: 10px;
+	width: 100%;
+}
+
+button.filter.active {
+    color: #b9b1b1;
+    border-bottom: 1px solid #165666;
+	    
+}
+.last-mod-arsy .Request button i {
+    color: #ffb200;
+    margin-left: 3px;
+}
+secrion.mod-arsy {
+    background: #f9f9f9;
+    display: -webkit-box;
+	padding-bottom: 50px
+}
+.last-mod-arsy .advertising2-car-2 .caarss h3 a {
+    font-size: 15px;
+    font-weight: bold;
+}
+.last-mod-arsy .advertising2-car-2 .caarss h3 {
+ margin-top: 0px;
+	margin-bottom: 20px
+}
+last-mod-arsy .advertising2-car-2 .caarss p {
+    font-size: 13px;
+    line-height: 25px;
+    margin-bottom: 25px;
+}
+.last-mod-arsy .advertising2-car-2 .caarss li {
+    width: 24%;
+    text-align: center;
+}
+.last-mod-arsy .advertising2-car-2 .caarss li span i {
+    padding: 0px;
+    margin: 0px;
+}
+.last-mod-arsy .advertising2-car-2 .caarss li a {
+    color: #000;
+    text-decoration: none;
+}
+.last-mod-arsy .advertising2-car-2 .caarss li a span {
+    color: #325c94;
+    
+}
+.last-mod-arsy .Request hr {
+    margin-top: 0px;
+    margin-bottom: 20px;
+    border: 0;
+    border-top: 1px solid #eee;
+}
+.modarsyy-1 .forme a {
+    width: 70%;
+    display: block;
+    height: 45px;
+    line-height: 45px;
+    text-align: center;
+    margin: auto;
+    text-decoration: none;
+    background: #165666;
+    color: #fff;
+    font-size: 18px;
+    border-radius: 30px;
+    margin-bottom: 150px;
+}
+.modarsyy-1 .form input[type="email"] {
+    text-align: center;
+    width: 100%;
+    border: 1px solid #eee;
+    background: #fff;
+    padding: 0px 10px;
+    height: 44px;
+    margin-bottom: 30px;
+    outline: none;
+    border-radius: 47px;
 }

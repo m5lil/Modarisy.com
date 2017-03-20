@@ -14,7 +14,6 @@
     <h4 class="ui horizontal divider">
         القائمة الرئيسية
     </h4>
-    {{ Html::ul($errors->all(),['class' => 'ui error message']) }}
 
     <div class="ui modal aeform">
         <div class="content">
