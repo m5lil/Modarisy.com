@@ -33,14 +33,14 @@
                     <div class="col-sm-6 col-xs-12">
 
                         <div class="forme">
-                            <a href="http://l54.dev/register?t=3"> تسجيل كطالب</a>
+                            <a href="{{ url('/register?t=3') }}"> تسجيل كطالب</a>
                         </div>
 
                     </div>
                     <div class="col-sm-6 col-xs-12">
 
                         <div class="forme">
-                            <a href="http://l54.dev/register?t=2">تسجيل كمدرس</a>
+                            <a href="{{ url('/register?t=2') }}">تسجيل كمدرس</a>
                         </div>
 
                     </div>

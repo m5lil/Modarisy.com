@@ -20,8 +20,8 @@ class ProfileController extends Controller
      */
     public function index()
     {
-        $profiles = Profile::all();
-        return view('frontend.new_profile', compact('profiles'));
+        $profiles = Profile::where('statue', 1)->get();
+        return view('frontend.all_profile', compact('profiles'));
     }
 
     /**
@@ -34,7 +34,7 @@ class ProfileController extends Controller
         if (\Auth::user()->statue == 0){
             return view('frontend.new_profile');
         }else{
-            return \Redirect::to('/');
+            return \Redirect::to('/home');
         }
     }
 
@@ -67,7 +67,7 @@ class ProfileController extends Controller
         $validator = \Validator::make($request->all(), $rules);
 
         if ($validator->fails()) {
-            return Redirect::to('/')
+            return \Redirect::back()
                 ->withErrors($validator);
         } else {
             $request = $this->saveFiles($request);
@@ -106,7 +106,8 @@ class ProfileController extends Controller
      */
     public function show($id)
     {
-        //
+        $profile = Profile::findOrFail($id);
+        return view('frontend.profile', compact('profile'));
     }
 
     /**

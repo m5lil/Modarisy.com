@@ -72,7 +72,7 @@ Route::group(['prefix' => 'dashboard', 'middleware' => 'admin'], function () {
     Route::resource('/inbox', 'InboxController');
 
     // ------------------------------- Profile ----------------------------- //
-    Route::resource('/profiles', 'ProfileController');
+//    Route::resource('/profiles', 'ProfileController');
 
     // ------------------------------- Subscribe ----------------------------- //
     Route::resource('/subscribers', 'SubscribersController');
@@ -87,17 +87,21 @@ Route::group(['prefix' => 'dashboard', 'middleware' => 'admin'], function () {
     Route::resource('/blog/comments', 'CommentController');
     Route::get('/blog/comments/{id}/delete', 'CommentController@destroy');
 
-
     // ------------------------------- Lectures ----------------------------- //
     Route::resource('/lectures', 'LectureController');
     Route::get('/lectures/statue/{type}', 'LectureController@statue');
+    Route::get('/lectures/activate/{id}', 'LectureController@activate');
+    Route::get('/lectures/{id}/delete', 'LectureController@destroy');
 
+    // ------------------------------- Lectures ----------------------------- //
+    Route::resource('/applicants', 'ApplicantController');
+    Route::get('/applicants/statue/{type}', 'ApplicantController@statue');
+    Route::get('/applicant/activate/{id}', 'ApplicantController@activate');
+    Route::get('/applicant/{id}/delete', 'ApplicantController@destroy');
 
     // ------------------------------- Other ----------------------------- //
     Route::get('/materials', 'DashController@get_materials');
     Route::post('/materials/create', 'DashController@add_material');
-
-
 
 
 });
@@ -109,8 +113,6 @@ Route::group(['prefix' => 'dashboard', 'middleware' => 'admin'], function () {
 | WEB VIEW
 |----------------------------------------------------------------------------*/
 Route::group(['middleware' => 'web'], function () {
-
-    Route::get('/home', 'HomeController@index')->middleware('mode');
 
     Route::get('/', function () {
         return view('index');
@@ -124,13 +126,29 @@ Route::group(['middleware' => 'web'], function () {
 
     Route::post('/subscribers/submit', 'SubscribersController@Submit');
 
-    Route::get('/{slug}', 'PageController@show');
 
+    Route::group(['middleware' => 'auth'], function () {
+
+        Route::get('/home', 'HomeController@index')->middleware('has_profile');
+        // Create New Request
+        Route::get('/request/create', 'LectureController@create');
+        Route::get('/request/{id}/delete', 'LectureController@delete');
+        Route::post('/request/create_request', 'LectureController@createRequest');
+        Route::post('/request', 'LectureController@store');
+        // Create New Applicant
+        Route::get('/applicant/create/{id}', 'ApplicantController@create');
+        Route::post('/applicant', 'ApplicantController@store');
+        Route::get('/applicants/{lecture_id}', 'ApplicantController@allApplicants');
+
+    });
+
+    Route::get('/{slug}', 'PageController@show');
 
 });
 
 // --------------------------------- teacher ------------------------------- //
 // Route::get('/home', 'HomeController@index');
+
 
 
 /*

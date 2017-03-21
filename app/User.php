@@ -47,10 +47,10 @@ class User extends Authenticatable
 	// 	return $this->hasMany('App\Message');
 	// }
     //
-    // public function applicatns()
-	// {
-	// 	return $this->hasMany('App\User');
-	// }
+     public function applicatns()
+	 {
+	 	return $this->hasMany('App\Applicant');
+	 }
 
 	 public function lectures()
 	 {

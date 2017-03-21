@@ -25,7 +25,9 @@
 
 </head>
 <body>
-
+@if (Session::has('message'))
+    <div style="position: relative; width: 100%; text-align: center;" class="alert alert-info">{{ Session::get('message') }}</div>
+@endif
 <header>
     <div class="header">
         <div class="header-top">
@@ -38,17 +40,15 @@
 
                                     <ul class="list-inline">
                                         <li class="facebook-1 hvr-float">
-                                            <a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+                                            <a href="{{ setting('facebook') }}"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
                                         <li class="twitter-1 hvr-float">
-                                            <a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+                                            <a href="{{ setting('twitter') }}"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
                                         <li class="youtube-1 hvr-float">
-                                            <a href="#"><i class="fa fa-youtube" aria-hidden="true"></i></a></li>
-                                        <li class="instagram-1 hvr-float">
-                                            <a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
-                                        <li class="google-1 hvr-float">
-                                            <a href="#"><i class="fa fa-google-plus" aria-hidden="true"></i></a></li>
-                                        <li class="rss-1 hvr-float">
-                                            <a href="#"><i class="fa fa-rss" aria-hidden="true"></i></a></li>
+                                            <a href="{{ setting('youtube') }}"><i class="fa fa-youtube" aria-hidden="true"></i></a></li>
+                                        {{--<li class="google-1 hvr-float">--}}
+                                            {{--<a href="{{ setting('facebook') }}"><i class="fa fa-google-plus" aria-hidden="true"></i></a></li>--}}
+                                        {{--<li class="rss-1 hvr-float">--}}
+                                            {{--<a href="{{ setting('facebook') }}"><i class="fa fa-rss" aria-hidden="true"></i></a></li>--}}
                                     </ul>
                                 </div>
                             </div>
@@ -60,11 +60,11 @@
 
                         <div class="heder-top-right">
                             <p class="wats">
-                                0567816954
+                                {{ setting('phone') }}
                                 <span><i class="fa fa-whatsapp" aria-hidden="true"></i></span>
                             </p>
                             <p class="mail">
-                                info@website.com
+                                {{ setting('email') }}
                                 <span class="icon-top"><i class="fa fa-envelope-o" aria-hidden="true"></i></span>
                             </p>
 
@@ -75,7 +75,6 @@
         </div>
         <!--  header-bottom      -->
 
-
         <div class="head-b">
             <nav class="navbar navbar-default">
                 <div class="container">
@@ -84,7 +83,7 @@
                         <a class="navbar-brand" href="{{ url('/') }}">
                             <div class="aside">
                                 @if(setting('logo'))
-                                    <img class=" img-logo-top-1 wow fadeInDown" data-wow-duration="" 2s""
+                                    <img class=" img-logo-top-1 wow fadeInDown" data-wow-duration=" 2s"
                                     src="{{ url('/uploads/' . setting('logo')) }}">
                                 @else
                                     {{ config('app.name', 'Modarrisi') }}
@@ -104,27 +103,30 @@
                     <!-- Collect the nav links, forms, and other content for toggling -->
                     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                         <ul class="nav navbar-nav text-center nna">
-                            <li class="active qw"><a href="#">الرئيسة <span class="sr-only">(current)</span></a></li>
-                            <li class="qw"><a class="qwe" href="contact.html">العثور على مدرس</a></li>
-                            <li class="qw"><a class="qwe" href="contact-3.html">كيف يعمل</a></li>
-                            <li class="dropdown menu-item-has-children qw">
-                                <a href="contact-me.html" class="dropdown-toggle qwe" data-toggle="dropdown"
-                                   role="button"
-                                   aria-haspopup="true" aria-expanded="false"> الطلبه<span class=""></span></a>
-                                <ul class="dropdown-menu  sub-menu">
-                                    <li><a href="contact-me-2.html">الطالب</a></li>
-                                    <li><a href="contact-me.html">المدرس</a></li>
-                                    <li><a href="contact-3.html"> ولى امر الطالب </a></li>
+                            @foreach(App\Menu::orderBy('order','asc')->get() as $menuItem)
 
-                                </ul>
-                            </li>
-                            <li class="qw"><a class="qwe" href="contact-4.html"> اتصل بنا</a></li>
+                                @if( $menuItem->parent_id == 0 )
+                                    <li class= "qw {{ $menuItem->url ? '' : "dropdown menu-item-has-children" }}">
+                                        <a href="{{ $menuItem->children->isEmpty() ? in_array($menuItem->url,\App\Page::pluck('slug')->toArray()) ? $menuItem->url : 'http://'.$menuItem->url : "#" }}" {{ $menuItem->children->isEmpty() ? '' : "class=\"dropdown-toggle\" data-toggle=dropdown role=button aria-expanded=false" }}>{{ $menuItem->title }}</a>
+                                @endif
+
+                                @if( ! $menuItem->children->isEmpty() )
+                                    <ul class="dropdown-menu sub-menu" role="menu">
+                                        @foreach($menuItem->children as $subMenuItem)
+                                            <li><a href="{{ in_array($subMenuItem->url,\App\Page::pluck('slug')->toArray()) ? $subMenuItem->url : 'http://'.$subMenuItem->url }}">{{ $subMenuItem->title }}</a></li>
+                                        @endforeach
+                                    </ul>
+                                @endif
+
+                                </li>
+
+                            @endforeach
+
                         </ul>
 
 
                     </div><!-- /.navbar-collapse -->
-                    <div class="segin wow fadeInDown" data-wow-duration="" 2s
-                    "">
+                    <div class="segin wow fadeInDown" data-wow-duration="2s">
                     <div class="bottom-headre">
                         @if (Auth::guest())
                             <button onclick="location.href='{{url('/')}}/be_member';" class="but-1 hvr-float-shadow">
@@ -136,6 +138,10 @@
                             @if(!Auth::user()->profile)
                                 <button onclick="location.href='{{url('/')}}/profile/create';"
                                         class="but-1 hvr-float-shadow">أكمل ملفك
+                                </button>
+                            @else
+                                <button onclick="location.href='{{url('/')}}/home';"
+                                        class="but-1 hvr-float-shadow">ملفك الشخصى
                                 </button>
                             @endif
                             <button type="submit"
@@ -292,6 +298,9 @@
     //            $('input[type="submit"]').click();
     //        });
     //    });
+    $(".alert").delay(4000).slideUp(200, function() {
+        $(this).alert('close');
+    });
 
 
 </script>

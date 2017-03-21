@@ -23,7 +23,7 @@ class UserController extends Controller
     public function members($type)
     {
         if ($type == 'students') {
-            $users = User::where('type', 2)->paginate(20);
+            $users = User::where('type', 3)->paginate(20);
             return view('backend.user.index',compact('users'));
         }elseif ($type == 'teachers') {
             $teachers = Profile::paginate(20);

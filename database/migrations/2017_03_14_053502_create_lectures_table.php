@@ -18,12 +18,13 @@ class CreateLecturesTable extends Migration
             $table->integer('user_id');
             $table->string('total_hours');
             $table->tinyInteger('preferred_time');
+            $table->string('material');
             $table->string('subject');
             $table->string('target');
             $table->text('comment');
             $table->integer('statue')->default(0);
-            $table->integer('num_bid')->default(0);
-            $table->integer('applicant_id')->nullable();
+            $table->integer('teacher_id')->default(0);
+            $table->integer('applicant_id')->default(0);
             $table->timestamps();
 
         });

@@ -27,11 +27,11 @@
         <div class="fields">
             <div class="twelve wide field  ">
                 <label>رابط خارجى</label>
-                {!! Form::text('url',  old('url'), array('id'=>'a', 'class'=>'form-control')) !!}
+                {!! Form::text('url',  old('url'), array('id'=>'a', 'class'=>'form-control', 'placeholder' => 'أكتب الرابط بدون http://')) !!}
             </div>
             <div class="four wide field">
                 <label>رابط من صفحة</label>
-                {!! Form::select('url',  \App\Page::translatedIn('en')->get()->pluck('title','id'), null, array('id'=>'b', 'class'=>'form-control')) !!}
+                {!! Form::select('url',  \App\Page::translatedIn('en')->get()->pluck('title','slug'), null, array('id'=>'b', 'class'=>'form-control')) !!}
             </div>
         </div>
 

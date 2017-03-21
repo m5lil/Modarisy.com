@@ -10,12 +10,14 @@
 
 
     <h4 class="ui horizontal divider">
-        @if (Request::is('dashboard/lectures/statue/done'))
-            إنتهت
-        @elseif (Request::is('dashboard/lectures/statue/progress'))
-            مفتوحة
-        @elseif (Request::is('dashboard/lectures/statue/waiting'))
-            تنتظر الموافقة
+        @if (Request::is('dashboard/lectures/statue/suspend'))
+            معلقة
+        @elseif (Request::is('dashboard/lectures/statue/active'))
+            مفعلة
+        @elseif (Request::is('dashboard/lectures/statue/in-progress'))
+            جارى العمل
+        @elseif (Request::is('dashboard/lectures/statue/done'))
+            منتهية
         @else
             الطلبات
         @endif
@@ -27,7 +29,7 @@
             <div class="ui header" id="subject"></div>
             <p id="name"></p>
             <p id="body"></p>
-            <hr />
+            <hr/>
             <p id="phone"></p>
             <p id="email"></p>
         </div>
@@ -38,7 +40,7 @@
             <div class="ui header" id="subject"></div>
             <p id="name"></p>
             <p id="body"></p>
-            <hr />
+            <hr/>
             <p id="phone"></p>
             <p id="email"></p>
         </div>
@@ -54,6 +56,7 @@
             <th>عدد المتقدمين</th>
             <th>صاحب الطلب</th>
             <th>إسم المعلم</th>
+            <th>منذ</th>
             <th>عمليات</th>
         </tr>
         </thead>
@@ -69,86 +72,62 @@
                     {{$value->id}}
                 </td>
                 <td><strong>{{$value->subject}}</strong></td>
-                <td>{{$value->statue}}</td>
-                <td>{{$value->num_bid}}</td>
-                <td>{{$value->user_id}}</td>
-                <td>{{$value->applicant_id}}</td>
+                <td>{{$value->Statue($value->statue)}}</td>
+                <td>{{count($value->applicants)}}</td>
+                <td>{{$value->user->first_name}}</td>
+                <td>{{@$value->applicants->find($value->applicant_id)->user->first_name}}</td>
                 <td>{{ \Date::parse($value->created_at)->diffForHumans() }}</td>
                 <td class="two wide">
-                    <a href = '/dashboard/inbox/{{$value->id}}' class="ui left blue mini attached show_msg button icon"><i class="unhide icon"></i></a>
-                    <a href = "{{$value->id}}"  class="ui right red mini attached delete_msg button icon"><i class="trash icon"></i></a>
+                    <a href="{{url('/dashboard/lectures/') . '/' . $value->id . '/delete'}}"
+                       class="ui left red mini attached delete_msg button icon"><i class="trash icon"></i></a>
+                    <a href="{{url('/dashboard/lectures/activate/') . '/' . $value->id}}"
+                       class="ui right mini attached button icon"><i class="
+                    @if($value->statue == 0)
+                        checkmark blue
+                    @else()
+                        ban
+                    @endif
+                        icon"></i></a>
+
                 </td>
             </tr>
         @endforeach
         </tbody>
     </table>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
-    <select name="select1" id="select1">
-        <option value="1">Fruit</option>
-        <option value="2">Animal</option>
-        <option value="3">Bird</option>
-        <option value="4">Car</option>
-    </select>
-
-
-
-    <select name="select2" id="select2">
-        <option ss="1">Banana</option>
-        <option ss="1">Apple</option>
-        <option ss="1">Orange</option>
-        <option ss="2">Wolf</option>
-        <option ss="2">Fox</option>
-        <option ss="2">Bear</option>
-        <option ss="3">Eagle</option>
-        <option ss="3">Hawk</option>
-        <option ss="4">BWM<option>
-    </select>
-
-
-
-    {{Form::open(array('action' => 'SubscribersController@Submit','method' => 'post'))}}
-    <p>Simple Newsletter Subscription</p>
-    {{Form::text('name',null,array('placeholder'=>'Type your Name here'))}}
-    {{Form::text('email',null,array('placeholder'=>'Type your E-mail address here'))}}
-    {{Form::submit('Submit!')}}
-
-    {{Form::close()}}
-
-    <div class="content"></div>
 
     @push('scripts')
     <script type="text/javascript">
-        $(function(){
+        $(function () {
             $('div.content').hide();
-            $('input[type="submit"]').click(function(e){
+            $('input[type="submit"]').click(function (e) {
                 e.preventDefault();
                 $.post('/dashboard/subscribers/submit', {
                     _token: $('input[name="_token"]').val(),
                     name: $('input[name="name"]').val(),
                     email: $('input[name="email"]').val()
-                }, function($data){
-                    if($data=='1') {
+                }, function ($data) {
+                    if ($data == '1') {
                         $('div.content').hide().removeClass('success error').addClass('success').html('You\'ve successfully subscribed to ournewsletter').fadeIn('fast');
                     } else {
-                        $('div.content').hide().removeClass('success error').addClass('error').html('There has been an error occurred:<br /><br />'+$data).fadeIn('fast');
+                        $('div.content').hide().removeClass('success error').addClass('error').html('There has been an error occurred:<br /><br />' + $data).fadeIn('fast');
                     }
                 });
             });
-            $('form').submit(function(e){
+            $('form').submit(function (e) {
                 e.preventDefault();
                 $('input[type="submit"]').click();
             });
         });
 
-        $('.show_msg').on('click',function(e){
+        $('.show_msg').on('click', function (e) {
             e.preventDefault();
             var url = $(this).attr("href");
             $.get(url, function (data) {
                 //success data
                 console.log(data.id);
                 $('.eshow.modal').modal({
-                    onShow : function() {
+                    onShow: function () {
                         $('#id').empty().append(data.id);
                         $('#subject').empty().append(data.subject);
                         $('#name').empty().append(data.name);
@@ -161,7 +140,7 @@
         });
 
 
-        $('.delete_msg').on('click', function(e) {
+        $('.delete_msg').on('click', function (e) {
             e.preventDefault();
             var target = $(this).attr("href");
             var self = $(this)
@@ -186,8 +165,8 @@
 //                   '_token': $("input[name='_token']").val(),
                         'id': self.attr("href")
                     },
-                    success: function(data) {
-                        $('.item' + '-' +  target).remove();
+                    success: function (data) {
+                        $('.item' + '-' + target).remove();
                     }
                 });
                 swal(
@@ -206,7 +185,7 @@
             })
         });
 
-        $("#select1").change(function() {
+        $("#select1").change(function () {
             if ($(this).data('options') == undefined) {
                 /*Taking an array of all options-2 and kind of embedding it on the select1*/
                 $(this).data('options', $('#select2 option').clone());

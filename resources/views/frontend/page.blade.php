@@ -1,7 +1,7 @@
 @extends('frontend.master')
 
 @section('content')
-
+    @if($page)
     <!--slider***************************************-->
     <section class="slider" style="height: 238px;">
         <div class="slid" style="height: 238px;">
@@ -29,7 +29,21 @@
             </div>
         </div>
     </section>
+    @else
+        <section class="slider" style="height: 238px;">
+            <div class="slid" style="height: 238px;">
+                <div class="container">
+                    <div class="row">
+                        <div class="li-list">
+                            <a href="#" class="home ">الرئيسية</a>
+                            <a href="#" class="conntact-my active">صفحة غير موجوده</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
 
+    @endif
 
 
 

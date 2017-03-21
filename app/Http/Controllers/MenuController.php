@@ -26,9 +26,9 @@ class MenuController extends Controller
         $menus = Menu::orderBy('parent_id','asc')->orderBy('order','asc')->get();
         $title = Menu::translated()->get()->pluck('title','id');
         $title = array_add($title, '0', 'بدون');
-        $parents_menu = array_add(Menu::translated()->get()->pluck('title','id'), '0', 'بدون');
+        $parents_menu = array_add(Menu::translated()->get()->pluck('title','slug'), '0', 'بدون');
 
-        $pages = Page::translated()->get()->pluck('title','id');
+        $pages = Page::translated()->get()->pluck('title','slug');
         return view('backend.menu.index',compact('menus','title','parents_menu','pages'));
     }
 

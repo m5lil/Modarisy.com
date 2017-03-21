@@ -46,7 +46,7 @@
             <div class="fields">
                 <div class="twelve wide field">
                     <label>رابط خارجى</label>
-                    {!! Form::text('url',  old('url'), array('id'=>'a', 'class'=>'form-control')) !!}
+                    {!! Form::text('url',  old('url'), array('id'=>'a', 'class'=>'form-control', 'placeholder' => 'أكتب الرابط بدون http://')) !!}
                 </div>
                 <div class="four wide field">
                     <label>رابط من صفحة</label>
@@ -83,8 +83,9 @@
                         <td class="collapsing"><a class="handle"><i class="sort icon"></i></a></td>
                         <td class="one wide">{{$value->order}}</td>
                         <td><strong>{{$value->title}}</strong><br/>
-                            @if(is_numeric($value->url))
-                                &nbsp;&nbsp;&nbsp;صفحة : <small>{{App\Page::find($value->url)->title}}</small>
+                            @if(in_array( $value->url  , \App\Page::pluck('slug')->toArray() ))
+                                &nbsp;&nbsp;&nbsp;صفحة :
+                                <small>{{ $value->url }}</small>
                             @else
                                 &nbsp;&nbsp;&nbsp; http://{{$value->url}}
                             @endif
@@ -100,9 +101,17 @@
                         @foreach ($value->children as $subMenuItem)
                             <tr style="font-size:12px; color:#2b2e55;">
                                 <td class="collapsing"></td>
-                                <td> <i class="level up icon"></i> {{$subMenuItem->order}}</td>
-                                <td> &nbsp;  <i class="level up icon"></i> <strong>{{$subMenuItem->title}} </strong> (رابط
-                                    فرعى)<br/>  &nbsp;  &nbsp;{{$subMenuItem->url}}</td>
+                                <td><i class="level up icon"></i> {{$subMenuItem->order}}</td>
+                                <td> &nbsp; <i class="level up icon"></i> <strong>{{$subMenuItem->title}} </strong>
+                                    (رابط
+                                    فرعى)<br/> &nbsp;
+                                    &nbsp; @if(in_array( $subMenuItem->url  , \App\Page::pluck('slug')->toArray() ))
+                                        &nbsp;&nbsp;&nbsp;صفحة :
+                                        <small>{{ $subMenuItem->url }}</small>
+                                    @else
+                                        &nbsp;&nbsp;&nbsp; http://{{$subMenuItem->url}}
+                                    @endif
+                                </td>
                                 <td class="two wide">
                                     <a href="{{'/dashboard/menu/' . $subMenuItem->id}}/edit"
                                        class="ui left blue mini attached edit_form button icon"><i
