@@ -43,7 +43,7 @@
                                     <ul class="list-inline">
                                         <a href="{{ url('/messages/' . $lecture_id . '/' . $value->id) }}"
                                            class="btn btn-primary"> الرسائل </a>
-                                        @if(!$value->student_id == \Auth::user()->id)
+                                        @if(\App\Lecture::find($lecture_id)->statue != 2)
                                         <a href="{{ url('/applicant/accept/' . $lecture_id . '/' . $value->id) }}"
                                            class="btn btn-default"> قبول العرض </a>
                                         @endif
