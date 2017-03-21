@@ -148,7 +148,7 @@
                                     @endif
 
                                     <button type="submit" class="btn btn-primary">
-                                        Register
+                                        تسجيل
                                     </button>
                         </form>
                         </div>

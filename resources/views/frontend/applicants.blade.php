@@ -20,7 +20,7 @@
                 <div class="row">
                     <div class="col-xs-12">
                         <h2>
-                            <a href="#">قائمة بملفات الأعضاء المدرسين</a>
+                            <a href="#">العروض المقدمة</a>
                         </h2>
                     </div>
                 </div>
@@ -32,18 +32,26 @@
                     <div class="col-sm-12 col-xs-12">
 
                         @foreach($applicants as $value)
-                        <div class="col-md-12 col-sm-12 col-xs-12 mix category-3" style="margin: 10px;background-color: #fff;">
-                            <div class="caarss ">
-                                <h3><a href="{{url('profile/' . $value->user->id)}}"> {{@$value->user->fullName()}}</a></h3>
-                                <p>{{@$value->brief}}</p>
-                                <hr>
-                                <ul class="list-inline">
-                                    <a href="{{ url('/messages/' . $lecture_id . '/' . $value->id) }}" class="btn btn-primary"> الرسائل </a>
-                                    <li>{{@$value->hour_price}}$ / ساعة</li>
-                                </ul>
+                            <div class="col-md-12 col-sm-12 col-xs-12 mix category-3"
+                                 style="margin: 10px;background-color: #fff;">
+                                <div class="caarss ">
+                                    <h3>
+                                        <a href="{{url('profile/' . $value->user->id)}}"> {{$value->user->fullName()}}</a>
+                                    </h3>
+                                    <p>{{@$value->brief}}</p>
+                                    <hr>
+                                    <ul class="list-inline">
+                                        <a href="{{ url('/messages/' . $lecture_id . '/' . $value->id) }}"
+                                           class="btn btn-primary"> الرسائل </a>
+                                        @if(!$value->student_id == \Auth::user()->id)
+                                        <a href="{{ url('/applicant/accept/' . $lecture_id . '/' . $value->id) }}"
+                                           class="btn btn-default"> قبول العرض </a>
+                                        @endif
+                                        <li><span style="border: solid #ddd 2px; padding: 2px 10px; ">{{@$value->hour_price}}</span> دولار / ساعة</li>
+                                    </ul>
+                                </div>
                             </div>
-                        </div>
-                    @endforeach
+                        @endforeach
 
                     </div>
 

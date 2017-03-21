@@ -8,7 +8,7 @@
                 <div class="row">
 
                     <div class="col-md-12 col-xs-12">
-                        <a class="send-mas" href="#">ارسال رساله</a>
+                        {{--<a class="send-mas" href="#">ارسال رساله</a>--}}
                     </div>
 
                 </div>
@@ -29,8 +29,8 @@
                         </div>
                         <div class="col-md-6 col-sm-6 col-xs-12">
                             <div class="slid-detils-wright">
-                                <h2> أ / {{ Auth::user()->fullName() }}</h2>
-                                <p> المدينة <span class="detils-p-2">: {{ Auth::user()->city }} </span></p>
+                                <h2> أ / {{ $profile->user->fullName() }}</h2>
+                                <p> المدينة <span class="detils-p-2">: {{ $profile->user->city }} </span></p>
                                 <p> التخصص <span class="detils-p-2">:{{$profile->specialty}}</span></p>
                             </div>
                         </div>

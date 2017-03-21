@@ -138,7 +138,11 @@ Route::group(['middleware' => 'web'], function () {
         // Create New Applicant
         Route::get('/applicant/create/{id}', 'ApplicantController@create');
         Route::post('/applicant', 'ApplicantController@store');
+        Route::get('/applicant/accept/{lecture_id}/{applicant_id}', 'ApplicantController@accept');
+        Route::get('/applicant/finish/{lecture_id}/{applicant_id}', 'ApplicantController@finish');
         Route::get('/applicants/{lecture_id}', 'ApplicantController@allApplicants');
+        Route::get('/messages/{lecture_id}/{applicant_id}', 'MessageController@allMessages');
+        Route::post('/messages', 'MessageController@store');
 
     });
 

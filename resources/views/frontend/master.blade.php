@@ -162,6 +162,7 @@
     </div>
 </header>
 <!-- end header-->
+{{ Html::ul($errors->all(),['class' => 'ui error message']) }}
 
 @yield('content')
 

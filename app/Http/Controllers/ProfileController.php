@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\User;
 use Illuminate\Http\Request;
 use App\Profile;
 
@@ -47,7 +48,6 @@ class ProfileController extends Controller
     public function store(Request $request)
     {
         $rules = array(
-            'sch_exp'     => 'required',
             'gen_exp'     => 'nullable',
             'teach_time'  => 'nullable',
             'teach_hours' => 'max:10',
@@ -106,7 +106,7 @@ class ProfileController extends Controller
      */
     public function show($id)
     {
-        $profile = Profile::findOrFail($id);
+        $profile = User::find($id)->profile;
         return view('frontend.profile', compact('profile'));
     }
 

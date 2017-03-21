@@ -3,7 +3,7 @@
 @section('content')
     <!--slider***************************************-->
     <section class="slider" style="height: 238px;">
-        <div class="slid"  style="height: 238px;     padding: 40px 0px;">
+        <div class="slid" style="height: 238px;     padding: 40px 0px;">
             <div class="container">
                 <div class="row">
                     <div class="col-md-12 col-xs-12">
@@ -21,27 +21,28 @@
 
                         <div class="col-md-6 col-sm-6 col-xs-12">
                             <div class="slid-detils-img">
-                                <img class="slid-detils" src="{{url('/uploads/' . Auth::user()->profile->photo)}}" alt="thumbnail">
+                                <img class="slid-detils" src="{{url('/uploads/' . Auth::user()->profile->photo)}}"
+                                     alt="thumbnail">
                             </div>
                         </div>
                         <div class="col-md-6 col-sm-6 col-xs-12">
                             <div class="slid-detils-wright">
-                                <h2> {{ Auth::user()->fullName() }}</h2>
+                                <h2> أ / {{ Auth::user()->fullName() }}</h2>
                                 <p> المدينة <span class="detils-p-2">: {{ Auth::user()->city }} </span></p>
                             </div>
                         </div>
 
                     </div>
 
-                    @if(Auth::user()->type == 2) <p> الخبرات <span class="detils-p-2">: {{ Auth::user()->gen_exp }}</span></p>
-                    <hr> @endif
+                    <p> الخبرات <span class="detils-p-2">: {{ Auth::user()->gen_exp }}</span></p>
+                    <hr>
                     <p>اللغة<span class="detils-p-2">: {{ Auth::user()->profile->lang }}</span></p>
                     <hr>
-                    @if(Auth::user()->type == 2) <p> التخصص <span class="detils-p-2">: {{ Auth::user()->profile->specialty }}</span></p>
-                    <hr> @endif
+                    <p> التخصص <span class="detils-p-2">: {{ Auth::user()->profile->specialty }}</span></p>
+                    <hr>
                     <p> السن <span class="detils-p-2">: {{ Auth::user()->profile->age }} عام</span></p>
                     <hr>
-                    <p> البريد الإلكترونى <span class="detils-p-2">: {{ Auth::user()->email }} عام</span></p>
+                    <p> البريد الإلكترونى <span class="detils-p-2">: {{ Auth::user()->email }}</span></p>
                     <hr>
                     <p> رقم الجوال <span class="detils-p-2">: {{ Auth::user()->phone }} عام</span></p>
                     <hr>
@@ -53,7 +54,7 @@
                     {{--</textarea>--}}
                     {{--<input type="number"  >--}}
                     {{--<label>--}}
-                        {{--<input type="checkbox"> تحديدالعنصر--}}
+                    {{--<input type="checkbox"> تحديدالعنصر--}}
                     {{--</label>--}}
                     {{--<button>ارسال طلب</button>--}}
                 </div>
@@ -86,63 +87,78 @@
                             <hr>
                         </div>
                         <div class="advertising2-car-2">
-                            <div class="row"  id="Container">
+                            <div class="row" id="Container">
                                 @foreach($enqueries as $enquery)
-                                <div class="col-md-12 col-sm-12 col-xs-12 mix category-1" data-bound="" >
-                                    <div class="caarss ">
+                                    <div class="col-md-12 col-sm-12 col-xs-12 mix category-1" data-bound="">
+                                        <div class="caarss ">
 
-                                        <h3><a href="#">{{$enquery->subject}}</a></h3>
-                                        <p>{{$enquery->comment}}</p>
-                                        <p>الغرض من الطلب : <strong>{{$enquery->target}}</strong> |
-الوقت المفضل : <strong>{{$enquery->PreferedTime($enquery->preferred_time)}}</strong></p>
-                                        <hr>
-                                        <ul class="list-inline">
-                                            @if (!Auth::user()->applicatns->where('lecture_id', $enquery->id)->first() )
-                                                <a href="{{ url('/applicant/create/' . $enquery->id) }}" class="btn btn-primary"> تقدم بعرضك </a>
-                                            @endif
-                                            <li><a href="{{url('/profile'). '/' .$enquery->user->id}}">الطالب : <span>{{$enquery->user->FullName()}}</span></a></li>
-                                            <li>عدد الساعات : <span>{{$enquery->total_hours}} ساعة</span></li>
-                                        </ul>
+                                            <h3><a href="#">{{$enquery->subject}}</a></h3>
+                                            <p>{{$enquery->comment}}</p>
+                                            <p>الغرض من الطلب : <strong>{{$enquery->target}}</strong> |
+                                                الوقت المفضل :
+                                                <strong>{{$enquery->PreferedTime($enquery->preferred_time)}}</strong>
+                                            </p>
+                                            <hr>
+                                            <ul class="list-inline">
+                                                @if (!Auth::user()->applicatns->where('lecture_id', $enquery->id)->first() )
+                                                    <a href="{{ url('/applicant/create/' . $enquery->id) }}"
+                                                       class="btn btn-primary"> تقدم بعرضك </a>
+                                                @endif
+                                                <li><a href="{{url('/profile'). '/' .$enquery->user->id}}">الطالب :
+                                                        <span>{{$enquery->user->FullName()}}</span></a></li>
+                                                <li>عدد الساعات : <span>{{$enquery->total_hours}} ساعة</span></li>
+                                            </ul>
 
+                                        </div>
                                     </div>
-                                </div>
                                 @endforeach
-                                @foreach($progress_enqueries as $enquery)
-                                <div class="col-md-12 col-sm-12 col-xs-12 mix category-2" data-bound="" >
-                                    <div class="caarss ">
+                                @if(isset($progress_enqueries))
+                                    @foreach($progress_enqueries as $enquery)
+                                        <div class="col-md-12 col-sm-12 col-xs-12 mix category-2" data-bound="">
+                                            <div class="caarss ">
 
-                                        <h3><a href="#">{{$enquery->subject}}</a></h3>
-                                        <p>{{$enquery->comment}}</p>
-                                        <p>الغرض من الطلب : <strong>{{$enquery->target}}</strong> |
-الوقت المفضل : <strong>{{$enquery->PreferedTime($enquery->preferred_time)}}</strong></p>
-                                        <hr>
-                                        <ul class="list-inline">
-                                                <a href="{{ url('/messages/' . $enquery->id) }}" class="btn btn-primary"> الرسائل </a>
-                                            <li><a href="{{url('/profile'). '/' .$enquery->user->id}}">الطالب : <span>{{$enquery->user->FullName()}}</span></a></li>
-                                            <li>عدد الساعات : <span>{{$enquery->total_hours}} ساعة</span></li>
-                                        </ul>
+                                                <h3><a href="#">{{$enquery->subject}}</a></h3>
+                                                <p>{{$enquery->comment}}</p>
+                                                <p>الغرض من الطلب : <strong>{{$enquery->target}}</strong> |
+                                                    الوقت المفضل :
+                                                    <strong>{{$enquery->PreferedTime($enquery->preferred_time)}}</strong>
+                                                </p>
+                                                <hr>
+                                                <ul class="list-inline">
+                                                    <a href="{{ url('/messages/' . $enquery->id . '/' . $enquery->applicants->find()->id) }}"
+                                                       class="btn btn-primary"> الرسائل </a>
+                                                    <li><a href="{{url('/profile'). '/' .$enquery->user->id}}">الطالب :
+                                                            <span>{{$enquery->user->FullName()}}</span></a></li>
+                                                    <li>عدد الساعات : <span>{{$enquery->total_hours}} ساعة</span></li>
+                                                </ul>
 
-                                    </div>
-                                </div>
-                                @endforeach
-                                @foreach($done_enqueries as $enquery)
-                                <div class="col-md-12 col-sm-12 col-xs-12 mix category-3" data-bound="" >
-                                    <div class="caarss ">
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                @endif
+                                @if(isset($done_enqueries))
 
-                                        <h3><a href="#">{{$enquery->subject}}</a></h3>
-                                        <p>{{$enquery->comment}}</p>
-                                        <p>الغرض من الطلب : <strong>{{$enquery->target}}</strong> |
-الوقت المفضل : <strong>{{$enquery->PreferedTime($enquery->preferred_time)}}</strong></p>
-                                        <hr>
-                                        <ul class="list-inline">
-                                                <a href="{{ url('/messages/' . $enquery->id) }}" class="btn btn-primary"> تقدم بعرضك </a>
-                                            <li><a href="{{url('/profile'). '/' .$enquery->user->id}}">الطالب : <span>{{$enquery->user->FullName()}}</span></a></li>
-                                            <li>عدد الساعات : <span>{{$enquery->total_hours}} ساعة</span></li>
-                                        </ul>
+                                    @foreach($done_enqueries as $enquery)
+                                        <div class="col-md-12 col-sm-12 col-xs-12 mix category-3" data-bound="">
+                                            <div class="caarss ">
 
-                                    </div>
-                                </div>
-                                @endforeach
+                                                <h3><a href="#">{{$enquery->subject}}</a></h3>
+                                                <p>{{$enquery->comment}}</p>
+                                                <p>الغرض من الطلب : <strong>{{$enquery->target}}</strong> |
+                                                    الوقت المفضل :
+                                                    <strong>{{$enquery->PreferedTime($enquery->preferred_time)}}</strong>
+                                                </p>
+                                                <hr>
+                                                <ul class="list-inline">
+                                                    <li><a href="{{url('/profile'). '/' .$enquery->user->id}}">الطالب :
+                                                            <span>{{$enquery->user->FullName()}}</span></a></li>
+                                                    <li>عدد الساعات : <span>{{$enquery->total_hours}} ساعة</span></li>
+                                                </ul>
+
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                @endif
                             </div>
                         </div>
 
@@ -172,7 +188,10 @@
                             </span>
                         </div>
                         <div class="clint-right">
-                            <p>هناك حقيقة مثبتة منذ زمن طويل وهي أن المحتوى المقروء لصفحة ما سيلهي القارئ عن التركيز على الشكل الخارجي للنص أو شكل توضع الفقرات في الصفحة التي يقرأها. ولذلك يتم استخدام طريقة لوريم إيبسوم  أو شكل توضع الفقرات في الصفحة التي يقرأها. ولذلك يتم استخدام طريقة لوريم إيبسوم ....</p>
+                            <p>هناك حقيقة مثبتة منذ زمن طويل وهي أن المحتوى المقروء لصفحة ما سيلهي القارئ عن التركيز على
+                                الشكل الخارجي للنص أو شكل توضع الفقرات في الصفحة التي يقرأها. ولذلك يتم استخدام طريقة
+                                لوريم إيبسوم أو شكل توضع الفقرات في الصفحة التي يقرأها. ولذلك يتم استخدام طريقة لوريم
+                                إيبسوم ....</p>
                             <i class="fa fa-comments" aria-hidden="true"></i>
                         </div>
                     </div>
@@ -188,7 +207,10 @@
                             </span>
                         </div>
                         <div class="clint-right">
-                            <p>هناك حقيقة مثبتة منذ زمن طويل وهي أن المحتوى المقروء لصفحة ما سيلهي القارئ عن التركيز على الشكل الخارجي للنص أو شكل توضع الفقرات في الصفحة التي يقرأها. ولذلك يتم استخدام طريقة لوريم إيبسوم  أو شكل توضع الفقرات في الصفحة التي يقرأها. ولذلك يتم استخدام طريقة لوريم إيبسوم ....</p>
+                            <p>هناك حقيقة مثبتة منذ زمن طويل وهي أن المحتوى المقروء لصفحة ما سيلهي القارئ عن التركيز على
+                                الشكل الخارجي للنص أو شكل توضع الفقرات في الصفحة التي يقرأها. ولذلك يتم استخدام طريقة
+                                لوريم إيبسوم أو شكل توضع الفقرات في الصفحة التي يقرأها. ولذلك يتم استخدام طريقة لوريم
+                                إيبسوم ....</p>
                             <i class="fa fa-comments" aria-hidden="true"></i>
                         </div>
                     </div>
@@ -204,7 +226,10 @@
                             </span>
                         </div>
                         <div class="clint-right">
-                            <p>هناك حقيقة مثبتة منذ زمن طويل وهي أن المحتوى المقروء لصفحة ما سيلهي القارئ عن التركيز على الشكل الخارجي للنص أو شكل توضع الفقرات في الصفحة التي يقرأها. ولذلك يتم استخدام طريقة لوريم إيبسوم  أو شكل توضع الفقرات في الصفحة التي يقرأها. ولذلك يتم استخدام طريقة لوريم إيبسوم ....</p>
+                            <p>هناك حقيقة مثبتة منذ زمن طويل وهي أن المحتوى المقروء لصفحة ما سيلهي القارئ عن التركيز على
+                                الشكل الخارجي للنص أو شكل توضع الفقرات في الصفحة التي يقرأها. ولذلك يتم استخدام طريقة
+                                لوريم إيبسوم أو شكل توضع الفقرات في الصفحة التي يقرأها. ولذلك يتم استخدام طريقة لوريم
+                                إيبسوم ....</p>
                             <i class="fa fa-comments" aria-hidden="true"></i>
                         </div>
                     </div>
@@ -220,7 +245,10 @@
                             </span>
                         </div>
                         <div class="clint-right">
-                            <p>هناك حقيقة مثبتة منذ زمن طويل وهي أن المحتوى المقروء لصفحة ما سيلهي القارئ عن التركيز على الشكل الخارجي للنص أو شكل توضع الفقرات في الصفحة التي يقرأها. ولذلك يتم استخدام طريقة لوريم إيبسوم  أو شكل توضع الفقرات في الصفحة التي يقرأها. ولذلك يتم استخدام طريقة لوريم إيبسوم ....</p>
+                            <p>هناك حقيقة مثبتة منذ زمن طويل وهي أن المحتوى المقروء لصفحة ما سيلهي القارئ عن التركيز على
+                                الشكل الخارجي للنص أو شكل توضع الفقرات في الصفحة التي يقرأها. ولذلك يتم استخدام طريقة
+                                لوريم إيبسوم أو شكل توضع الفقرات في الصفحة التي يقرأها. ولذلك يتم استخدام طريقة لوريم
+                                إيبسوم ....</p>
                             <i class="fa fa-comments" aria-hidden="true"></i>
                         </div>
                     </div>
@@ -236,7 +264,10 @@
                             </span>
                         </div>
                         <div class="clint-right">
-                            <p>هناك حقيقة مثبتة منذ زمن طويل وهي أن المحتوى المقروء لصفحة ما سيلهي القارئ عن التركيز على الشكل الخارجي للنص أو شكل توضع الفقرات في الصفحة التي يقرأها. ولذلك يتم استخدام طريقة لوريم إيبسوم  أو شكل توضع الفقرات في الصفحة التي يقرأها. ولذلك يتم استخدام طريقة لوريم إيبسوم ....</p>
+                            <p>هناك حقيقة مثبتة منذ زمن طويل وهي أن المحتوى المقروء لصفحة ما سيلهي القارئ عن التركيز على
+                                الشكل الخارجي للنص أو شكل توضع الفقرات في الصفحة التي يقرأها. ولذلك يتم استخدام طريقة
+                                لوريم إيبسوم أو شكل توضع الفقرات في الصفحة التي يقرأها. ولذلك يتم استخدام طريقة لوريم
+                                إيبسوم ....</p>
                             <i class="fa fa-comments" aria-hidden="true"></i>
                         </div>
                     </div>
@@ -252,7 +283,10 @@
                             </span>
                         </div>
                         <div class="clint-right">
-                            <p>هناك حقيقة مثبتة منذ زمن طويل وهي أن المحتوى المقروء لصفحة ما سيلهي القارئ عن التركيز على الشكل الخارجي للنص أو شكل توضع الفقرات في الصفحة التي يقرأها. ولذلك يتم استخدام طريقة لوريم إيبسوم  أو شكل توضع الفقرات في الصفحة التي يقرأها. ولذلك يتم استخدام طريقة لوريم إيبسوم ....</p>
+                            <p>هناك حقيقة مثبتة منذ زمن طويل وهي أن المحتوى المقروء لصفحة ما سيلهي القارئ عن التركيز على
+                                الشكل الخارجي للنص أو شكل توضع الفقرات في الصفحة التي يقرأها. ولذلك يتم استخدام طريقة
+                                لوريم إيبسوم أو شكل توضع الفقرات في الصفحة التي يقرأها. ولذلك يتم استخدام طريقة لوريم
+                                إيبسوم ....</p>
                             <i class="fa fa-comments" aria-hidden="true"></i>
                         </div>
                     </div>

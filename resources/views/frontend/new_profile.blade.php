@@ -78,13 +78,14 @@
                                 </select>
                                 <input type="text" name="gen_exp" placeholder="سنوات الخبره فى مجال تخصصك">
                                 <input type="text" name="sch_exp" placeholder="سنوات العمل فى مجال التدريس">
-                                <input type="text" name="hour_rate" placeholder="سعر الساعة">
-                                <input type="text" name="teach_time" placeholder="عدد الساعات المناسبة للتدريس من خلال موقعنا">
+                                <input type="text" name="hour_rate" placeholder="سعر الساعة بالدولار">
+                                <input type="text" name="teach_time" placeholder="عدد الساعات المناسبة للتدريس فى اليوم من خلال موقعنا">
                                 <select name="teach_hours" id="">
                                     <option selected disabled>مواعيد التدريس المناسبة</option>
                                     <option value="1">صباحا من 8ص وحتى 12م</option>
                                     <option value="2">منتصف اليوم من 12م وحتى 6م</option>
                                     <option value="3">مساءا من 6م وحتى 10م</option>
+                                    <option value="4">فى أى وقت فى اليوم</option>
                                 </select>
                             @elseif(Auth::user()->type == 3)
                                 <select name="level" id="">

@@ -43,7 +43,7 @@
                     <hr>
                     <p> البريد الإلكترونى <span class="detils-p-2">: {{ Auth::user()->email }} عام</span></p>
                     <hr>
-                    <p> رقم الجوال <span class="detils-p-2">: {{ Auth::user()->phone }} عام</span></p>
+                    <p> رقم الجوال <span class="detils-p-2">: {{ Auth::user()->phone }}</span></p>
                     <hr>
                     {{--<h2 class="dede-h2">رسالة سريعة</h2>--}}
                     {{--<input type="text" placeholder="الاسم">--}}
@@ -74,8 +74,7 @@
                                     </div>
                                     <div class="col-md-4 col-sm-2 col-xs-12 ">
                                         <button class="bot-3 filter " data-filter=".category-3">
-                                            <i class="fa fa-check-circle" aria-hidden="true"></i>
-                                            تم تنفيذها
+                                            <i class="fa fa-check-circle" aria-hidden="true"></i> تم
                                         </button>
                                     </div>
 
@@ -100,9 +99,46 @@
                                                        class="btn btn-danger"> X </a>
 
                                                     <a href="{{ url('/applicants/' . $enquery->id) }}"
-                                                       class="btn btn-primary"> العروض المقدمة </a>
+                                                       class="btn btn-primary"> العروض المقدمة ({{ count(\App\Applicant::where('lecture_id',$enquery->id)->get()) }})</a>
 
                                                 <li>عدد الساعات : <span>{{$enquery->total_hours}} ساعة</span></li>
+                                            </ul>
+
+                                        </div>
+                                    </div>
+                                @endforeach
+                                @foreach($applicants as $applicant)
+                                    <div class="col-md-12 col-sm-12 col-xs-12 mix category-2" data-bound="">
+                                        <div class="caarss ">
+
+                                            <h3><a href="#">{{$applicant->lecture->subject}}</a></h3>
+                                            <p>{{$applicant->brief}}</p>
+                                            <p>الأستاذ /  {{$applicant->user->FullName()}}</p>
+                                            <hr>
+                                            <ul class="list-inline">
+                                                    <a href="{{ url('/applicant/finish/' . $applicant->lecture_id . '/' . $applicant->id) }}"
+                                                       class="btn btn-default"> إنتهى الدرس </a>
+                                                    <a href="{{ url('/messages/' . $applicant->lecture_id . '/' . $applicant->id) }}"
+                                                   class="btn btn-primary"> الرسائل </a>
+
+                                                <li>عدد الساعات : <span>{{$applicant->total_hours}} ساعة</span></li>
+                                            </ul>
+
+                                        </div>
+                                    </div>
+                                @endforeach
+                                @foreach($done_applicants as $applicant)
+                                    <div class="col-md-12 col-sm-12 col-xs-12 mix category-3" data-bound="">
+                                        <div class="caarss ">
+
+                                            <h3><a href="#">{{$applicant->lecture->subject}}</a></h3>
+                                            <p>{{$applicant->brief}}</p>
+                                            <p>الأستاذ /  {{$applicant->user->FullName()}}</p>
+                                            <hr>
+                                            <ul class="list-inline">
+                                                <li>عدد الساعات : <span>{{$applicant->lecture->total_hours}} ساعة</span></li>
+                                                <li>سعر الساعة : <span>${{$applicant->hour_price}} / ساعة</span></li>
+                                                <li>إجمالى السعر : <span>{{$applicant->lecture->total_hours * $applicant->hour_price }} دولار</span></li>
                                             </ul>
 
                                         </div>

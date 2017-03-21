@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Applicant;
 use App\Lecture;
 use Auth;
 use Illuminate\Http\Request;
@@ -27,14 +28,22 @@ class HomeController extends Controller
     {
         if (Auth::user()->type == 3) {
             $enqueries = Auth::user()->lectures;
-            return view('frontend.student', compact('enqueries'));
-        } elseif (Auth::user()->type == 2) {
-            $enqueries = Lecture::where('material', \Auth::user()->profile->specialty)->get();
-            $progress_enqueries = Lecture::where('teacher_id', Auth::user()->id)->get();
-            $done_enqueries = Lecture::where('teacher_id', Auth::user()->id)
+            $applicants = Applicant::where('student_id', Auth::user()->id)
                 ->where('statue', 3)
                 ->get();
-            return view('frontend.teacher', compact('enqueries','progress_enqueries','done_enqueries'));
+            $done_applicants = Applicant::where('student_id', Auth::user()->id)
+                ->where('statue', 3)
+                ->get();
+            return view('frontend.student', compact('enqueries', 'applicants', 'done_applicants'));
+        } elseif (Auth::user()->type == 2) {
+            $enqueries = Lecture::where('material', \Auth::user()->profile->specialty)->get();
+            if (Auth::user()->applicants) {
+                $progress_enqueries = Auth::user()->applicants->where('statue', 2)->get();
+                $done_enqueries = Lecture::where('teacher_id', Auth::user()->id)
+                    ->where('statue', 3)
+                    ->get();
+            }
+            return view('frontend.teacher', compact('enqueries', 'progress_enqueries', 'done_enqueries'));
         }
     }
 }

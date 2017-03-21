@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Applicant;
 use Illuminate\Http\Request;
 use App\Lecture;
 use Illuminate\Support\Facades\Cache;
@@ -109,6 +110,8 @@ class LectureController extends Controller
         }
     }
 
+
+
     /**
      * Display the specified resource.
      *
@@ -167,6 +170,8 @@ class LectureController extends Controller
      */
     public function delete($id){
         if(Lecture::find($id)->user->id == \Auth::user()->id){
+            $applicants = Applicant::where('lecture_id', Lecture::find($id)->id);
+            $applicants->delete();
             Lecture::destroy($id);
             \Session::flash('message', 'تم الحذف');
             return redirect()->back();
