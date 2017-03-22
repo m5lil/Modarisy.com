@@ -63,8 +63,7 @@
             </div>
 
             <div class="actions">
-                <button type="submit" class="ui positive right labeled icon button">
-                    حفظ
+                <button type="submit" class="ui positive right labeled icon button">حفظ
                     <i class="checkmark icon"></i>
                 </button>
             </div>
@@ -155,7 +154,7 @@
         $(function () {
             $.ajaxSetup({
                 headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf"]').attr('content')
+                    'X-CSRF-TOKEN': $('meta[name="csrf"]').attr('value')
                 }
             })
             $("#sortable").sortable({
@@ -172,6 +171,7 @@
                 'handle': '.handle',
                 update: function (event, ui) {
                     $.post('{{ url('/dashboard/menu/order') }}', $(this).sortable('serialize'), function (data) {
+                        console.log(data);
                         if (!data.success) {
                             alert('Whoops, something went wrong :/');
                         }

@@ -46,7 +46,6 @@ Route::group(['prefix' => 'dashboard', 'middleware' => 'admin'], function () {
     Route::resource('/menu', 'MenuController');
     Route::get('/menu/{id}/delete', 'MenuController@destroy');
     Route::post('/menu/order', function () {
-//        dd(Input::get('item'));
         if (Input::has('item')) {
             $i = 0;
             foreach (Input::get('item') as $id) {

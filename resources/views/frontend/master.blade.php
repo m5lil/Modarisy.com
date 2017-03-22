@@ -107,7 +107,7 @@
 
                                 @if( $menuItem->parent_id == 0 )
                                     <li class= "qw {{ $menuItem->url ? '' : "dropdown menu-item-has-children" }}">
-                                        <a href="{{ $menuItem->children->isEmpty() ? in_array($menuItem->url,\App\Page::pluck('slug')->toArray()) ? $menuItem->url : 'http://'.$menuItem->url : "#" }}" {{ $menuItem->children->isEmpty() ? '' : "class=\"dropdown-toggle\" data-toggle=dropdown role=button aria-expanded=false" }}>{{ $menuItem->title }}</a>
+                                        <a href="{{ $menuItem->children->isEmpty() ? in_array($menuItem->url,\App\Page::pluck('slug')->toArray()) ? url('/'.$menuItem->url) : 'http://'.$menuItem->url : "#" }}" {{ $menuItem->children->isEmpty() ? '' : "class=\"dropdown-toggle\" data-toggle=dropdown role=button aria-expanded=false" }}>{{ $menuItem->title }}</a>
                                 @endif
 
                                 @if( ! $menuItem->children->isEmpty() )
@@ -129,14 +129,14 @@
                     <div class="segin wow fadeInDown" data-wow-duration="2s">
                     <div class="bottom-headre">
                         @if (Auth::guest())
-                            <button onclick="location.href='{{url('/')}}/be_member';" class="but-1 hvr-float-shadow">
+                            <button onclick="location.href='{{url('/be_member')}}';" class="but-1 hvr-float-shadow">
                                 اشتراك
                             </button>
-                            <button onclick="location.href='{{url('/')}}/login';" class="but-2 hvr-float-shadow">دخول
+                            <button onclick="location.href='{{url('/login')}}';" class="but-2 hvr-float-shadow">دخول
                             </button>
                         @else
                             @if(!Auth::user()->profile)
-                                <button onclick="location.href='{{url('/')}}/profile/create';"
+                                <button onclick="location.href='{{url('/profile/create')}}';"
                                         class="but-1 hvr-float-shadow">أكمل ملفك
                                 </button>
                             @else
@@ -173,8 +173,9 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-3 col-sm-6 col-xs-12">
-                    <p class="first"> القائمة الرئيسية </p>
+                    <p class="first"> القائمة البريدية </p>
                     <hr>
+                    <div class="form">
                     {{Form::open(array('action' => 'SubscribersController@Submit','method' => 'post'))}}
                     {{Form::text('name',null,array('placeholder'=>'Type your Name here'))}}
                     {{Form::text('email',null,array('placeholder'=>'Type your E-mail address here'))}}
@@ -182,7 +183,7 @@
 
                     {{Form::close()}}
                     <div class="content"></div>
-
+                    </div>
 
                 </div>
 
@@ -190,7 +191,7 @@
                     <p class="first"> تابعنا على الفيس </p>
                     <hr>
                     <div class="fot-im">
-                        <img src="images/footer-soshil.png">
+                        <img src="{{ url('/images/footer-soshil.png')}}">
                     </div>
                 </div>
 
@@ -255,7 +256,7 @@
                 </div>
                 <div class="col-md-6 col-sm-6 col-xs-12">
                     <div class="footer-bottom-img">
-                        <img src="images/footer-log-bottom.png">
+                        <img src="{{ url('/images/footer-log-bottom.png')}}">
                     </div>
                 </div>
             </div>

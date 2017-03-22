@@ -59,7 +59,7 @@
             <div class="container">
                 <div class="heit-title text-center">
                     <p>كيف تعمل</p>
-                    <img src="images/after.png">
+                    <img src="{{url('images/after.png')}}">
                 </div>
                 <div class="row">
                     <div class="col-md-4 col-sm-6 col-xs-12  wow fadeInUp" data-wow-duration="2s">
@@ -200,14 +200,14 @@
         <div class="owl-slid">
             <div class="owl-slid-hite text-center">
                 <p>كيف تعمل</p>
-                <img src="images/after.png">
+                <img src="{{url('images/after.png')}}">
             </div>
             <div class="container">
                 <div class="owl-carousel">
                     <div class="item  wow fadeInUp" data-wow-duration="2s">
                         <div class="Clients">
                                 <span class="Client-img">
-                                    <img src="images/clint.png">
+                                    <img src="{{url('images/clint.png')}}">
                                 </span>
                             <span class="Client-driv">
                                     <span class="name">أحمد الالفى</span>
@@ -226,7 +226,7 @@
                     <div class="item  wow fadeInUp" data-wow-duration="2s">
                         <div class="Clients">
                                 <span class="Client-img">
-                                    <img src="images/clint.png">
+                                    <img src="{{url('images/clint.png')}}">
                                 </span>
                             <span class="Client-driv">
                                     <span class="name">أحمد الالفى</span>
@@ -245,7 +245,7 @@
                     <div class="item wow bounceIn" data-wow-duration="2s">
                         <div class="Clients">
                                 <span class="Client-img">
-                                    <img src="images/clint.png">
+                                    <img src="{{url('images/clint.png')}}">
                                 </span>
                             <span class="Client-driv">
                                     <span class="name">أحمد الالفى</span>
@@ -264,7 +264,7 @@
                     <div class="item wow bounceIn" data-wow-duration="2s">
                         <div class="Clients">
                                 <span class="Client-img">
-                                    <img src="images/clint.png">
+                                    <img src="{{url('images/clint.png')}}">
                                 </span>
                             <span class="Client-driv">
                                     <span class="name">أحمد الالفى</span>
@@ -283,7 +283,7 @@
                     <div class="item wow bounceIn" data-wow-duration="2s">
                         <div class="Clients">
                                 <span class="Client-img">
-                                    <img src="images/clint.png">
+                                    <img src="{{url('images/clint.png')}}">
                                 </span>
                             <span class="Client-driv">
                                     <span class="name">أحمد الالفى</span>
@@ -302,7 +302,7 @@
                     <div class="item wow bounceIn" data-wow-duration="2s">
                         <div class="Clients">
                                 <span class="Client-img">
-                                    <img src="images/clint.png">
+                                    <img src="{{url('images/clint.png')}}">
                                 </span>
                             <span class="Client-driv">
                                     <span class="name">أحمد الالفى</span>
