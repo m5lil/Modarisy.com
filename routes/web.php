@@ -66,6 +66,7 @@ Route::group(['prefix' => 'dashboard', 'middleware' => 'admin'], function () {
 
     // ------------------------------ Abilities ---------------------------- //
     Route::resource('/abilities', 'AbilityController');
+    Route::get('/abilities/{id}/delete', 'AbilityController@destroy');
 
     // -------------------------------- Inbox ------------------------------ //
     Route::resource('/inbox', 'InboxController');
@@ -117,11 +118,16 @@ Route::group(['middleware' => 'web'], function () {
         return view('index');
     });
 
+
+
     Route::get('/be_member', function () {
         return view('frontend.be_member');
     });
 
     Route::post('/search', 'HomeController@filter');
+
+    Route::post('/contact', 'InboxController@contact');
+    Route::get('/contact/', 'InboxController@create');
 
     Route::resource('/profile', 'ProfileController');
 

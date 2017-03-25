@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use Dotenv\Validator;
 use Illuminate\Http\Request;
 use App\Inbox;
+use Illuminate\Support\Facades\Auth;
 
 
 class InboxController extends Controller
@@ -28,7 +30,7 @@ class InboxController extends Controller
      */
     public function create()
     {
-        //
+        return view('frontend.contactus');
     }
 
     /**
@@ -39,7 +41,38 @@ class InboxController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validator = \Validator::make($request->all(), [
+            'body' => 'required',
+            'subject' => 'required',
+        ]);
+        if ($validator->fails()) {
+            return \Redirect::to('/contact')
+                ->withErrors($validator);
+        } else {
+            $msg = New Inbox();
+            if (Auth::check()){
+                $msg->user_id = Auth::user()->id;
+                $msg->name = Auth::user()->FullName();
+                $msg->email = Auth::user()->email;
+                $msg->phone = Auth::user()->phone;
+                $msg->subject = $request->subject;
+                $msg->body = $request->body;
+                $msg->read = 0;
+
+            }else{
+                $msg->name = $request->name;
+                $msg->email = $request->email;
+                $msg->phone = $request->phone;
+                $msg->subject = $request->subject;
+                $msg->read = 0;
+                $msg->body = $request->body;
+            }
+            $msg->save();
+            // redirect
+            \Session::flash('message', 'تم إرسال رسالتك بنجاح!');
+            return \Redirect::to('/');
+        }
+
     }
 
     /**

@@ -9,7 +9,7 @@ class Inbox extends Model
     protected $fillable = [
           'name',
           'email',
-          'from_user',
+          'to_user',
           'user_id',
           'phone',
           'subject',

@@ -84,7 +84,7 @@
                         </div>
                         <div class="advertising2-car-2">
                             <div class="row" id="Container">
-                                @foreach($enqueries as $enquery)
+                                @foreach($enquiries as $enquery)
                                     <div class="col-md-12 col-sm-12 col-xs-12 mix category-1" data-bound="">
                                         <div class="caarss ">
 

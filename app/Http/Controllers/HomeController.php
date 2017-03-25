@@ -29,7 +29,7 @@ class HomeController extends Controller
     public function index()
     {
         if (Auth::user()->type == 3) {
-            $enqueries = Auth::user()->enquiries()
+            $enquiries = Auth::user()->enquiries()
                 ->where('statue', 1)
                 ->get();
             $applicants = Applicant::where('student_id', Auth::user()->id)
@@ -38,20 +38,20 @@ class HomeController extends Controller
             $done_applicants = Applicant::where('student_id', Auth::user()->id)
                 ->where('statue', 3)
                 ->get();
-            return view('frontend.student', compact('enqueries', 'applicants', 'done_applicants'));
+            return view('frontend.student', compact('enquiries', 'applicants', 'done_applicants'));
         } elseif (Auth::user()->type == 2) {
-            $enqueries = Enquiry::where('material', \Auth::user()->profile->specialty)
+            $enquiries = Enquiry::where('material', \Auth::user()->profile->specialty)
                 ->where('statue', 1)
                 ->get();
             if (Auth::user()->applicatns) {
-                $progress_enqueries = Enquiry::where('teacher_id', Auth::user()->id)
+                $progress_enquiries = Enquiry::where('teacher_id', Auth::user()->id)
                     ->where('statue', 2)
                     ->get();;
-                $done_enqueries = Enquiry::where('teacher_id', Auth::user()->id)
+                $done_enquiries = Enquiry::where('teacher_id', Auth::user()->id)
                     ->where('statue', 3)
                     ->get();
             }
-            return view('frontend.teacher', compact('enqueries', 'progress_enqueries', 'done_enqueries'));
+            return view('frontend.teacher', compact('enquiries', 'progress_enquiries', 'done_enquiries'));
         }
     }
 
@@ -67,17 +67,20 @@ class HomeController extends Controller
         }
 
         if ($request->has('lat')) {
-            if ($request->input('distance')){
+            if ($request->input('distance')) {
                 $distance = $request->input('distance');
-            }else{
+            } else {
                 $distance = 100;
             }
             $results = DB::select(DB::raw('SELECT id, ( 6371 * acos( cos( radians(' . $request->input('lat') . ') ) * cos( radians( lat ) ) * cos( radians( lng ) - radians(' . $request->input('lng') . ') ) + sin( radians(' . $request->input('lat') . ') ) * sin( radians(lat) ) ) ) AS distance FROM enquiries HAVING distance < ' . $distance . ' ORDER BY distance'));
 //            dd(array_pluck($results, 'id'));
         }
 
-
-        $enquiries = $enquiries->find(array_pluck($results, 'id'));
+        if (isset($results)) {
+            $enquiries = $enquiries->find(array_pluck($results, 'id'));
+        }else{
+            $enquiries = $enquiries->all();
+        }
 
         return view('frontend.enquiries', compact('enquiries'));
     }

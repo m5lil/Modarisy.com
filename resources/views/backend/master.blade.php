@@ -41,16 +41,16 @@
     </div>
     <div class="content">
         <a href="/dashboard/users" class="item">
-            <i class="file icon"></i> الأعضاء
+            <i class="hashtag icon"></i> الأعضاء
         </a>
         <a href="/dashboard/abilities" class="item">
-            <i class="file icon"></i> الصلاحيات
+            <i class="hashtag icon"></i> الصلاحيات
         </a>
         <a href="/dashboard/users/members/students" class="item">
-            <i class="file icon"></i> التلاميذ
+            <i class="hashtag icon"></i> التلاميذ
         </a>
         <a href="/dashboard/users/members/teachers" class="item">
-            <i class="file icon"></i> المدرسين
+            <i class="hashtag icon"></i> المدرسين
         </a>
     </div>
 
@@ -60,19 +60,19 @@
     </div>
     <div class="content">
         <a href="/dashboard/enquiries" class="item">
-            <i class="file icon"></i>الطلبات
+            <i class="hashtag icon"></i>الطلبات
         </a>
         <a href="/dashboard/enquiries/statue/suspend" class="item">
-            <i class="file icon"></i>غير مفعلة
+            <i class="hashtag icon"></i>غير مفعلة
         </a>
         <a href="/dashboard/enquiries/statue/active" class="item">
-            <i class="file icon"></i>الطلبات الجديدة
+            <i class="hashtag icon"></i>الطلبات الجديدة
         </a>
         <a href="/dashboard/enquiries/statue/in-progress" class="item">
-            <i class="file icon"></i>جارى العمل عليها
+            <i class="hashtag icon"></i>جارى العمل عليها
         </a>
         <a href="/dashboard/enquiries/statue/done" class="item">
-            <i class="file icon"></i>تم إنهائها
+            <i class="hashtag icon"></i>تم إنهائها
         </a>
     </div>
 
@@ -81,19 +81,19 @@
     </div>
     <div class="content">
         <a href="/dashboard/applicants" class="item">
-            <i class="file icon"></i> العروض
+            <i class="hashtag icon"></i> العروض
         </a>
         <a href="/dashboard/applicants/statue/suspend" class="item">
-            <i class="file icon"></i> غير مفعلة
+            <i class="hashtag icon"></i> غير مفعلة
         </a>
         <a href="/dashboard/applicants/statue/active" class="item">
-            <i class="file icon"></i> الطلبات الجديدة
+            <i class="hashtag icon"></i> الطلبات الجديدة
         </a>
         <a href="/dashboard/applicants/statue/in-progress" class="item">
-            <i class="file icon"></i>  جارى العمل عليها
+            <i class="hashtag icon"></i>  جارى العمل عليها
         </a>
         <a href="/dashboard/applicants/statue/done" class="item">
-            <i class="file icon"></i> تم إنهائها
+            <i class="hashtag icon"></i> تم إنهائها
         </a>
     </div>
     <div class="ui item title">
@@ -101,10 +101,10 @@
     </div>
     <div class="content">
         <a href="/dashboard/blog/categories" class="item">
-            <i class="file icon"></i> الأقسام
+            <i class="hashtag icon"></i> الأقسام
         </a>
         <a href="/dashboard/blog/posts" class="item">
-            <i class="file icon"></i> المقالات
+            <i class="hashtag icon"></i> المقالات
         </a>
     </div>
 
@@ -116,13 +116,13 @@
                 <div class="ui basic segment">
                     <div class="ui secondary pointing labeled icon menu">
                         <div class="ui dropdown item border1">
-                            <i class="inbox icon blue"></i> لوحة التحكم
+                            <i class="home icon blue"></i> لوحة التحكم
                             <div class="menu">
                                 <a href="/dashboard/" class="item">
-                                    <i class="user icon blue"></i> الرئيسية
+                                    <i class="home icon blue"></i> الرئيسية
                                 </a>
                                 <a href="/dashboard/settings" class="item">
-                                    <i class="user icon blue"></i> إعدادت الموقع
+                                    <i class="options icon blue"></i> إعدادت الموقع
                                 </a>
                             </div>
                         </div>
@@ -150,7 +150,7 @@
                             </div>
                         </div>
                         <a href="/dashboard/inbox" class="item border1">
-                            <i class="inbox icon
+                            <i class="mail icon
                                     @if (App\Inbox::where('read', 0)->count() > 0)
                                     teal">
                                 <div class="floating ui circular teal label">{{App\Inbox::where('read', 0)->count()}}</div>
@@ -159,30 +159,77 @@
                                 @endif
                             </i> البريد الوارد
                         </a>
-                        <a href="/dashboard/bar" class="item border1">
-                            <i class="area chart icon blue"></i> تقارير
-                        </a>
+                        <div class="ui dropdown item border1">
+                            <i class="inbox icon blue"></i> العروض
+                            <div class="menu">
+                                <a href="/dashboard/applicants" class="item">
+                                    <i class="hashtag icon"></i> العروض
+                                </a>
+                                <a href="/dashboard/applicants/statue/suspend" class="item">
+                                    <i class="hashtag icon"></i> غير مفعلة
+                                </a>
+                                <a href="/dashboard/applicants/statue/active" class="item">
+                                    <i class="hashtag icon"></i> الطلبات الجديدة
+                                </a>
+                                <a href="/dashboard/applicants/statue/in-progress" class="item">
+                                    <i class="hashtag icon"></i>  جارى العمل عليها
+                                </a>
+                                <a href="/dashboard/applicants/statue/done" class="item">
+                                    <i class="hashtag icon"></i> تم إنهائها
+                                </a>
+                            </div>
+                        </div>
+                        <div class="ui dropdown item border1">
+                            <i class="wpforms icon blue"></i> الطلبات
+                            <div class="menu">
+                                <a href="/dashboard/enquiries" class="item">
+                                    <i class="hashtag icon"></i> العروض
+                                </a>
+                                <a href="/dashboard/enquiries/statue/suspend" class="item">
+                                    <i class="hashtag icon"></i> غير مفعلة
+                                </a>
+                                <a href="/dashboard/enquiries/statue/active" class="item">
+                                    <i class="hashtag icon"></i> الطلبات الجديدة
+                                </a>
+                                <a href="/dashboard/enquiries/statue/in-progress" class="item">
+                                    <i class="hashtag icon"></i>  جارى العمل عليها
+                                </a>
+                                <a href="/dashboard/enquiries/statue/done" class="item">
+                                    <i class="hashtag icon"></i> تم إنهائها
+                                </a>
+                            </div>
+                        </div>
+                        <div class="ui dropdown item border1">
+                            <i class="wordpress icon blue"></i> المدونة
+                            <div class="menu">
+                                <a href="/dashboard/blog/categories" class="item">
+                                    <i class="folder open icon"></i> الأقسام
+                                </a>
+                                <a href="/dashboard/blog/posts" class="item">
+                                    <i class="file text outline icon"></i> المقالات
+                                </a>
+                            </div>
+                        </div>
                         <a href="/dashboard/subscribers" class="item border1">
-                            <i class="area chart icon blue"></i> القائمة البريدية
+                            <i class="mail square icon blue"></i> القائمة البريدية
                         </a>
                         <div class="right menu">
                             <div class="ui inline dropdown item">
                                 <div class="text">
-                                    <i class="mail icon"></i> Admin
+                                    <i class="user icon"></i> {{Auth::user()->first_name}}
                                     <i class="dropdown icon"></i>
                                 </div>
                                 <div class="menu">
                                     @if (Auth::check())
                                         <a href="{{'/dashboard/users/' . Auth::user()->id}}/edit" class="item">
-                                            <i class="file icon"></i> الملف الشخصى
+                                            <i class="hashtag icon"></i> الملف الشخصى
                                         </a>
-
                                     @endif
                                     <div class="item">
-                                        <i class="file icon"></i> تغير كلمة المرور
+                                        <i class="hashtag icon"></i> تغير كلمة المرور
                                     </div>
                                     <div class="item">
-                                        <i class="file icon"></i> تسجيل خروج
+                                        <i class="hashtag icon"></i> تسجيل خروج
                                     </div>
                                 </div>
                             </div>

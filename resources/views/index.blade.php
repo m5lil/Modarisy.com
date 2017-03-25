@@ -14,11 +14,10 @@
                             <h3 style="color: #fff; text-align: center; margin-bottom: 40px;">أطلب درس خاص</h3>
                             {!! Form::open(array('action' => 'EnquiryController@createRequest', 'method' => 'post')) !!}
                             <input type="text" name="subject" placeholder="موضوع الدرس">
-                            <input type="text" name="total_hours" placeholder="عدد الساعات المقترحة">
+                            <input type="text" name="total_hours" placeholder="عدد الساعات المطلوبة">
                             <button class="se">أطلب الآن</button>
                             {{--<p><a href="#">بحث متقدم</a></p>--}}
                             {!! Form::close() !!}
-
                         </div>
 
                     </div>

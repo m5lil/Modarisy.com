@@ -47,7 +47,7 @@ class User extends Authenticatable
 	 	return $this->hasMany('App\Message');
 	 }
 
-     public function applicatns()
+     public function applicants()
 	 {
 	 	return $this->hasMany('App\Applicant');
 	 }

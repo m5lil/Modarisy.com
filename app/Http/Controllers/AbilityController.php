@@ -132,6 +132,8 @@ class AbilityController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $delete = Bouncer::role()->where('id',$id)->delete();
+        Session::flash('message', 'تم بنجاح!');
+        return redirect('/dashboard/abilities');
     }
 }

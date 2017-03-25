@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Applicant;
+use App\Enquiry;
 use App\User;
 use Illuminate\Http\Request;
 use App\Profile;
@@ -32,9 +34,9 @@ class ProfileController extends Controller
      */
     public function create()
     {
-        if (\Auth::user()->statue == 0){
+        if (\Auth::user()->statue == 0) {
             return view('frontend.new_profile');
-        }else{
+        } else {
             return \Redirect::to('/home');
         }
     }
@@ -107,7 +109,23 @@ class ProfileController extends Controller
     public function show($id)
     {
         $profile = User::find($id)->profile;
-        return view('frontend.profile', compact('profile'));
+        if ($profile->user->type == 3) {
+            $enquiries = $profile->user->enquiries()
+                ->where('statue', 1)->get();
+            $applicants = Applicant::where('student_id', $profile->user->id)
+                ->where('statue', 2)->get();
+            $done_applicants = Applicant::where('student_id', $profile->user->id)
+                ->where('statue', 3)->get();
+            return view('frontend.profile', compact('profile','enquiries', 'applicants', 'done_applicants'));
+        } elseif ($profile->user->type == 2) {
+            if ($profile->user->applicants) {
+                $progress_enquiries = Enquiry::where('teacher_id', $profile->user->id)
+                    ->where('statue', 2)->get();
+                $done_enquiries = Enquiry::where('teacher_id', $profile->user->id)
+                    ->where('statue', 3)->get();
+                }
+            return view('frontend.profile', compact('profile', 'progress_enquiries', 'done_enquiries'));
+        }
     }
 
     /**

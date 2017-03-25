@@ -4,9 +4,7 @@
 
 @section('content')
 
-    {{-- <div id="app">
-        <example></example>
-    </div> --}}
+
 
 
     <h4 class="ui horizontal divider">

@@ -34,9 +34,9 @@
 
                     </div>
 
-                    <p> الخبرات <span class="detils-p-2">: {{ Auth::user()->gen_exp }}</span></p>
+                    <p> خبرة <span class="detils-p-2">: {{ Auth::user()->gen_exp }} عام</span></p>
                     <hr>
-                    <p>اللغة<span class="detils-p-2">: {{ Auth::user()->profile->lang }}</span></p>
+                    <p>لغة التدريس<span class="detils-p-2">: {{ Auth::user()->profile->lang }}</span></p>
                     <hr>
                     <p> التخصص <span class="detils-p-2">: {{ Auth::user()->profile->specialty }}</span></p>
                     <hr>
@@ -45,6 +45,8 @@
                     <p> البريد الإلكترونى <span class="detils-p-2">: {{ Auth::user()->email }}</span></p>
                     <hr>
                     <p> رقم الجوال <span class="detils-p-2">: {{ Auth::user()->phone }} عام</span></p>
+                    <hr>
+                    <p> الوقت المناسب للتدريس <span class="detils-p-2">: {{ Auth::user()->profile->teach_time }} عام</span></p>
                     <hr>
 
                     {{--<h2 class="dede-h2">رسالة سريعة</h2>--}}
@@ -88,7 +90,7 @@
                         </div>
                         <div class="advertising2-car-2">
                             <div class="row" id="Container">
-                                @foreach($enqueries as $enquery)
+                                @foreach($enquiries as $enquery)
                                     <div class="col-md-12 col-sm-12 col-xs-12 mix category-1" data-bound="">
                                         <div class="caarss ">
 
@@ -114,8 +116,8 @@
                                         </div>
                                     </div>
                                 @endforeach
-                                @if(isset($progress_enqueries))
-                                    @foreach($progress_enqueries as $enquery)
+                                @if(isset($progress_enquiries))
+                                    @foreach($progress_enquiries as $enquery)
                                         <div class="col-md-12 col-sm-12 col-xs-12 mix category-2" data-bound="">
                                             <div class="caarss ">
 
@@ -138,8 +140,8 @@
                                         </div>
                                     @endforeach
                                 @endif
-                                @if(isset($done_enqueries))
-                                    @foreach($done_enqueries as $enquery)
+                                @if(isset($done_enquiries))
+                                    @foreach($done_enquiries as $enquery)
                                         <div class="col-md-12 col-sm-12 col-xs-12 mix category-3" data-bound="">
                                             <div class="caarss ">
 

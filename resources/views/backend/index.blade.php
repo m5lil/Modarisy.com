@@ -39,7 +39,7 @@
     <hr/>
 
     <div class="ui four link cards">
-        <a href="#" class="card">
+        <a href="/dashboard/settings" class="card">
             <div class="image">
                 <img src="{{url('/images/png/cogwheel-2.png')}}">
             </div>
@@ -51,7 +51,7 @@
             </div>
         </a>
 
-        <a href="#" class="card">
+        <a href="/dashboard/pages" class="card">
             <div class="image">
                 <img src="{{url('/images/png/interface.png')}}">
             </div>
@@ -72,7 +72,43 @@
             </div>
         </a>
 
-        <a href="#" class="card">
+        <a href="/dashboard/applicants" class="card">
+            <div class="image">
+                <img src="{{url('/images/png/price-tag.png')}}">
+            </div>
+            <div class="content">
+                <div class="header">العــــروض</div>
+                <div class="description">العروض المقدمة من المدرسي للطلبة</div>
+            </div>
+            <div class="extra content">
+            <span class="right floated">
+                {{count(\App\Applicant::where('statue',0))}} عروض غير مفعلة
+            </span>
+                <span>
+              <i class="file icon"></i> {{count(\App\Applicant::get())}} عرض
+            </span>
+            </div>
+        </a>
+
+        <a href="/dashboard/enquiries" class="card">
+            <div class="image">
+                <img src="{{url('/images/png/interface-3.png')}}">
+            </div>
+            <div class="content">
+                <div class="header">الطلبـــــات</div>
+                <div class="description">الطلبات الواردة من الطلبة</div>
+            </div>
+            <div class="extra content">
+            <span class="right floated">
+                {{count(\App\Enquiry::where('statue',0))}} طلب غير مفعلة
+            </span>
+                <span>
+              <i class="file icon"></i> {{count(\App\Enquiry::get())}} طلب
+            </span>
+            </div>
+        </a>
+
+        <a href="/dashboard/users" class="card">
             <div class="image">
                 <img src="{{url('/images/png/profile.png')}}">
             </div>
@@ -92,7 +128,7 @@
             </div>
         </a>
 
-        <a href="#" class="card">
+        <a href="/dashboard/users/members/teachers" class="card">
             <div class="image">
                 <img src="{{url('/images/png/profile.png')}}">
             </div>
@@ -112,7 +148,27 @@
             </div>
         </a>
 
-        <a href="#" class="card">
+        <a href="/dashboard/users/members/students" class="card">
+            <div class="image">
+                <img src="{{url('/images/png/profile.png')}}">
+            </div>
+            <div class="content">
+                <div class="header">المدرسين</div>
+                <div class="description">
+                    يمكن إضافة وعرض وتعديل وحذف الأعضاء وأيضا إضافهة صلاحيات جديده وتحديدها لأعضـــــاء معينه
+                </div>
+            </div>
+            <div class="extra content">
+            <span class="right floated">
+                {{count(\App\Profile::where('statue',0)->get())}} مدرس غير مفعل
+            </span>
+                <span>
+              <i class="user icon"></i> {{count(\App\User::get())}} <مدرس></مدرس>
+            </span>
+            </div>
+        </a>
+
+        <a href="/dashboard/inbox" class="card">
             <div class="image">
                 <img src="{{url('/images/png/paper-plane.png')}}">
             </div>

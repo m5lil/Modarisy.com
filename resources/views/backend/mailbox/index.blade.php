@@ -17,11 +17,11 @@
         <div class="header">محتوى الرساله</div>
         <div class="content">
             <div class="ui header" id="subject"></div>
-            <p id="name"></p>
             <p id="body"></p>
             <hr/>
-            <p id="phone"></p>
-            <p id="email"></p>
+            <span id="name"></span> -
+            <span id="phone"></span> -
+            <span id="email"></span>
         </div>
     </div>
     <div class="ui modal ereply">
@@ -57,7 +57,7 @@
                     class="positive"
                     @endif
             >
-                <td
+
                 <td class="collapsing">
                     @if (!$value->read)
                         <div class="ui blue ribbon label"><i class="hide icon"></i></div>
@@ -92,17 +92,14 @@
             var url = $(this).attr("href");
             $.get(url, function (data) {
                 //success data
-                console.log(data.id);
-                $('.eshow.modal').modal({
-                    onShow: function () {
-                        $('#id').empty().append(data.id);
-                        $('#subject').empty().append(data.subject);
-                        $('#name').empty().append(data.name);
-                        $('#phone').empty().append(data.phone);
-                        $('#email').empty().append(data.email);
-                        $('#body').empty().append(data.body);
-                    }
-                }).modal('show');
+                $('#id').empty().append(data.id);
+                $('#subject').empty().append(data.subject);
+                $('#name').empty().append(data.name);
+                $('#phone').empty().append(data.phone);
+                $('#email').empty().append(data.email);
+                $('#body').empty().append(data.body);
+
+                $('.eshow.modal').modal('show');
             });
         });
 
