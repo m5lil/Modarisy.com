@@ -204,9 +204,9 @@
                     <hr>
                     <div class="form">
                         {{Form::open(array('action' => 'SubscribersController@Submit','method' => 'post'))}}
-                        {{Form::text('name',null,array('placeholder'=>'Type your Name here'))}}
-                        {{Form::text('email',null,array('placeholder'=>'Type your E-mail address here'))}}
-                        {{Form::submit('Submit!')}}
+                        {{Form::text('name',null,array('placeholder'=>'Type your Name here','class' => 'input1'))}}
+                        {{Form::text('email',null,array('placeholder'=>'Type your E-mail address here','class' => 'input1'))}}
+                        {{Form::submit('إشتراك!',['class' => 'btn btn-primary btn1'])}}
 
                         {{Form::close()}}
                         <div class="content"></div>
@@ -226,10 +226,10 @@
                     <p class="first"> اتصل بنا </p>
                     <hr>
                     <div class="conect-me">
-                        <p><span>   <i class="fa fa-envelope-o" aria-hidden="true"></i> </span> info@website.com </p>
-                        <p><span>   <i class="fa fa-phone" aria-hidden="true"></i> </span> 009000000 / 009000000 </p>
-                        <p><span>   <i class="fa fa-user-plus" aria-hidden="true"></i> </span> 0090000000 </p>
-                        <p><span>   <i class="fa fa-map-marker" aria-hidden="true"></i> </span> السعودية , الرياض </p>
+                        <p><span>   <i class="fa fa-envelope-o" aria-hidden="true"></i> </span> {{setting('email')}} </p>
+                        <p><span>   <i class="fa fa-phone" aria-hidden="true"></i> </span> {{setting('phone')}} </p>
+                        <p><span>   <i class="fa fa-user-plus" aria-hidden="true"></i> </span> {{setting('postal')}} </p>
+                        <p><span>   <i class="fa fa-map-marker" aria-hidden="true"></i> </span> {{setting('address')}} </p>
                     </div>
                 </div>
 

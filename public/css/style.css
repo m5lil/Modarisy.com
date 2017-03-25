@@ -1297,3 +1297,15 @@ last-mod-arsy .advertising2-car-2 .caarss p {
 .notie-container {
     box-shadow: none;
 }
+
+.input1{
+    border: 1px solid #eee;
+    background: #fff;
+    color: #00bcd4;
+    padding: 0px 10px;
+    height: 44px;
+    margin-bottom: 30px;
+    outline: none;
+    border-radius: 47px;
+    text-align: center;
+}
