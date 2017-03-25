@@ -2,7 +2,7 @@
 
 @section('content')
 
-    @if (!\Auth::user()->can('lecture'))
+    @if (!\Auth::user()->can('enquiry'))
 
         {{ Form::model($page, array('method' => 'PATCH','route' =>['pages.update', $page->id], 'class' => 'ui form', 'id' => 'formpage','files' => true)) }}
         <div class="ui top attached tabular menu">

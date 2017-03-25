@@ -16,7 +16,7 @@ class CreateApplicantsTable extends Migration
         Schema::create('applicants', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id');
-            $table->string('lecture_id');
+            $table->string('enquiry_id');
             $table->text('brief');
             $table->integer('hour_price');
             $table->integer('student_id')->nullable();

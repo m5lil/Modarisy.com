@@ -3,7 +3,10 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="lE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{{ setting('site_name') }} | @yield('title', '') </title>
+    <meta name="description" content="{{setting('description')}}">
+    <meta name="keywords" content="{{setting('site_keywords')}}">
+    <link rel="shortcut icon" type="image/x-icon" href="{{setting('fav_icon')}}">
+    <title>{{ setting('site_name') }} | @yield('title', 'Welcome you') </title>
     <link rel="stylesheet" href="{{ url('/css/font-awesome.min.css') }}"/>
     <link rel="stylesheet" href="{{ url('/css/animate.css') }}"/>
     <link rel="stylesheet" href="{{ url('/css/bootstrap.cs') }}s">
@@ -15,19 +18,29 @@
     <link rel="stylesheet" href="{{ url('/css/style.css') }}"/>
     <link rel="stylesheet" href="{{ url('/css/style-ar.css') }}"/>
     <link rel="stylesheet" href="{{ url('/css/media.css') }}"/>
+    <link rel="stylesheet" href="{{ url('/css/jquery-ui.min.css') }}"/>
+    <link rel="stylesheet" href="{{ url('/css/notie.min.css') }}"/>
+    <script src="{{ url('/js/jquery-1.12.2.js') }}"></script>
+    <script src="{{ url('/js/jquery-ui.min.js') }}"></script>
 
-    <script src="http://maps.google.com/maps/api/js?sensor=false" type="text/javascript"></script>
+    <script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBWymiO9Sk-Xp_8gVAuegZ3TpJ1FtbFLZI&amp;sensor=false&amp;signed_in=true&amp;libraries=geometry,places"></script>
+    <script src="{{asset('js/markerclusterer.js')}}"></script>
+    <script src="{{asset('js/maperizer/List.js')}}"></script>
+    <script src="{{asset('js/maperizer/Maperizer.js')}}"></script>
+    <script src="{{asset('js/maperizer/map-options.js')}}"></script>
+    <script src="{{asset('js/maperizer/jqueryui.maperizer.js')}}"></script>
+    <script src="{{asset('js/notie.min.js')}}"></script>
+
+    {{--<script src="http://maps.google.com/maps/api/js?sensor=false" type="text/javascript"></script>--}}
     <script>
         window.Laravel = {!! json_encode([
             'csrfToken' => csrf_token(),
         ]) !!};
+        window.notie
     </script>
 
 </head>
 <body>
-@if (Session::has('message'))
-    <div style="position: relative; width: 100%; text-align: center;" class="alert alert-info">{{ Session::get('message') }}</div>
-@endif
 <header>
     <div class="header">
         <div class="header-top">
@@ -37,18 +50,20 @@
                         <div class="heder-top-left">
                             <div class="liste">
                                 <div class="bootom">
-
                                     <ul class="list-inline">
                                         <li class="facebook-1 hvr-float">
-                                            <a href="{{ setting('facebook') }}"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+                                            <a href="{{ setting('facebook') }}"><i class="fa fa-facebook"
+                                                                                   aria-hidden="true"></i></a></li>
                                         <li class="twitter-1 hvr-float">
-                                            <a href="{{ setting('twitter') }}"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+                                            <a href="{{ setting('twitter') }}"><i class="fa fa-twitter"
+                                                                                  aria-hidden="true"></i></a></li>
                                         <li class="youtube-1 hvr-float">
-                                            <a href="{{ setting('youtube') }}"><i class="fa fa-youtube" aria-hidden="true"></i></a></li>
+                                            <a href="{{ setting('youtube') }}"><i class="fa fa-youtube"
+                                                                                  aria-hidden="true"></i></a></li>
                                         {{--<li class="google-1 hvr-float">--}}
-                                            {{--<a href="{{ setting('facebook') }}"><i class="fa fa-google-plus" aria-hidden="true"></i></a></li>--}}
+                                        {{--<a href="{{ setting('facebook') }}"><i class="fa fa-google-plus" aria-hidden="true"></i></a></li>--}}
                                         {{--<li class="rss-1 hvr-float">--}}
-                                            {{--<a href="{{ setting('facebook') }}"><i class="fa fa-rss" aria-hidden="true"></i></a></li>--}}
+                                        {{--<a href="{{ setting('facebook') }}"><i class="fa fa-rss" aria-hidden="true"></i></a></li>--}}
                                     </ul>
                                 </div>
                             </div>
@@ -56,7 +71,8 @@
 
                     </div>
                     <div class="col-md-6 col-sm-6 xs-12">
-                        <button class="bot-com-2"><a href="index_en.html">English</a></button>
+
+                        <button class="bot-com-2"><a href="#">English</a></button>
 
                         <div class="heder-top-right">
                             <p class="wats">
@@ -69,6 +85,7 @@
                             </p>
 
                         </div>
+
                     </div>
                 </div>
             </div>
@@ -82,11 +99,11 @@
                     <div class="navbar-header">
                         <a class="navbar-brand" href="{{ url('/') }}">
                             <div class="aside">
-                                @if(setting('logo'))
+                                @if(file_exists(public_path() . '/uploads/' . setting('logo')))
                                     <img class=" img-logo-top-1 wow fadeInDown" data-wow-duration=" 2s"
-                                    src="{{ url('/uploads/' . setting('logo')) }}">
+                                         src="{{ url('/uploads/' . setting('logo')) }}">
                                 @else
-                                    {{ config('app.name', 'Modarrisi') }}
+                                    <div style="font-size: 24px; margin-top: 45px; text-transform: uppercase;">{{ config('app.name', 'Modarrisi') }}</div>
                                 @endif
                             </div>
                         </a>
@@ -97,72 +114,82 @@
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
                         </button>
-
                     </div>
 
                     <!-- Collect the nav links, forms, and other content for toggling -->
                     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                         <ul class="nav navbar-nav text-center nna">
                             @foreach(App\Menu::orderBy('order','asc')->get() as $menuItem)
-
                                 @if( $menuItem->parent_id == 0 )
-                                    <li class= "qw {{ $menuItem->url ? '' : "dropdown menu-item-has-children" }}">
+                                    <li class="qw {{ $menuItem->url ? '' : "dropdown menu-item-has-children" }}">
                                         <a href="{{ $menuItem->children->isEmpty() ? in_array($menuItem->url,\App\Page::pluck('slug')->toArray()) ? url('/'.$menuItem->url) : 'http://'.$menuItem->url : "#" }}" {{ $menuItem->children->isEmpty() ? '' : "class=\"dropdown-toggle\" data-toggle=dropdown role=button aria-expanded=false" }}>{{ $menuItem->title }}</a>
-                                @endif
+                                        @endif
 
-                                @if( ! $menuItem->children->isEmpty() )
-                                    <ul class="dropdown-menu sub-menu" role="menu">
-                                        @foreach($menuItem->children as $subMenuItem)
-                                            <li><a href="{{ in_array($subMenuItem->url,\App\Page::pluck('slug')->toArray()) ? $subMenuItem->url : 'http://'.$subMenuItem->url }}">{{ $subMenuItem->title }}</a></li>
-                                        @endforeach
-                                    </ul>
-                                @endif
+                                        @if( ! $menuItem->children->isEmpty() )
+                                            <ul class="dropdown-menu sub-menu" role="menu">
+                                                @foreach($menuItem->children as $subMenuItem)
+                                                    <li>
+                                                        <a href="{{ in_array($subMenuItem->url,\App\Page::pluck('slug')->toArray()) ? $subMenuItem->url : 'http://'.$subMenuItem->url }}">{{ $subMenuItem->title }}</a>
+                                                    </li>
+                                                @endforeach
+                                            </ul>
+                                        @endif
+                                    </li>
 
-                                </li>
-
-                            @endforeach
+                                    @endforeach
 
                         </ul>
 
 
                     </div><!-- /.navbar-collapse -->
                     <div class="segin wow fadeInDown" data-wow-duration="2s">
-                    <div class="bottom-headre">
-                        @if (Auth::guest())
-                            <button onclick="location.href='{{url('/be_member')}}';" class="but-1 hvr-float-shadow">
-                                اشتراك
-                            </button>
-                            <button onclick="location.href='{{url('/login')}}';" class="but-2 hvr-float-shadow">دخول
-                            </button>
-                        @else
-                            @if(!Auth::user()->profile)
-                                <button onclick="location.href='{{url('/profile/create')}}';"
-                                        class="but-1 hvr-float-shadow">أكمل ملفك
+                        <div class="bottom-headre">
+                            @if (Auth::guest())
+                                <button onclick="location.href='{{url('/be_member')}}';" class="but-1 hvr-float-shadow">
+                                    اشتراك
+                                </button>
+                                <button onclick="location.href='{{url('/login')}}';" class="but-2 hvr-float-shadow">دخول
                                 </button>
                             @else
-                                <button onclick="location.href='{{url('/')}}/home';"
-                                        class="but-1 hvr-float-shadow">ملفك الشخصى
-                                </button>
-                            @endif
-                            <button type="submit"
-                                    onclick="event.preventDefault();
+                                @if(!Auth::user()->profile)
+                                    <button onclick="location.href='{{url('/profile/create')}}';"
+                                            class="but-1 hvr-float-shadow">أكمل ملفك
+                                    </button>
+                                @else
+                                    <button onclick="location.href='{{url('/')}}/home';"
+                                            class="but-1 hvr-float-shadow">ملفك الشخصى
+                                    </button>
+                                @endif
+                                <button type="submit"
+                                        onclick="event.preventDefault();
                                 document.getElementById('logout-form').submit();"
-                                class="but-2 hvr-float-shadow">خروج
-                            </button>
-                            <form id="logout-form" action="{{ url('/logout') }}" method="POST" style="display: none;">
-                                {{ csrf_field() }}
-                            </form>
-                        @endif
+                                        class="but-2 hvr-float-shadow">خروج
+                                </button>
+                                <form id="logout-form" action="{{ url('/logout') }}" method="POST"
+                                      style="display: none;">
+                                    {{ csrf_field() }}
+                                </form>
+                            @endif
+                        </div>
                     </div>
-                </div>
-        </div><!-- /.container-fluid -->
-        </nav>
+                </div><!-- /.container-fluid -->
+            </nav>
 
-    </div>
+        </div>
     </div>
 </header>
 <!-- end header-->
-{{ Html::ul($errors->all(),['class' => 'ui error message']) }}
+
+<script type="text/javascript">
+    @if($errors->all())
+        notie.alert({text: '{{ Html::ul($errors->all(),['class' => 'ui list']) }}'});
+    @endif
+
+    @if (Session::has('message'))
+        notie.alert({ text: '{{ Session::get('message') }}' });
+    @endif
+
+</script>
 
 @yield('content')
 
@@ -176,13 +203,13 @@
                     <p class="first"> القائمة البريدية </p>
                     <hr>
                     <div class="form">
-                    {{Form::open(array('action' => 'SubscribersController@Submit','method' => 'post'))}}
-                    {{Form::text('name',null,array('placeholder'=>'Type your Name here'))}}
-                    {{Form::text('email',null,array('placeholder'=>'Type your E-mail address here'))}}
-                    {{Form::submit('Submit!')}}
+                        {{Form::open(array('action' => 'SubscribersController@Submit','method' => 'post'))}}
+                        {{Form::text('name',null,array('placeholder'=>'Type your Name here'))}}
+                        {{Form::text('email',null,array('placeholder'=>'Type your E-mail address here'))}}
+                        {{Form::submit('Submit!')}}
 
-                    {{Form::close()}}
-                    <div class="content"></div>
+                        {{Form::close()}}
+                        <div class="content"></div>
                     </div>
 
                 </div>
@@ -265,8 +292,6 @@
 </footer>
 
 
-<script src="{{ url('/js/jquery-1.12.2.js') }}"></script>
-
 <script src="{{ url('/js/bootstrap.min.js') }}"></script>
 <script src="{{ url('/js/bootstrap-select.min.js') }}"></script>
 <script src="{{ url('/js/owl.carousel.js') }}"></script>
@@ -279,30 +304,27 @@
 
 
     {{--Ajax For Subscribe to newsletter--}}
-    //    $(document).ready(function (){
-    //        $('div.content').hide();
-    //        $('input[type="submit"]').click(function(e){
-    //            e.preventDefault();
-    //            $.post('/subscribers/submit', {
-    //                _token: $('input[name="_token"]').val(),
-    //                name: $('input[name="name"]').val(),
-    //                email: $('input[name="email"]').val()
-    //            }, function($data){
-    //                if($data=='1') {
-    //                    $('div.content').hide().removeClass('success error').addClass('success').html('You\'ve successfully subscribed to ournewsletter').fadeIn('fast');
-    //                } else {
-    //                    $('div.content').hide().removeClass('success error').addClass('error').html('There has been an error occurred:<br /><br />'+$data).fadeIn('fast');
-    //                }
-    //            });
-    //        });
-    //        $('form').submit(function(e){
-    //            e.preventDefault();
-    //            $('input[type="submit"]').click();
-    //        });
-    //    });
-    $(".alert").delay(4000).slideUp(200, function() {
-        $(this).alert('close');
-    });
+//        $(document).ready(function () {
+//                $('div.content').hide();
+//                $('input[type="submit"]').click(function(e){
+//                    e.preventDefault();
+//                    $.post('/subscribers/submit', {
+//                        _token: $('input[name="_token"]').val(),
+//                        name: $('input[name="name"]').val(),
+//                        email: $('input[name="email"]').val()
+//                    }, function($data){
+//                        if($data=='1') {
+//                            $('div.content').hide().removeClass('success error').addClass('success').html('You\'ve successfully subscribed to ournewsletter').fadeIn('fast');
+//                        } else {
+//                            $('div.content').hide().removeClass('success error').addClass('error').html('There has been an error occurred:<br /><br />'+$data).fadeIn('fast');
+//                        }
+//                    });
+//                });
+//                $('form').submit(function(e){
+//                    e.preventDefault();
+//                    $('input[type="submit"]').click();
+//                });
+//    });
 
 
 </script>

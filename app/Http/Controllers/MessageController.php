@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Applicant;
+use App\Enquiry;
 use Illuminate\Http\Request;
 use App\Message;
 use Auth;
@@ -12,7 +13,7 @@ class MessageController extends Controller
     public function index()
     {
         $message = Message::all();
-        return view('backend.lecture.index',compact('message'));
+        return view('backend.enquiry.index',compact('message'));
     }
 
     /**
@@ -25,21 +26,32 @@ class MessageController extends Controller
         return view('frontend.message');
     }
 
-    public function allMessages($lecture_id, $applicant_id)
+    public function allMessages($enquiry_id, $applicant_id)
     {
+        if(Applicant::find($applicant_id)->statue != 0 || Enquiry::find($enquiry_id)->statue != 0){
+            $student_id = Enquiry::find($enquiry_id)->user->id;
+            $teacher_id = Applicant::find($applicant_id)->user->id;
+            if ($student_id == Auth::user()->id || $teacher_id == Auth::user()->id){
+                $student_messages = Message::where('to', $teacher_id)
+                    ->where('enquiry_id', $enquiry_id)
+                    ->where('applicant_id', $applicant_id)
+                    ->where('user_id', $student_id)
+                    ->get();
+                $teacher_messages = Message::where('to', $student_id)
+                    ->where('enquiry_id', $enquiry_id)
+                    ->where('applicant_id', $applicant_id)
+                    ->where('user_id', $teacher_id)
+                    ->get();
+                $messages = $student_messages->merge($teacher_messages)->sortByDesc('created_at');
+//            dd($student_id);
+            }
+            return view('frontend.messages',compact('messages','enquiry_id','applicant_id'));
 
-        $student_messages = Message::where('lecture_id',$lecture_id)
-            ->where('applicant_id',$applicant_id)
-            ->where('user_id', Auth::user()->id)
-            ->get();
+        }
 
-        $teacher_messages = Message::where('lecture_id',$lecture_id)
-            ->where('applicant_id',$applicant_id)
-            ->where('user_id', Applicant::find($applicant_id)->user->id)
-            ->get();
-        $messages = $student_messages->merge($teacher_messages)->sortByDesc('created_at');;
+        \Session::flash('message', 'بعد الموافقة يمكنك ارسال رساله!');
+        return \Redirect::back();
 
-        return view('frontend.messages',compact('messages','lecture_id','applicant_id'));
 
     }
 
@@ -61,13 +73,18 @@ class MessageController extends Controller
             return \Redirect::to('messages')
                 ->withErrors($validator);
         } else {
-
+            $request = $this->saveFiles($request);
             $msg = new Message();
             $msg->user_id = \Auth::user()->id;
-            $msg->lecture_id = $request->lecture_id;
+            $msg->enquiry_id = $request->enquiry_id;
             $msg->body = $request->body;
             $msg->attached = $request->attached;
             $msg->applicant_id = $request->applicant_id;
+            if(Auth::user()->type == 3){
+                $msg->to = Applicant::find($request->applicant_id)->user->id;
+            }elseif (Auth::user()->type == 2){
+                $msg->to = Enquiry::find($request->enquiry_id)->user->id;
+            }
             $msg->save();
 
                 \Session::flash('message', 'تم بنجاح!');

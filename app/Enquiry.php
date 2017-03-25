@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Lecture extends Model
+class Enquiry extends Model
 {
     protected $fillable = [
         'user_id',
@@ -15,6 +15,8 @@ class Lecture extends Model
         'target',
         'comment',
         'statue',
+        'lat',
+        'lng',
         'teacher_id',
         'applicant_id',
     ];
@@ -32,7 +34,11 @@ class Lecture extends Model
         }
     }
 
-
+//    public function newQuery()
+//    {
+//        return parent::newQuery()->where('statue', '!=', 0);
+//    }
+//
     public function Statue($num)
     {
         if ($num == 0){

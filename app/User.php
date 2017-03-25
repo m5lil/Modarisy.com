@@ -42,19 +42,19 @@ class User extends Authenticatable
 		return $this->hasOne('App\Profile');
 	}
 
-    // public function messages()
-	// {
-	// 	return $this->hasMany('App\Message');
-	// }
-    //
+     public function messages()
+	 {
+	 	return $this->hasMany('App\Message');
+	 }
+
      public function applicatns()
 	 {
 	 	return $this->hasMany('App\Applicant');
 	 }
 
-	 public function lectures()
+	 public function enquiries()
 	 {
-	 	return $this->hasMany('App\Lecture');
+	 	return $this->hasMany('App\Enquiry');
 	 }
     //
     //   // user has many comments

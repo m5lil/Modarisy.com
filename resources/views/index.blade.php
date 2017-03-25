@@ -12,11 +12,13 @@
                     <div class="col-md-6 col-xs-12 right-right">
                         <div class="dede cors wow fadeInUp" data-wow-duration="2s">
                             <h3 style="color: #fff; text-align: center; margin-bottom: 40px;">أطلب درس خاص</h3>
-                            {!! Form::open(array('action' => 'LectureController@createRequest', 'method' => 'post')) !!}
+                            {!! Form::open(array('action' => 'EnquiryController@createRequest', 'method' => 'post')) !!}
                             <input type="text" name="subject" placeholder="موضوع الدرس">
                             <input type="text" name="total_hours" placeholder="عدد الساعات المقترحة">
                             <button class="se">أطلب الآن</button>
                             {{--<p><a href="#">بحث متقدم</a></p>--}}
+                            {!! Form::close() !!}
+
                         </div>
 
                     </div>
@@ -119,63 +121,68 @@
 
     <div class="map-map-cors">
         <div class="cors-1  wow fadeInUp" data-wow-duration="2s">
-            <p class="cors-right-1"><a href="#"> ابحث عن مدرس فى مدينتك</a></p>
-            <select class="selectpicker">
-                <option>المرحلة التعليمية</option>
-                <option>Ketchup</option>
-                <option>Relish</option>
+            <p class="cors-right-1"><a href="#">إبحث عن طلبات دروس واردة</a></p>
+
+            {!! Form::open(array('action' => 'HomeController@filter', 'method' => 'POST')) !!}
+            <select name="material" class="selectpicker">
+                <option selected disabled>المادة</option>
+                <option value="arabic">لغة عربية</option>
+                <option value="scince">علوم</option>
+                <option value="math">رياضيات</option>
             </select>
 
-            <select class="selectpicker">
-                <option>المستوى</option>
-                <option>Ketchup</option>
-                <option>Relish</option>
+            <select name="preferred_time"  class="selectpicker">
+                <option selected disabled>مواعيد التدريس المناسبة</option>
+                <option value="1">صباحا من 8ص وحتى 12م</option>
+                <option value="2">منتصف اليوم من 12م وحتى 6م</option>
+                <option value="3">مساءا من 6م وحتى 10م</option>
+                <option value="4">فى أى وقت فى اليوم</option>
             </select>
+            <select name="distance"  class="selectpicker" required>
+                <option selected disabled>المسافة لا تزيد عن</option>
+                <option value="10">10 كيلو</option>
+                <option value="50">50 كيلو</option>
+                <option value="100">100 كيلو</option>
+                <option value="200">200 كيلو</option>
+            </select>
+            <div class="text-center"><h4>اختر موقعك من الخريطه</h4></div>
+            <input id="pac-input" type="text" placeholder="Search Box"/>
 
-            <select class="selectpicker">
-                <option>المادة</option>
-                <option>Ketchup</option>
-                <option>Relish</option>
-            </select>
-            <button class="se">بحث الان</button>
+            {!! Form::hidden('lat', null, ['id' => 'lat']) !!}
+            {!! Form::hidden('lng', null, ['id' => 'lng']) !!}
+
+            <button type="submit" class="se">بحث الان</button>
+            {!! Form::close() !!}
 
         </div>
     </div>
-    <div id="map" style="height: 530px; width: 100%;">
+    <div id="map-canvas" style="height: 530px; width: 100%;">
 
     </div>
     <script type="text/javascript">
-        var locations = [
-            ['Bondi Beach', -33.890542, 151.274856, 4],
-            ['Coogee Beach', -33.923036, 151.259052, 5],
-            ['Cronulla Beach', -34.028249, 151.157507, 3],
-            ['Manly Beach', -33.80010128657071, 151.28747820854187, 2],
-            ['Maroubra Beach', -33.950198, 151.259302, 1]
-        ];
+        var $maperizer = $('#map-canvas').maperizer(Maperizer.MAP_OPTIONS);
 
-        var map = new google.maps.Map(document.getElementById('map'), {
-            zoom: 10,
-            center: new google.maps.LatLng(-33.92, 151.25),
-            mapTypeId: google.maps.MapTypeId.ROADMAP
+        $maperizer.maperizer('setCenter', {
+            location: 'Saudi Arabia'
         });
 
-        var infowindow = new google.maps.InfoWindow();
+        var latField = $('input#lat'),
+            lngField = $('input#lng');
 
-        var marker, i;
-
-        for (i = 0; i < locations.length; i++) {
-            marker = new google.maps.Marker({
-                position: new google.maps.LatLng(locations[i][1], locations[i][2]),
-                map: map
-            });
-
-            google.maps.event.addListener(marker, 'click', (function (marker, i) {
-                return function () {
-                    infowindow.setContent(locations[i][0]);
-                    infowindow.open(map, marker);
+        $maperizer.maperizer('attachEventsToMap', [{
+                name: 'click',
+                callback: function(event){
+                    $maperizer.maperizer('removeAllMarkers');
+                    $maperizer.maperizer('addMarker', {
+                        lat: event.latLng.lat(),
+                        lng: event.latLng.lng(),
+                    });
+                    latField.val(event.latLng.lat());
+                    lngField.val(event.latLng.lng());
                 }
-            })(marker, i));
-        }
+            }]
+        );
+
     </script>
 
 

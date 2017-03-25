@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Profile;
+use Dotenv\Validator;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Http\Request;
 use App\User;
 use Bouncer;
+
 class UserController extends Controller
 {
     /**
@@ -17,17 +19,17 @@ class UserController extends Controller
     public function index()
     {
         $users = User::where('type', 1)->paginate(20);
-        return view('backend.user.index',compact('users'));
+        return view('backend.user.index', compact('users'));
     }
 
     public function members($type)
     {
         if ($type == 'students') {
             $users = User::where('type', 3)->paginate(20);
-            return view('backend.user.index',compact('users'));
-        }elseif ($type == 'teachers') {
+            return view('backend.user.index', compact('users'));
+        } elseif ($type == 'teachers') {
             $teachers = Profile::paginate(20);
-            return view('backend.user.index',compact('teachers'));
+            return view('backend.user.index', compact('teachers'));
         }
     }
 
@@ -44,7 +46,7 @@ class UserController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -55,7 +57,7 @@ class UserController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -66,7 +68,7 @@ class UserController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -78,41 +80,33 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request $request
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
-        $rules = array(
-            'title'       => 'required',
-            'body' => 'required'
-        );
-        $validator = Validator::make($request->all(), $rules);
-        if ($validator->fails()) {
-            return Redirect::to('dashboard/users')
-                ->withErrors($validator);
-        } else {
-            $user = User::findOrFail($id);
+        $user = User::findOrFail($id);
+        if (null !== $user->roles()->first()) {
             Bouncer::retract($user->roles()->pluck('name'))->from($user);
-            Bouncer::assign($request->role)->to($user);
-            $input = $request->all();
-            if(!empty($input['password'])){
-                $input['password'] =  bcrypt($input['password']);
-            }else{
-                $input = array_except($input,array('password'));
-            }
-            $user->update($input);
-            Session::flash('message', 'تم بنجاح!');
-            return Redirect::to('dashboard/users');
         }
+        Bouncer::assign($request->role)->to($user);
+        $input = $request->all();
+        if (!empty($input['password'])) {
+            $input['password'] = bcrypt($input['password']);
+        } else {
+            $input = array_except($input, array('password'));
+        }
+        $user->update($input);
+        \Session::flash('message', 'تم بنجاح!');
+        return Redirect::to('dashboard/users');
 
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)

@@ -40,6 +40,7 @@
                                 <button type="submit" class="">
                                     تسجيل دخول
                                 </button>
+                                <br>
                                 <label>
                                     <input type="checkbox"
                                            name="remember" {{ old('remember') ? 'checked' : '' }}> تذكرنى
@@ -48,6 +49,13 @@
                                     نسيت كلمة المرور?
                                 </a>
                             </form>
+                            <div style="clear: both;"></div>
+                            <div class="text-center">
+                                <button onclick="location.href='{{url('/register')}}'" class="">
+                                    إنشاء حساب جديد
+                                </button>
+                            </div>
+
                         </div>
                     </div>
 

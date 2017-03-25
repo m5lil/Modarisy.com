@@ -41,11 +41,11 @@
                                     <p>{{@$value->brief}}</p>
                                     <hr>
                                     <ul class="list-inline">
-                                        <a href="{{ url('/messages/' . $lecture_id . '/' . $value->id) }}"
-                                           class="btn btn-primary"> الرسائل </a>
-                                        @if(\App\Lecture::find($lecture_id)->statue != 2)
-                                        <a href="{{ url('/applicant/accept/' . $lecture_id . '/' . $value->id) }}"
-                                           class="btn btn-default"> قبول العرض </a>
+                                        <a href="{{ url('/messages/' . $enquiry_id . '/' . $value->id) }}"
+                                           class="btn btn-primary btn1"> الرسائل <span class="badge"> {{ count(\App\Message::where('enquiry_id',$enquiry_id)->where('read')->where('applicant_id', $value->id)->get()) }}</span></a>
+                                        @if(\App\Enquiry::find($enquiry_id)->statue != 2)
+                                        <a href="{{ url('/applicant/accept/' . $enquiry_id . '/' . $value->id) }}"
+                                           class="btn btn-default btn1"> قبول العرض </a>
                                         @endif
                                         <li><span style="border: solid #ddd 2px; padding: 2px 10px; ">{{@$value->hour_price}}</span> دولار / ساعة</li>
                                     </ul>

@@ -86,13 +86,13 @@ Route::group(['prefix' => 'dashboard', 'middleware' => 'admin'], function () {
     Route::resource('/blog/comments', 'CommentController');
     Route::get('/blog/comments/{id}/delete', 'CommentController@destroy');
 
-    // ------------------------------- Lectures ----------------------------- //
-    Route::resource('/lectures', 'LectureController');
-    Route::get('/lectures/statue/{type}', 'LectureController@statue');
-    Route::get('/lectures/activate/{id}', 'LectureController@activate');
-    Route::get('/lectures/{id}/delete', 'LectureController@destroy');
+    // ------------------------------- Enquirys ----------------------------- //
+    Route::resource('/enquiries', 'EnquiryController');
+    Route::get('/enquiries/statue/{type}', 'EnquiryController@statue');
+    Route::get('/enquiries/activate/{id}', 'EnquiryController@activate');
+    Route::get('/enquiries/{id}/delete', 'EnquiryController@destroy');
 
-    // ------------------------------- Lectures ----------------------------- //
+    // ------------------------------- Enquirys ----------------------------- //
     Route::resource('/applicants', 'ApplicantController');
     Route::get('/applicants/statue/{type}', 'ApplicantController@statue');
     Route::get('/applicant/activate/{id}', 'ApplicantController@activate');
@@ -121,26 +121,27 @@ Route::group(['middleware' => 'web'], function () {
         return view('frontend.be_member');
     });
 
+    Route::post('/search', 'HomeController@filter');
+
     Route::resource('/profile', 'ProfileController');
 
     Route::post('/subscribers/submit', 'SubscribersController@Submit');
-
 
     Route::group(['middleware' => 'auth'], function () {
 
         Route::get('/home', 'HomeController@index')->middleware('has_profile');
         // Create New Request
-        Route::get('/request/create', 'LectureController@create');
-        Route::get('/request/{id}/delete', 'LectureController@delete');
-        Route::post('/request/create_request', 'LectureController@createRequest');
-        Route::post('/request', 'LectureController@store');
+        Route::get('/request/create', 'EnquiryController@create');
+        Route::get('/request/{id}/delete', 'EnquiryController@delete');
+        Route::post('/request/create_request', 'EnquiryController@createRequest');
+        Route::post('/request', 'EnquiryController@store');
         // Create New Applicant
         Route::get('/applicant/create/{id}', 'ApplicantController@create');
         Route::post('/applicant', 'ApplicantController@store');
-        Route::get('/applicant/accept/{lecture_id}/{applicant_id}', 'ApplicantController@accept');
-        Route::get('/applicant/finish/{lecture_id}/{applicant_id}', 'ApplicantController@finish');
-        Route::get('/applicants/{lecture_id}', 'ApplicantController@allApplicants');
-        Route::get('/messages/{lecture_id}/{applicant_id}', 'MessageController@allMessages');
+        Route::get('/applicant/accept/{enquiry_id}/{applicant_id}', 'ApplicantController@accept');
+        Route::get('/applicant/finish/{enquiry_id}/{applicant_id}', 'ApplicantController@finish');
+        Route::get('/applicants/{enquiry_id}', 'ApplicantController@allApplicants');
+        Route::get('/messages/{enquiry_id}/{applicant_id}', 'MessageController@allMessages');
         Route::post('/messages', 'MessageController@store');
 
     });

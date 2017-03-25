@@ -28,7 +28,7 @@ class BasicController extends Controller
     public function index()
     {
         $pages = Page::all();
-        return view('backend.lecture.index',compact('pages'));
+        return view('backend.enquiry.index',compact('pages'));
     }
 
     /**

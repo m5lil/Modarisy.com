@@ -18,7 +18,8 @@ class CreateMessagesTable extends Migration
             $table->integer('user_id');
             $table->text('body');
             $table->text('attached')->nullable();
-            $table->integer('lecture_id');
+            $table->tinyInteger('read')->default('0');
+            $table->integer('enquiry_id');
             $table->integer('applicant_id');
             $table->timestamps();
         });

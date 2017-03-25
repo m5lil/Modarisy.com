@@ -1420,7 +1420,7 @@ $.fn.dropdown = function(parameters) {
                   event.preventDefault();
                 }
 
-                // lecture down (show next lecture)
+                // enquiry down (show next enquiry)
                 if(pressedKey == keys.pageUp) {
                   module.scrollPage('up');
                   event.preventDefault();

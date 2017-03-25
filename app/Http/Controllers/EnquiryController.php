@@ -4,11 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Applicant;
 use Illuminate\Http\Request;
-use App\Lecture;
+use App\Enquiry;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Input;
 
-class LectureController extends Controller
+class EnquiryController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,22 +17,22 @@ class LectureController extends Controller
      */
     public function index()
     {
-        $lectures = Lecture::orderBy('statue', 'asc')->get();
-        return view('backend.lecture.index', compact('lectures'));
+        $enquiries = Enquiry::orderBy('statue', 'asc')->get();
+        return view('backend.enquiry.index', compact('enquiries'));
     }
 
     public function statue($type)
     {
         if ($type == 'suspend') {
-            $lectures = Lecture::where('statue', 0)->paginate(20);
+            $enquiries = Enquiry::where('statue', 0)->paginate(20);
         } elseif ($type == 'active') {
-            $lectures = Lecture::where('statue', 1)->paginate(20);
+            $enquiries = Enquiry::where('statue', 1)->paginate(20);
         } elseif ($type == 'in-progress') {
-            $lectures = Lecture::where('statue', 2)->paginate(20);
+            $enquiries = Enquiry::where('statue', 2)->paginate(20);
         } elseif ($type == 'done') {
-            $lectures = Lecture::where('statue', 3)->paginate(20);
+            $enquiries = Enquiry::where('statue', 3)->paginate(20);
         }
-        return view('backend.lecture.index', compact('lectures'));
+        return view('backend.enquiry.index', compact('enquiries'));
     }
 
 
@@ -43,12 +43,12 @@ class LectureController extends Controller
      */
     public function create()
     {
-        if (\Auth::user()->type == 3){
+        if (\Auth::user()->type == 3) {
             return view('frontend.request');
-        }elseif (\Auth::user()->type == 2){
+        } elseif (\Auth::user()->type == 2) {
             \Session::flash('message', 'لا يمكنك إضافة طلب لأنك ليس طالب');
             return redirect('/');
-        }else{
+        } else {
             \Session::flash('message', 'قم بالتسجيل أولا لتتمكن من إضافة طلب');
             return redirect('/register?t=3');
         }
@@ -57,14 +57,14 @@ class LectureController extends Controller
 
     public function createRequest()
     {
-        if (\Auth::user()->type == 3){
+        if (\Auth::user()->type == 3) {
             Cache::put('subject', Input::get('subject'), 2);
             Cache::put('total_hours', Input::get('total_hours'), 2);
             return view('frontend.request');
-        }elseif (\Auth::user()->type == 2){
+        } elseif (\Auth::user()->type == 2) {
             \Session::flash('message', 'لا يمكنك إضافة طلب لأنك ليس طالب');
             return redirect('/');
-        }else{
+        } else {
             \Session::flash('message', 'قم بالتسجيل أولا لتتمكن من إضافة طلب');
             return redirect('/register?t=3');
         }
@@ -84,16 +84,20 @@ class LectureController extends Controller
             'subject'        => 'required',
             'target'         => 'required',
             'comment'        => 'required',
-            'material'       => 'required'
+            'material'       => 'required',
+            'lat'            => 'required',
         );
+        $messages = [
+            'lat.required'    => 'رجاء قم بإختيار موقعك على الخريطه.',
+        ];
 
-        $validator = \Validator::make($request->all(), $rules);
+        $validator = \Validator::make($request->all(), $rules, $messages);
 
         if ($validator->fails()) {
             return \Redirect::back()
                 ->withErrors($validator);
         } else {
-            $enquire = new Lecture();
+            $enquire = new Enquiry();
             $enquire->user_id = \Auth::user()->id;
             $enquire->total_hours = $request->total_hours;
             $enquire->preferred_time = $request->preferred_time;
@@ -101,6 +105,8 @@ class LectureController extends Controller
             $enquire->target = $request->target;
             $enquire->comment = $request->comment;
             $enquire->material = $request->material;
+            $enquire->lat = $request->lat;
+            $enquire->lng = $request->lng;
             $enquire->save();
 
             // redirect
@@ -111,7 +117,6 @@ class LectureController extends Controller
     }
 
 
-
     /**
      * Display the specified resource.
      *
@@ -120,7 +125,7 @@ class LectureController extends Controller
      */
     public function show($id)
     {
-        return Lecture::findOrFail($id);
+        return Enquiry::findOrFail($id);
     }
 
     /**
@@ -131,17 +136,17 @@ class LectureController extends Controller
      */
     public function activate($id)
     {
-        $lecture = Lecture::findOrFail($id);
-        if($lecture) {
-            if ($lecture->statue == 0) {
-                $lecture->statue = '1';
-                $lecture->save();
+        $enquiry = Enquiry::findOrFail($id);
+        if ($enquiry) {
+            if ($enquiry->statue == 0) {
+                $enquiry->statue = '1';
+                $enquiry->save();
                 \Session::flash('message', 'تم تنشيط العرض');
-            }elseif ($lecture->statue == 1){
-                $lecture->statue = '0';
-                $lecture->save();
+            } elseif ($enquiry->statue == 1) {
+                $enquiry->statue = '0';
+                $enquiry->save();
                 \Session::flash('message', 'تم تعليق العرض');
-            }else{
+            } else {
                 \Session::flash('message', 'لايمكن تعديل الحالة حاليا');
             }
         }
@@ -168,21 +173,22 @@ class LectureController extends Controller
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function delete($id){
-        if(Lecture::find($id)->user->id == \Auth::user()->id){
-            $applicants = Applicant::where('lecture_id', Lecture::find($id)->id);
+    public function delete($id)
+    {
+        if (Enquiry::find($id)->user->id == \Auth::user()->id) {
+            $applicants = Applicant::where('enquiry_id', Enquiry::find($id)->id);
             $applicants->delete();
-            Lecture::destroy($id);
+            Enquiry::destroy($id);
             \Session::flash('message', 'تم الحذف');
             return redirect()->back();
-        }else{
+        } else {
             return redirect()->back();
         }
     }
 
     public function destroy($id)
     {
-        Lecture::destroy($id);
+        Enquiry::destroy($id);
         \Session::flash('message', 'تم الحذف');
         return redirect()->back();
 

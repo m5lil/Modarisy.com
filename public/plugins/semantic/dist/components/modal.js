@@ -601,7 +601,7 @@ $.fn.modal = function(parameters) {
               $body.css('height', '');
             }
             else {
-              module.debug('Modal is taller than lecture content, resizing lecture height');
+              module.debug('Modal is taller than enquiry content, resizing enquiry height');
               $body
                 .css('height', module.cache.height + (settings.padding * 2) )
               ;
@@ -868,7 +868,7 @@ $.fn.modal.settings = {
   offset     : 0,
   transition : 'scale',
 
-  // padding with edge of lecture
+  // padding with edge of enquiry
   padding    : 50,
 
   // called before show animation

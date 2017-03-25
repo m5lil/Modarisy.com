@@ -94,15 +94,17 @@
 
                                             <h3><a href="#">{{$enquery->subject}}</a></h3>
                                             <p>{{$enquery->comment}}</p>
-                                            <p>الغرض من الطلب : <strong>{{$enquery->target}}</strong> |
-                                                الوقت المفضل :
+                                            <p>الغرض من الطلب : <strong>{{$enquery->target}}</strong> |الوقت المفضل :
                                                 <strong>{{$enquery->PreferedTime($enquery->preferred_time)}}</strong>
                                             </p>
                                             <hr>
                                             <ul class="list-inline">
-                                                @if (!Auth::user()->applicatns->where('lecture_id', $enquery->id)->first() )
+                                                @if (!Auth::user()->applicatns->where('enquiry_id', $enquery->id)->first() )
                                                     <a href="{{ url('/applicant/create/' . $enquery->id) }}"
-                                                       class="btn btn-primary"> تقدم بعرضك </a>
+                                                       class="btn btn-primary btn1"> تقدم بعرضك </a>
+                                                @else
+                                                    <a href="{{ url('/messages/' . $enquery->id . '/' . Auth::user()->applicatns->where('enquiry_id', $enquery->id)->first()->id) }}"
+                                                       class="btn btn-primary btn1"> الرسائل </a>
                                                 @endif
                                                 <li><a href="{{url('/profile'). '/' .$enquery->user->id}}">الطالب :
                                                         <span>{{$enquery->user->FullName()}}</span></a></li>
@@ -125,8 +127,8 @@
                                                 </p>
                                                 <hr>
                                                 <ul class="list-inline">
-                                                    <a href="{{ url('/messages/' . $enquery->id . '/' . $enquery->applicants->find()->id) }}"
-                                                       class="btn btn-primary"> الرسائل </a>
+                                                    <a href="{{ url('/messages/' . $enquery->id . '/' . $enquery->applicant_id) }}"
+                                                       class="btn btn-primary btn"> الرسائل </a>
                                                     <li><a href="{{url('/profile'). '/' .$enquery->user->id}}">الطالب :
                                                             <span>{{$enquery->user->FullName()}}</span></a></li>
                                                     <li>عدد الساعات : <span>{{$enquery->total_hours}} ساعة</span></li>
@@ -137,7 +139,6 @@
                                     @endforeach
                                 @endif
                                 @if(isset($done_enqueries))
-
                                     @foreach($done_enqueries as $enquery)
                                         <div class="col-md-12 col-sm-12 col-xs-12 mix category-3" data-bound="">
                                             <div class="caarss ">

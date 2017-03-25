@@ -9,10 +9,31 @@
     @endif
 
     <div class="ui label">
-        <i class="mail icon"></i> {{count(\App\Inbox::get())}} رسالة
+        <i class="hashtag icon"></i><span style="color:#f50057;">{{count(\App\Inbox::get())}}</span>&nbsp;  رسالة للإدارة
     </div>
     <div class="ui label">
-        <i class="file icon"></i> {{count(\App\Page::get())}} صفحة
+        <i class="hashtag icon"></i><span style="color:#f50057;">{{count(\App\Applicant::get())}}</span>&nbsp;  عروض
+    </div>
+    <div class="ui label">
+        <i class="hashtag icon"></i><span style="color:#f50057;">{{count(\App\Applicant::where('statue',0)->get())}}</span>&nbsp;  عروض غير مفعله
+    </div>
+    <div class="ui label">
+        <i class="hashtag icon"></i><span style="color:#f50057;">{{count(\App\Enquiry::get())}}</span>&nbsp;  طلبات
+    </div>
+    <div class="ui label">
+        <i class="hashtag icon"></i><span style="color:#f50057;">{{count(\App\Enquiry::where('statue',0)->get())}}</span>&nbsp;  طلبات غير مفعله
+    </div>
+    <div class="ui label">
+        <i class="hashtag icon"></i><span style="color:#f50057;">{{count(\App\Page::get())}}</span>&nbsp;  صفحة
+    </div>
+    <div class="ui label">
+        <i class="hashtag icon"></i><span style="color:#f50057;">{{count(\App\User::where('type',2)->get())}}</span>&nbsp;  مدرس
+    </div>
+    <div class="ui label">
+        <i class="hashtag icon"></i><span style="color:#f50057;">{{count(\App\User::where('type',3)->get())}}</span>&nbsp;  طالب
+    </div>
+    <div class="ui label">
+        <i class="hashtag icon"></i><span style="color:#f50057;">{{count(\App\Subscriber::get())}}</span>&nbsp;  مشترك فى القائمة البريدية
     </div>
 
     <hr/>

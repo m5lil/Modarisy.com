@@ -57,6 +57,13 @@
             @endforeach
 
             <div class="field">
+                <label>العنوان</label>
+                <input name="slug" id="title" type="text"
+                        placeholder="إسم الصفحة أو إختصار معبر لها باللغةالإنجليزية">
+            </div>
+
+
+            <div class="field">
                 {!! Form::label('photo', 'الصورة*', array('class'=>'col-sm-2 control-label')) !!}
                     {!! Form::file('photo') !!}
                     {!! Form::hidden('photo_w', 4096) !!}

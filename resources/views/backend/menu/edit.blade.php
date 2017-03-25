@@ -31,7 +31,7 @@
             </div>
             <div class="four wide field">
                 <label>رابط من صفحة</label>
-                {!! Form::select('url',  \App\Page::translatedIn('en')->get()->pluck('title','slug'), null, array('id'=>'b', 'class'=>'form-control')) !!}
+                {!! Form::select('url',  \App\Page::translatedIn('en')->where('statue',1)->get()->pluck('title','slug'), null, array('id'=>'b', 'class'=>'form-control')) !!}
             </div>
         </div>
 

@@ -33,9 +33,10 @@
         <section class="modarsyy-1">
             <div class="container">
                 <div class="row">
-                    <div class="col-sm-12 col-xs-12">
+
+                    <div class="col-sm-6 col-xs-12">
                         <div class="form">
-                            {!! Form::open(array('action' => 'LectureController@store', 'method' => 'POST')) !!}
+                            {!! Form::open(array('action' => 'EnquiryController@store', 'method' => 'POST')) !!}
 
                             <select name="material" id="">
                                 <option selected disabled>المادة</option>
@@ -60,10 +61,47 @@
                                 <option value="4">فى أى وقت فى اليوم</option>
                             </select>
 
+                            <input id="pac-input" type="text" placeholder="Search Box"/>
+
+                            {!! Form::hidden('lat', null, ['id' => 'lat']) !!}
+
+                            {!! Form::hidden('lng', null, ['id' => 'lng']) !!}
+
                             {!! Form::submit('طلب') !!}
 
                             {!! Form::close() !!}
                         </div>
+                    </div>
+
+
+                    <div class="col-sm-6 col-xs-12">
+                        <div id="map-canvas" style="height: 730px; width: 100%;">
+                            <script type="text/javascript">
+                                var $maperizer = $('#map-canvas').maperizer(Maperizer.MAP_OPTIONS);
+
+                                $maperizer.maperizer('setCenter', {
+                                    location: 'Saudi Arabia'
+                                });
+
+                                var latField = $('input#lat'),
+                                    lngField = $('input#lng');
+
+                                $maperizer.maperizer('attachEventsToMap', [{
+                                        name: 'click',
+                                        callback: function(event){
+                                            $maperizer.maperizer('removeAllMarkers');
+                                            $maperizer.maperizer('addMarker', {
+                                                lat: event.latLng.lat(),
+                                                lng: event.latLng.lng(),
+                                            });
+                                            latField.val(event.latLng.lat());
+                                            lngField.val(event.latLng.lng());
+                                        }
+                                    }]
+                                );
+
+                            </script>
+
                     </div>
 
                 </div>

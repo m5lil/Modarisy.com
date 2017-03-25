@@ -43,41 +43,68 @@
         <a href="/dashboard/users" class="item">
             <i class="file icon"></i> الأعضاء
         </a>
-        <a href="/dashboard/roles" class="item">
+        <a href="/dashboard/abilities" class="item">
             <i class="file icon"></i> الصلاحيات
         </a>
-        <a href="/dashboard/members/students" class="item">
+        <a href="/dashboard/users/members/students" class="item">
             <i class="file icon"></i> التلاميذ
         </a>
-        <a href="/dashboard/members/teachers" class="item">
+        <a href="/dashboard/users/members/teachers" class="item">
             <i class="file icon"></i> المدرسين
         </a>
     </div>
 
 
     <div class="ui item title">
-        <i class="dropdown icon"></i> الإعلانات
+        <i class="dropdown icon"></i> الطلبات
     </div>
     <div class="content">
-        <a href="/dashboard/" class="item">
-            <i class="file icon"></i> الأقسام
+        <a href="/dashboard/enquiries" class="item">
+            <i class="file icon"></i>الطلبات
         </a>
-        <a href="/dashboard/" class="item">
-            <i class="file icon"></i> الإعلانات
+        <a href="/dashboard/enquiries/statue/suspend" class="item">
+            <i class="file icon"></i>غير مفعلة
         </a>
-        <a href="/dashboard/" class="item">
-            <i class="file icon"></i> الماركات/الموديلات
+        <a href="/dashboard/enquiries/statue/active" class="item">
+            <i class="file icon"></i>الطلبات الجديدة
+        </a>
+        <a href="/dashboard/enquiries/statue/in-progress" class="item">
+            <i class="file icon"></i>جارى العمل عليها
+        </a>
+        <a href="/dashboard/enquiries/statue/done" class="item">
+            <i class="file icon"></i>تم إنهائها
+        </a>
+    </div>
+
+    <div class="ui item title">
+        <i class="dropdown icon"></i> العروض
+    </div>
+    <div class="content">
+        <a href="/dashboard/applicants" class="item">
+            <i class="file icon"></i> العروض
+        </a>
+        <a href="/dashboard/applicants/statue/suspend" class="item">
+            <i class="file icon"></i> غير مفعلة
+        </a>
+        <a href="/dashboard/applicants/statue/active" class="item">
+            <i class="file icon"></i> الطلبات الجديدة
+        </a>
+        <a href="/dashboard/applicants/statue/in-progress" class="item">
+            <i class="file icon"></i>  جارى العمل عليها
+        </a>
+        <a href="/dashboard/applicants/statue/done" class="item">
+            <i class="file icon"></i> تم إنهائها
         </a>
     </div>
     <div class="ui item title">
-        <i class="dropdown icon"></i> الإعلانات
+        <i class="dropdown icon"></i> المدونة
     </div>
     <div class="content">
-        <a href="/dashboard/" class="item">
+        <a href="/dashboard/blog/categories" class="item">
             <i class="file icon"></i> الأقسام
         </a>
-        <a href="/dashboard/" class="item">
-            <i class="file icon"></i> الإعلانات
+        <a href="/dashboard/blog/posts" class="item">
+            <i class="file icon"></i> المقالات
         </a>
     </div>
 

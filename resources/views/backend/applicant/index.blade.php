@@ -19,32 +19,10 @@
         @elseif (Request::is('dashboard/applicants/statue/done'))
             منتهية
         @else
-            الطلبات
+            العروض
         @endif
     </h4>
 
-    <div class="ui modal eshow">
-        <div class="header">محتوى الرساله</div>
-        <div class="content">
-            <div class="ui header" id="subject"></div>
-            <p id="name"></p>
-            <p id="body"></p>
-            <hr/>
-            <p id="phone"></p>
-            <p id="email"></p>
-        </div>
-    </div>
-    <div class="ui modal ereply">
-        <div class="header">محتوى الرساله</div>
-        <div class="content">
-            <div class="ui header" id="subject"></div>
-            <p id="name"></p>
-            <p id="body"></p>
-            <hr/>
-            <p id="phone"></p>
-            <p id="email"></p>
-        </div>
-    </div>
     <table class="ui compact basic table">
         <thead class="full-width">
         <tr>
@@ -53,7 +31,7 @@
             </th>
             <th>عنوان الطلب</th>
             <th>الحالة</th>
-            <th>عدد الساعات</th>
+            <th>سعر الساعة</th>
             <th>صاحب الطلب</th>
             <th> المعلم المتقدم</th>
             <th>منذ</th>
@@ -71,11 +49,11 @@
                 <td class="collapsing">
                     {{$value->id}}
                 </td>
-                <td><strong>{{$value->lecture->subject}}</strong></td>
+                <td><strong>{{$value->enquiry->subject}}</strong></td>
                 <td>{{$value->Statue($value->statue)}}</td>
                 <td>{{$value->hour_price}}</td>
-                <td>{{$value->lecture->user->first_name}}</td>
-                <td>{{$value->user->first_name}}</td>
+                <td>{{$value->enquiry->user->FullName()}}</td>
+                <td>{{$value->user->FullName()}}</td>
                 <td>{{ \Date::parse($value->created_at)->diffForHumans() }}</td>
                 <td class="two wide">
                     <a href="{{url('/dashboard/applicant/') . '/' . $value->id . '/delete'}}"

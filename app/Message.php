@@ -8,10 +8,12 @@ class Message extends Model
 {
     protected $fillable = [
         'user_id',
-        'lecture_id',
+        'enquiry_id',
         'body',
         'applicant_id',
         'attached',
+        'read',
+        'to',
     ];
 
 

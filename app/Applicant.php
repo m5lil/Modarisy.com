@@ -8,7 +8,7 @@ class Applicant extends Model
 {
     protected $fillable = [
         'user_id',
-        'lecture_id',
+        'enquiry_id',
         'brief',
         'hour_price',
         'paid',
@@ -17,26 +17,30 @@ class Applicant extends Model
 
     public function Statue($num)
     {
-        if ($num == 0){
+        if ($num == 0) {
             return 'معلقة';
-        }elseif ($num == 1){
+        } elseif ($num == 1) {
             return 'مفعلة';
-        }elseif ($num == 2){
+        } elseif ($num == 2) {
             return 'جارى العمل';
-        }elseif ($num == 3){
+        } elseif ($num == 3) {
             return 'منتهية';
         }
     }
-
+//
+//    public function newQuery()
+//    {
+//        return parent::newQuery()->where('statue', '!=', 0);
+//    }
 
     public function user()
     {
         return $this->belongsTo('App\User');
     }
 
-    public function lecture()
+    public function enquiry()
     {
-        return $this->belongsTo('App\Lecture');
+        return $this->belongsTo('App\Enquiry');
     }
 
 

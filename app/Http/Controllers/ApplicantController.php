@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Lecture;
+use App\Enquiry;
 use Illuminate\Http\Request;
 use App\Applicant;
 use Illuminate\Support\Facades\Auth;
@@ -22,11 +22,12 @@ class ApplicantController extends Controller
         return view('backend.applicant.index', compact('applicants'));
     }
 
-    public function allApplicants($lecture_id)
+    public function allApplicants($enquiry_id)
     {
-        if (\Auth::user()->id == Lecture::find($lecture_id)->user->id) {
-            $applicants = Applicant::orderBy('statue', 'asc')->where('lecture_id', $lecture_id)->get();
-            return view('frontend.applicants', compact('applicants', 'lecture_id'));
+        if (\Auth::user()->id == Enquiry::find($enquiry_id)->user->id) {
+            $applicants = Applicant::orderBy('statue', 'asc')->where('enquiry_id', $enquiry_id)->where('statue', 1)
+                ->get();
+            return view('frontend.applicants', compact('applicants', 'enquiry_id'));
         } else {
 
         }
@@ -87,7 +88,7 @@ class ApplicantController extends Controller
         } else {
             $enquire = new Applicant();
             $enquire->user_id = \Auth::user()->id;
-            $enquire->lecture_id = $request->lecture_id;
+            $enquire->enquiry_id = $request->enquiry_id;
             $enquire->brief = $request->brief;
             $enquire->hour_price = $request->hour_price;
             $enquire->paid = 0;
@@ -102,13 +103,12 @@ class ApplicantController extends Controller
     }
 
 
-
-    public function accept($lecture_id,$applicant_id)
+    public function accept($enquiry_id, $applicant_id)
     {
-        $accept = Lecture::findOrFail($lecture_id);
+        $accept = Enquiry::findOrFail($enquiry_id);
         $applicant = Applicant::find($applicant_id);
         $teacher_id = Applicant::find($applicant_id)->user->id;
-        if ($accept){
+        if ($accept) {
             $accept->applicant_id = $applicant_id;
             $accept->statue = 2;
             $accept->teacher_id = $teacher_id;
@@ -119,21 +119,21 @@ class ApplicantController extends Controller
             $applicant->save();
 
             \Session::flash('message', 'تم الموافقة بنجاح');
-            return \Redirect::to('/messages' . '/' . $lecture_id . '/' . $applicant_id);
+            return \Redirect::to('/messages' . '/' . $enquiry_id . '/' . $applicant_id);
 
         }
 
     }
 
-    public function finish($lecture_id,$applicant_id)
+    public function finish($enquiry_id, $applicant_id)
     {
-        $accept = Lecture::findOrFail($lecture_id);
+        $accept = Enquiry::findOrFail($enquiry_id);
         $applicant = Applicant::find($applicant_id);
-        if ($accept){
-            $accept->statue = 2;
+        if ($accept) {
+            $accept->statue = 3;
             $accept->save();
 
-            $applicant->statue = 2;
+            $applicant->statue = 3;
             $applicant->save();
 
             \Session::flash('message', 'تهانينا !!');
@@ -207,7 +207,7 @@ class ApplicantController extends Controller
             Applicant::destroy($id);
             \Session::flash('message', 'تم الحذف');
             return redirect()->back();
-        }else{
+        } else {
             return redirect()->back();
         }
     }

@@ -21,7 +21,7 @@
                     <div class="col-xs-12">
                         <h2>
                             <a href="#">أكتب بيانات عرضك الذى تريد تقديمة</a>
-                            <p>هذا العرض بخصوص طلب بعنوان <strong>{{ App\Lecture::findOrFail($id)->subject }}</strong> للطالب  <strong>{{ App\Lecture::findOrFail($id)->user->FullName() }}</strong></p>
+                            <p>هذا العرض بخصوص طلب بعنوان <strong>{{ App\Enquiry::findOrFail($id)->subject }}</strong> للطالب  <strong>{{ App\Enquiry::findOrFail($id)->user->FullName() }}</strong></p>
                         </h2>
                     </div>
                 </div>
@@ -34,7 +34,7 @@
                         <div class="form">
                             {!! Form::open(array('action' => 'ApplicantController@store', 'method' => 'POST')) !!}
                             
-                            <input type="hidden" name="lecture_id" value="{{$id}}">
+                            <input type="hidden" name="enquiry_id" value="{{$id}}">
 
                             <textarea name="brief" id="" cols="30" rows="10" placeholder="ملاحظات"></textarea>
 

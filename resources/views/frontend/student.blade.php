@@ -41,7 +41,7 @@
                     <hr>
                     <p> السن <span class="detils-p-2">: {{ Auth::user()->profile->age }} عام</span></p>
                     <hr>
-                    <p> البريد الإلكترونى <span class="detils-p-2">: {{ Auth::user()->email }} عام</span></p>
+                    <p> البريد الإلكترونى <span class="detils-p-2">: {{ Auth::user()->email }}</span></p>
                     <hr>
                     <p> رقم الجوال <span class="detils-p-2">: {{ Auth::user()->phone }}</span></p>
                     <hr>
@@ -96,10 +96,10 @@
                                             <hr>
                                             <ul class="list-inline">
                                                     <a href="{{ url('/request/' . $enquery->id) . '/delete' }}"
-                                                       class="btn btn-danger"> X </a>
+                                                       class="btn btn-danger btn1"> <i class="fa fa-trash-o"></i> </a>
 
                                                     <a href="{{ url('/applicants/' . $enquery->id) }}"
-                                                       class="btn btn-primary"> العروض المقدمة ({{ count(\App\Applicant::where('lecture_id',$enquery->id)->get()) }})</a>
+                                                       class="btn btn-primary btn1"> <i class="fa fa-wpforms"></i> العروض المقدمة <span class="badge"> {{ count(\App\Applicant::where('enquiry_id',$enquery->id)->where('statue', 1)->get()) }}</span></a>
 
                                                 <li>عدد الساعات : <span>{{$enquery->total_hours}} ساعة</span></li>
                                             </ul>
@@ -111,15 +111,15 @@
                                     <div class="col-md-12 col-sm-12 col-xs-12 mix category-2" data-bound="">
                                         <div class="caarss ">
 
-                                            <h3><a href="#">{{$applicant->lecture->subject}}</a></h3>
+                                            <h3><a href="#">{{$applicant->enquiry->subject}}</a></h3>
                                             <p>{{$applicant->brief}}</p>
                                             <p>الأستاذ /  {{$applicant->user->FullName()}}</p>
                                             <hr>
                                             <ul class="list-inline">
-                                                    <a href="{{ url('/applicant/finish/' . $applicant->lecture_id . '/' . $applicant->id) }}"
-                                                       class="btn btn-default"> إنتهى الدرس </a>
-                                                    <a href="{{ url('/messages/' . $applicant->lecture_id . '/' . $applicant->id) }}"
-                                                   class="btn btn-primary"> الرسائل </a>
+                                                    <a href="{{ url('/applicant/finish/' . $applicant->enquiry_id . '/' . $applicant->id) }}"
+                                                       class="btn btn-default btn1"> إنتهى الدرس </a>
+                                                    <a href="{{ url('/messages/' . $applicant->enquiry_id . '/' . $applicant->id) }}"
+                                                   class="btn btn-primary btn1"> الرسائل <span class="badge"> {{ count(\App\Message::where('enquiry_id',$applicant->enquiry_id)->where('read',0)->where('applicant_id', $applicant->id)->get()) }}</span></a>
 
                                                 <li>عدد الساعات : <span>{{$applicant->total_hours}} ساعة</span></li>
                                             </ul>
@@ -131,14 +131,14 @@
                                     <div class="col-md-12 col-sm-12 col-xs-12 mix category-3" data-bound="">
                                         <div class="caarss ">
 
-                                            <h3><a href="#">{{$applicant->lecture->subject}}</a></h3>
+                                            <h3><a href="#">{{$applicant->enquiry->subject}}</a></h3>
                                             <p>{{$applicant->brief}}</p>
                                             <p>الأستاذ /  {{$applicant->user->FullName()}}</p>
                                             <hr>
                                             <ul class="list-inline">
-                                                <li>عدد الساعات : <span>{{$applicant->lecture->total_hours}} ساعة</span></li>
+                                                <li>عدد الساعات : <span>{{$applicant->enquiry->total_hours}} ساعة</span></li>
                                                 <li>سعر الساعة : <span>${{$applicant->hour_price}} / ساعة</span></li>
-                                                <li>إجمالى السعر : <span>{{$applicant->lecture->total_hours * $applicant->hour_price }} دولار</span></li>
+                                                <li>إجمالى السعر : <span>{{$applicant->enquiry->total_hours * $applicant->hour_price }} دولار</span></li>
                                             </ul>
 
                                         </div>
