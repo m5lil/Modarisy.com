@@ -108,11 +108,14 @@
                                 <td> &nbsp; <i class="level up icon"></i> <strong>{{$subMenuItem->title}} </strong>
                                     (رابط
                                     فرعى)<br/> &nbsp;
-                                    &nbsp; @if(in_array( $subMenuItem->url  , \App\Page::pluck('slug')->toArray() ))
-                                        &nbsp;&nbsp;&nbsp;صفحة :
+                                    @if(in_array( $subMenuItem->url  , \App\Page::pluck('slug')->toArray() ))
+                                        &nbsp;&nbsp;&nbsp;<strong>صفحة</strong> :
+                                        <small>{{ $subMenuItem->url }}</small>
+                                    @elseif(strpos($subMenuItem->url, 'section/') )
+                                        &nbsp;&nbsp;&nbsp;<strong>قسم</strong> :
                                         <small>{{ $subMenuItem->url }}</small>
                                     @else
-                                        &nbsp;&nbsp;&nbsp; http://{{$subMenuItem->url}}
+                                        &nbsp;&nbsp;&nbsp;<strong>رابط</strong> : http://{{$subMenuItem->url}}
                                     @endif
                                 </td>
                                 <td class="two wide">

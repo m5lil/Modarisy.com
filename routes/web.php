@@ -102,9 +102,10 @@ Route::group(['prefix' => 'dashboard', 'middleware' => 'admin'], function () {
     Route::get('/applicant/activate/{id}', 'ApplicantController@activate');
     Route::get('/applicant/{id}/delete', 'ApplicantController@destroy');
 
-    // ------------------------------- Other ----------------------------- //
+    // ------------------------------- Material ----------------------------- //
     Route::get('/materials', 'DashController@get_materials');
     Route::post('/materials/create', 'DashController@add_material');
+    Route::get('/materials/delete/{id}', 'DashController@delete_material');
 
 
 });

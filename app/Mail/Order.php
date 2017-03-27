@@ -31,7 +31,7 @@ class Order extends Mailable
 //            ->with([
 //                'orderName' => $this->order->name,
 //                'orderPrice' => $this->order->price,
-//            ])
+//            ]);
 //            ->attach('/path/to/file', [
 //                'as' => 'name.pdf',
 //                'mime' => 'application/pdf',

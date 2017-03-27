@@ -108,6 +108,11 @@
         </a>
     </div>
 
+    <a href="/dashboard/materials" class="item">
+        <i class="book blue icon"></i> المواد
+    </a>
+
+
 </div>
 <div class="pusher" style="">
     <div class="ui grid">
@@ -183,7 +188,7 @@
                             <i class="wpforms icon blue"></i> الطلبات
                             <div class="menu">
                                 <a href="/dashboard/enquiries" class="item">
-                                    <i class="hashtag icon"></i> العروض
+                                    <i class="hashtag icon"></i> الطلبات
                                 </a>
                                 <a href="/dashboard/enquiries/statue/suspend" class="item">
                                     <i class="hashtag icon"></i> غير مفعلة
@@ -228,9 +233,15 @@
                                     <a href="{{ url('/') }}" target="_blank" class="item">
                                         <i class="hashtag icon"></i> زيارة الموقع
                                     </a>
-                                    <div class="item">
-                                        <i class="hashtag icon"></i> تسجيل خروج
-                                    </div>
+                                        <a type="submit"
+                                                onclick="event.preventDefault();
+                                document.getElementById('logout-form').submit();"
+                                                class="item"><i class="power icon"></i>  خروج
+                                        </a>
+                                        <form id="logout-form" action="{{ url('/logout') }}" method="POST"
+                                              style="display: none;">
+                                            {{ csrf_field() }}
+                                        </form>
                                 </div>
                             </div>
                         </div>

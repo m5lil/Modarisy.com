@@ -90,7 +90,7 @@
                                 <div class="advertising1-car-1">
                                     <div class="row">
                                         <div class="col-md-4 col-sm-2 col-xs-12 ">
-                                            <button class="bot-2 filter " data-filter=".category-2">
+                                            <button class="bot-2 filter active" data-filter=".category-2">
                                                 <i class="fa fa-wpforms" aria-hidden="true"></i>
                                                 جاري العمل علية
                                             </button>
@@ -234,8 +234,29 @@
                         @endif
 
                     </div>
+                    <div class="panel panel-default" style="margin-top: 20px;">
+                        <div class="panel-heading">التقييمات</div>
+
+                        <div class="panel-body">
+                            @foreach($profile->reviews()->get() as $value)
+                                <div class="col-md-12 col-sm-12 col-xs-12 mix category-3"
+                                     style="margin: 10px;background-color: #fff;">
+                                    <div class="caarss ">
+                                        <h4>
+                                            {{$value->title}} - <small>{{$value->author->FullName()}}</small>
+                                        </h4>
+                                        <p>{{@$value->body}}</p>
+                                        <p><input type="hidden" readonly="readonly" class="rating" value="{{$value->rating}}">
+                                        </p>
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
+                    </div>
+
                 </div>
             </div>
+
         </div>
     </secrion>
     <!--owl-slider**********************************-->

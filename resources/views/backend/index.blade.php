@@ -153,7 +153,7 @@
                 <img src="{{url('/images/png/profile.png')}}">
             </div>
             <div class="content">
-                <div class="header">المدرسين</div>
+                <div class="header">الطلاب</div>
                 <div class="description">
                     يمكن إضافة وعرض وتعديل وحذف الأعضاء وأيضا إضافهة صلاحيات جديده وتحديدها لأعضـــــاء معينه
                 </div>
@@ -176,6 +176,25 @@
                 <div class="header">الرسائل</div>
                 <div class="description">
                     يمكن إضافة وعرض وتعديل وحذف الأعضاء وأيضا إضافهة صلاحيات جديده وتحديدها لأعضـــــاء معينه
+                </div>
+            </div>
+            <div class="extra content">
+            <span class="right floated">
+                 {{count(\App\Inbox::where('read', 0)->get())}} رسالة جديده
+            </span>
+                <span>
+              <i class="mail icon"></i> {{count(\App\Inbox::get())}} رسالة
+            </span>
+            </div>
+        </a>
+        <a href="/dashboard/subscribers" class="card">
+            <div class="image">
+                <img src="{{url('/images/png/paper-plane.png')}}">
+            </div>
+            <div class="content">
+                <div class="header">القائمة البريدية</div>
+                <div class="description">
+                    يمكنك من إرسال نشرة بريدية للأعضاء المشتركين لديك
                 </div>
             </div>
             <div class="extra content">

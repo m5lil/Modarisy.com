@@ -70,12 +70,7 @@
                             </select>
 
                             @if(Auth::user()->type == 2)
-                                <select name="specialty" id="">
-                                    <option selected disabled>التخصص</option>
-                                    <option value="arabic">لغة عربية</option>
-                                    <option value="scince">علوم</option>
-                                    <option value="math">رياضيات</option>
-                                </select>
+                                {{Form::select('specialty',\App\Materials::pluck('title','slug'),null,['class' => 'form-control'])}}
                                 <input type="text" name="gen_exp" placeholder="سنوات الخبره فى مجال تخصصك">
                                 <input type="text" name="sch_exp" placeholder="سنوات العمل فى مجال التدريس">
                                 <input type="text" name="hour_rate" placeholder="سعر الساعة بالدولار">

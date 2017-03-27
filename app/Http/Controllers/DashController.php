@@ -26,16 +26,25 @@ class DashController extends Controller
             'slug'  => 'required'
         );
 
-        $validator = Validator::make($request->all(), $rules);
+        $validator = \Validator::make($request->all(), $rules);
 
         if ($validator->fails()) {
             return Redirect::to('dashboard/materials')
                 ->withErrors($validator);
         } else {
-            Page::create($request->all());              //save
+            Materials::create($request->all());              //save
             // redirect
-            Session::flash('message', 'تم بنجاح!');
-            return Redirect::to('dashboard/materials');
+            \Session::flash('message', 'تم بنجاح!');
+            return \Redirect::to('dashboard/materials');
         }
     }
+
+    public function delete_material($id)
+    {
+        $material = Materials::findOrFail($id);
+        $material->delete();
+        \Session::flash('message', 'تم بنجاح!');
+        return redirect('/dashboard/materials');
+    }
+
 }
