@@ -222,7 +222,7 @@
                 <div class="col-md-3 col-sm-6 col-xs-12">
                     <p class="first"> القائمة البريدية </p>
                     <hr>
-                    <div class="form">
+                    <div class="form123">
                         {{Form::open(array('action' => 'SubscribersController@Submit','method' => 'post'))}}
                         {{Form::text('name',null,array('placeholder'=>'إسمك الكريم','class' => 'input1'))}}
                         {{Form::text('email',null,array('placeholder'=>'بريدك الإلكترونى','class' => 'input1'))}}
@@ -344,7 +344,7 @@
                 }
             });
         });
-        $('.form').submit(function (e) {
+        $('.form123').submit(function (e) {
             e.preventDefault();
             $('input[type="submit"]').click();
         });
