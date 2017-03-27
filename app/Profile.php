@@ -3,9 +3,12 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use BrianFaust\Reviewable\HasReviews;
 
 class Profile extends Model
 {
+
+    use HasReviews;
     public $timestamps = false;
 	protected $fillable = [
         'gen_exp',

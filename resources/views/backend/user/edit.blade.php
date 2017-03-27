@@ -23,16 +23,19 @@
         </div>
 
         {{--@if ($user->isAn('admin'))--}}
-            @if($user->type != 3 || $user->type != 2)
+            @if($user->type != 3 AND $user->type != 2)
                 <div class="field">
                     {!! Form::label('role', 'الصلاحية:') !!}
                     {!! Form::select('role', Bouncer::role()->pluck('name', 'name'), $user->roles()->pluck('name','name')->toArray(), array('class'=>'form-control')) !!}
                 </div>
             @endif
-            <div class="field">
-                {!! Form::label('activated', 'Active:') !!}
-                {!! Form::select('activated', [1 => 'مفعل', 0 => 'غير مفعل'], $user->activated, array('class'=>'form-control')) !!}
+        <div class="inline  field">
+            <div class="ui toggle checkbox">
+                {!! Form::checkbox('activated', 1)  !!}
+                {!! Form::label('activated', 'مفعل') !!}
             </div>
+        </div>
+
         {{--@endif--}}
 
         <div class="actions">

@@ -29,7 +29,7 @@ class ApplicantController extends Controller
                 ->get();
             return view('frontend.applicants', compact('applicants', 'enquiry_id'));
         } else {
-
+            return redirect()->back();
         }
     }
 
@@ -125,11 +125,22 @@ class ApplicantController extends Controller
 
     }
 
-    public function finish($enquiry_id, $applicant_id)
+    public function finish(Request $request)
     {
-        $accept = Enquiry::findOrFail($enquiry_id);
-        $applicant = Applicant::find($applicant_id);
+        $accept = Enquiry::findOrFail($request->enquiry_id);
+        $applicant = Applicant::find($request->applicant_id);
         if ($accept) {
+
+        $user = Auth::user();
+        $profile = $applicant->user->profile;
+//        dd($profile);
+
+        $profile->createReview([
+            'title'  => $request->title,
+            'body'   => $request->body,
+            'rating' => $request->rating,
+        ], $user);
+
             $accept->statue = 3;
             $accept->save();
 

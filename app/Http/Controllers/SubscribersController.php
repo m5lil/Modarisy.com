@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Subscriber;
+use Illuminate\Support\Facades\Mail;
 use Validator;
 use Illuminate\Support\Facades\Input;
+
 class SubscribersController extends Controller
 {
     /**
@@ -16,7 +18,7 @@ class SubscribersController extends Controller
     public function index()
     {
         $subscribers = Subscriber::paginate(20);
-        return view('backend.subscriber.index',compact('subscribers'));
+        return view('backend.subscriber.index', compact('subscribers'));
     }
 
     /**
@@ -32,18 +34,30 @@ class SubscribersController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        //
+        $title = $request->subject;
+        $content = $request->message;
+//        dd($content);
+
+        $send = Mail::send('emails.newsletter', ['title' => $title, 'content' => $content], function ($message) use ($title) {
+            $message->from('newsletter@modariy.com', 'Modarisy');
+            $message->to(Subscriber::pluck('email')->toArray());
+            $message->subject($title);
+        });
+        \Session::flash('message', 'تم بنجاح!');
+        return redirect()->back();
+
+
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -54,7 +68,7 @@ class SubscribersController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -65,8 +79,8 @@ class SubscribersController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request $request
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -77,34 +91,37 @@ class SubscribersController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function delete($id)
     {
-        return Subscriber::destroy($id);
+        Subscriber::destroy($id);
+        \Session::flash('message', 'تم بنجاح!');
+        return redirect()->back();
+
     }
 
 
-    public function Submit() {
+    public function Submit()
+    {
         $validation = Validator::make(Input::all(), array(
-                'name' => 'required',
+                'name'  => 'required',
                 'email' => 'required|email|unique:subscribers,email'
             )
         );
 
-        if($validation->fails()) {
+        if ($validation->fails()) {
             return $validation->errors()->first();
         } else {
-
             $create = Subscriber::create(array(
-                'name' => Input::get('name'),
+                'name'  => Input::get('name'),
                 'email' => Input::get('email')
             ));
 
             //If successful, we will be returning the '1' so the form//understands it's successful
             //or if we encountered an unsuccessful creation attempt,return its info
-            return $create?'1':'We could not save your address to oursystem, please try again later';
+            return $create ? '1' : 'We could not save your address to oursystem, please try again later';
         }
     }
 

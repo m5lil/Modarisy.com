@@ -14,11 +14,12 @@ class Category extends Model
 
     protected $fillable = [
         'status',
+        'slug',
     ];
 
      public function posts()
      {
-         return $this->hasMany('App\Posts','category_id');
+         return $this->hasMany('App\Post');
      }
 	// use SluggableTrait;
     // protected $sluggable = [

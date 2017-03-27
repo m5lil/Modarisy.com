@@ -31,7 +31,7 @@
             </div>
             <div class="four wide field">
                 <label>رابط من صفحة</label>
-                {!! Form::select('url',  \App\Page::translatedIn('en')->where('statue',1)->get()->pluck('title','slug'), null, array('id'=>'b', 'class'=>'form-control')) !!}
+                {!! Form::select('url',  $pages, null, array('id'=>'b', 'class'=>'form-control')) !!}
             </div>
         </div>
 
@@ -40,6 +40,7 @@
             {!! Form::text('order', old('order'), array('class'=>'form-control')) !!}
         </div>
         <div class="field">
+            <label>الرابط الرئيسيى (الأب)</label>
             {!! Form::select('parent_id', $menus , null, array('class'=>'form-control')) !!}
         </div>
 

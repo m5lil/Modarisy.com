@@ -23,7 +23,7 @@
     <script src="{{ url('/js/jquery-1.12.2.js') }}"></script>
     <script src="{{ url('/js/jquery-ui.min.js') }}"></script>
 
-    <script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBWymiO9Sk-Xp_8gVAuegZ3TpJ1FtbFLZI&amp;sensor=false&amp;signed_in=true&amp;libraries=geometry,places"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBWymiO9Sk-Xp_8gVAuegZ3TpJ1FtbFLZI&amp;sensor=false&amp;signed_in=true&amp;libraries=geometry,places"></script>
     <script src="{{asset('js/markerclusterer.js')}}"></script>
     <script src="{{asset('js/maperizer/List.js')}}"></script>
     <script src="{{asset('js/maperizer/Maperizer.js')}}"></script>
@@ -122,14 +122,34 @@
                             @foreach(App\Menu::orderBy('order','asc')->get() as $menuItem)
                                 @if( $menuItem->parent_id == 0 )
                                     <li class="qw {{ $menuItem->url ? '' : "dropdown menu-item-has-children" }}">
-                                        <a href="{{ $menuItem->children->isEmpty() ? in_array($menuItem->url,\App\Page::pluck('slug')->toArray()) ? url('/'.$menuItem->url) : 'http://'.$menuItem->url : "#" }}" {{ $menuItem->children->isEmpty() ? '' : "class=\"dropdown-toggle\" data-toggle=dropdown role=button aria-expanded=false" }}>{{ $menuItem->title }}</a>
-                                        @endif
+                                        <a href="@if($menuItem->children->isEmpty())
+                                                @if(in_array($menuItem->url,\App\Page::pluck('slug')->toArray()))
+                                                    {{ $menuItem->url}}
+                                                @elseif(strpos($menuItem->url, '/') !== false )
+                                                    {{ $menuItem->url}}
+                                                @else
+                                                    http://{{$menuItem->url}}
+                                                @endif
+                                            @else
+                                                #
+                                            @endif" {{ $menuItem->children->isEmpty() ? '' : "class=\"dropdown-toggle\" data-toggle=dropdown role=button aria-expanded=false" }}>{{ $menuItem->title }}</a>
+
+
+                                @endif
 
                                         @if( ! $menuItem->children->isEmpty() )
                                             <ul class="dropdown-menu sub-menu" role="menu">
                                                 @foreach($menuItem->children as $subMenuItem)
                                                     <li>
-                                                        <a href="{{ in_array($subMenuItem->url,\App\Page::pluck('slug')->toArray()) ? $subMenuItem->url : 'http://'.$subMenuItem->url }}">{{ $subMenuItem->title }}</a>
+                                                        <a href="
+                                                            @if(in_array($subMenuItem->url,\App\Page::pluck('slug')->toArray()))
+                                                                {{$subMenuItem->url}}
+                                                            @elseif(strpos($subMenuItem->url, 'section/') !== false )
+                                                                {{$subMenuItem->url}}
+                                                            @else
+                                                                    http://{{$subMenuItem->url}}
+                                                            @endif
+                                                                ">{{ $subMenuItem->title }}</a>
                                                     </li>
                                                 @endforeach
                                             </ul>
@@ -186,7 +206,7 @@
     @endif
 
     @if (Session::has('message'))
-        notie.alert({ text: '{{ Session::get('message') }}' });
+        notie.alert({text: '{{ Session::get('message') }}'});
     @endif
 
 </script>
@@ -204,9 +224,9 @@
                     <hr>
                     <div class="form">
                         {{Form::open(array('action' => 'SubscribersController@Submit','method' => 'post'))}}
-                        {{Form::text('name',null,array('placeholder'=>'Type your Name here','class' => 'input1'))}}
-                        {{Form::text('email',null,array('placeholder'=>'Type your E-mail address here','class' => 'input1'))}}
-                        {{Form::submit('إشتراك!',['class' => 'btn btn-primary btn1'])}}
+                        {{Form::text('name',null,array('placeholder'=>'إسمك الكريم','class' => 'input1'))}}
+                        {{Form::text('email',null,array('placeholder'=>'بريدك الإلكترونى','class' => 'input1'))}}
+                        {{Form::submit('إشتراك!',['class' => 'subscribe btn btn-primary btn1'])}}
 
                         {{Form::close()}}
                         <div class="content"></div>
@@ -218,7 +238,7 @@
                     <p class="first"> تابعنا على الفيس </p>
                     <hr>
                     <div class="fot-im">
-                        <img src="{{ url('/images/footer-soshil.png')}}">
+                        <iframe src="https://www.facebook.com/plugins/page.php?href={{setting('facebook')}}%2F&tabs=timeline&width=260&height=270&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=true&appId=418325768507501" width="260" height="270" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true"></iframe>
                     </div>
                 </div>
 
@@ -226,10 +246,13 @@
                     <p class="first"> اتصل بنا </p>
                     <hr>
                     <div class="conect-me">
-                        <p><span>   <i class="fa fa-envelope-o" aria-hidden="true"></i> </span> {{setting('email')}} </p>
+                        <p><span>   <i class="fa fa-envelope-o" aria-hidden="true"></i> </span> {{setting('email')}}
+                        </p>
                         <p><span>   <i class="fa fa-phone" aria-hidden="true"></i> </span> {{setting('phone')}} </p>
-                        <p><span>   <i class="fa fa-user-plus" aria-hidden="true"></i> </span> {{setting('postal')}} </p>
-                        <p><span>   <i class="fa fa-map-marker" aria-hidden="true"></i> </span> {{setting('address')}} </p>
+                        <p><span>   <i class="fa fa-user-plus" aria-hidden="true"></i> </span> {{setting('postal')}}
+                        </p>
+                        <p><span>   <i class="fa fa-map-marker" aria-hidden="true"></i> </span> {{setting('address')}}
+                        </p>
                     </div>
                 </div>
 
@@ -294,6 +317,7 @@
 
 <script src="{{ url('/js/bootstrap.min.js') }}"></script>
 <script src="{{ url('/js/bootstrap-select.min.js') }}"></script>
+<script src="{{ url('/js/bootstrap-rating.min.js') }}"></script>
 <script src="{{ url('/js/owl.carousel.js') }}"></script>
 <script src="{{ url('/js/jquery.ticker.js') }}"></script>
 <script src="{{ url('/js/wow.min.js') }}"></script>
@@ -304,28 +328,28 @@
 
 
     {{--Ajax For Subscribe to newsletter--}}
-//        $(document).ready(function () {
-//                $('div.content').hide();
-//                $('input[type="submit"]').click(function(e){
-//                    e.preventDefault();
-//                    $.post('/subscribers/submit', {
-//                        _token: $('input[name="_token"]').val(),
-//                        name: $('input[name="name"]').val(),
-//                        email: $('input[name="email"]').val()
-//                    }, function($data){
-//                        if($data=='1') {
-//                            $('div.content').hide().removeClass('success error').addClass('success').html('You\'ve successfully subscribed to ournewsletter').fadeIn('fast');
-//                        } else {
-//                            $('div.content').hide().removeClass('success error').addClass('error').html('There has been an error occurred:<br /><br />'+$data).fadeIn('fast');
-//                        }
-//                    });
-//                });
-//                $('form').submit(function(e){
-//                    e.preventDefault();
-//                    $('input[type="submit"]').click();
-//                });
-//    });
-
+        $(document).ready(function () {
+        $('div.content').hide();
+        $('input.subscribe').click(function (e) {
+            e.preventDefault();
+            $.post('/subscribers/submit', {
+                _token: $('input[name="_token"]').val(),
+                name: $('input[name="name"]').val(),
+                email: $('input[name="email"]').val()
+            }, function ($data) {
+                if ($data == '1') {
+                    $('div.content').hide().removeClass('success error').addClass('success').html('تم إشتراكك بنجاح فى القائمة البريدية').fadeIn('fast');
+                } else {
+                    $('div.content').hide().removeClass('success error').addClass('error').html('هناك مشكلة الرجاء المحاولة فى وقت لاحق:<br /><br />' + $data).fadeIn('fast');
+                }
+            });
+        });
+        $('.form').submit(function (e) {
+            e.preventDefault();
+            $('input[type="submit"]').click();
+        });
+    });
+    $('input.rating').rating();
 
 </script>
 

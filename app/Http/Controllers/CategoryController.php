@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Http\Request;
 use App\Category;
+use App\Posts;
 use Session;
 use Validator;
 
@@ -42,6 +43,7 @@ class CategoryController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'title.*'      => 'required',
+            'slug'      => 'required',
         ]);
         if ($validator->fails()) {
             return Redirect::to('dashboard/blog/categories')
@@ -49,6 +51,7 @@ class CategoryController extends Controller
         } else {
             $category = new Category();
             $category->statue = $request->statue ? $request->statue : 0;
+            $category->slug = $request->slug;
             $category->save();
             foreach ( config('app.locals') as $locale)
             {
@@ -67,11 +70,13 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($slug)
     {
-        $category = Category::find($id);
+        $category = Category::where('slug',$slug)->first();
+        $category_name = $category->title;
         $posts = $category->posts;
-        return view('category',compact('posts'));
+//        dd($category);
+        return view('frontend.category',compact('posts','category_name'));
     }
 
     /**

@@ -165,12 +165,16 @@ class PageController extends Controller
      */
     public function destroy($id)
     {
-        return Page::destroy($id);
+        Page::destroy($id);
+        Session::flash('message', 'تم الحذف !');
+        return Redirect::to('dashboard/pages');
+
     }
 
     public function delete(Request $request)
     {
         Page::find($request->id)->delete();
-        return response()->json();
+        Session::flash('message', 'تم الحذف س!');
+        return Redirect::to('dashboard/pages');
     }
 }

@@ -9,6 +9,7 @@
         "barryvdh/laravel-ide-helper": "v2.3.2",
         "cviebrock/eloquent-sluggable": "^4.2",
         "dimsav/laravel-translatable": "^7.0",
+        "faustbrian/laravel-reviewable": "^2.1",
         "intervention/image": "^2.3",
         "jenssegers/date": "^3.2",
         "laravel/framework": "5.4.*",

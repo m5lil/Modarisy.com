@@ -174,6 +174,7 @@ return [
         Silber\Bouncer\BouncerServiceProvider::class,
         Dimsav\Translatable\TranslatableServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
+        BrianFaust\Reviewable\ReviewableServiceProvider::class,
 
         /*
          * Application Service Providers...

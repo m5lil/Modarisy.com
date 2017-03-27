@@ -221,13 +221,13 @@
                                 </div>
                                 <div class="menu">
                                     @if (Auth::check())
-                                        <a href="{{'/dashboard/users/' . Auth::user()->id}}/edit" class="item">
+                                        <a href="{{url('/dashboard/users/' . Auth::user()->id)}}/edit" class="item">
                                             <i class="hashtag icon"></i> الملف الشخصى
                                         </a>
                                     @endif
-                                    <div class="item">
-                                        <i class="hashtag icon"></i> تغير كلمة المرور
-                                    </div>
+                                    <a href="{{ url('/') }}" target="_blank" class="item">
+                                        <i class="hashtag icon"></i> زيارة الموقع
+                                    </a>
                                     <div class="item">
                                         <i class="hashtag icon"></i> تسجيل خروج
                                     </div>

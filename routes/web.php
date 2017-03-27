@@ -73,9 +73,12 @@ Route::group(['prefix' => 'dashboard', 'middleware' => 'admin'], function () {
 
     // ------------------------------- Profile ----------------------------- //
 //    Route::resource('/profiles', 'ProfileController');
+    Route::get('/profiles/activate/{id}', 'ProfileController@activate');
+
 
     // ------------------------------- Subscribe ----------------------------- //
     Route::resource('/subscribers', 'SubscribersController');
+    Route::get('/subscribers/{id}/delete', 'SubscribersController@delete');
 
     // ------------------------------- Blog ----------------------------- //
     Route::resource('/blog/categories', 'CategoryController');
@@ -145,7 +148,7 @@ Route::group(['middleware' => 'web'], function () {
         Route::get('/applicant/create/{id}', 'ApplicantController@create');
         Route::post('/applicant', 'ApplicantController@store');
         Route::get('/applicant/accept/{enquiry_id}/{applicant_id}', 'ApplicantController@accept');
-        Route::get('/applicant/finish/{enquiry_id}/{applicant_id}', 'ApplicantController@finish');
+        Route::post('/applicant/finish/', 'ApplicantController@finish');
         Route::get('/applicants/{enquiry_id}', 'ApplicantController@allApplicants');
         Route::get('/messages/{enquiry_id}/{applicant_id}', 'MessageController@allMessages');
         Route::post('/messages', 'MessageController@store');
@@ -153,6 +156,8 @@ Route::group(['middleware' => 'web'], function () {
     });
 
     Route::get('/{slug}', 'PageController@show');
+    Route::get('/post/{id}', 'PostController@show');
+    Route::get('/section/{slug}', 'CategoryController@show');
 
 });
 

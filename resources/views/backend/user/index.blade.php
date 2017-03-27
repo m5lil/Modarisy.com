@@ -59,7 +59,7 @@
                       <td>{{$value->email}}</td>
                       <td>
                           <i class="circle icon
-                          @if ($value->activated)
+                          @if ($value->profile->statue != 0)
                               green
                           @endif
                           "></i>
@@ -67,26 +67,43 @@
                       <td>{{$value->roles()->pluck('name')}}</td>
                       <td class="two wide">
                           <a href = "{{'/dashboard/users/' . $value->id}}/edit" class="ui left blue mini attached edit_form button icon"><i class="edit icon"></i></a>
+                          <a href="{{url('/dashboard/profiles/activate/') . '/' . $value->id}}"
+                             class="ui right mini attached button icon"><i class="
+                    @if($value->profile->statue == 0)
+                                      checkmark blue
+                                  @else()
+                                      ban
+                                  @endif
+                                      icon"></i></a>
                           <a href = "{{'/dashboard/users/' . $value->id}}/delete"  class="ui right red mini attached delete_form button icon"><i class="trash icon"></i></a>
                       </td>
                     </tr>
                 @endforeach
-            @elseif (isset($teachers) AND count($teachers))
+            @elseif ( isset($teachers) AND count($teachers))
                 @foreach($teachers as $value)
                     <tr>
                       <td class="collapsing">{{$value->id}}</td>
-                      <td>{{$value->user->first_name}} {{$value->user->last_name}}</td>
-                      <td>{{$value->specialty}}</td>
-                      <td>{{$value->level}}</td>
+                      <td>{{$value->FullName()}}
+                      <td>{{$value->profile->specialty}}</td>
+                      <td>{{$value->profile->level}}</td>
                       <td>
                           <i class="circle icon
-                          @if ($value->statue)
+                          @if ($value->profile->statue != 0)
                               green
                           @endif
                           "></i>
                       </td>
                       <td class="two wide">
                           <a href = "{{'/dashboard/users/' . $value->id}}/edit" class="ui left blue mini attached edit_form button icon"><i class="edit icon"></i></a>
+                          <a href="{{url('/dashboard/profiles/activate/') . '/' . $value->id}}"
+                             class="ui right mini attached button icon"><i class="
+                    @if($value->profile->statue == 0)
+                                      checkmark blue
+                                  @else()
+                                      ban
+                                  @endif
+                                      icon"></i></a>
+
                           <a href = "{{'/dashboard/users/' . $value->id}}/delete"  class="ui right red mini attached delete_form button icon"><i class="trash icon"></i></a>
                       </td>
                     </tr>

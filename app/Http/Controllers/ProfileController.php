@@ -13,7 +13,7 @@ class ProfileController extends Controller
 
     public function __construct()
     {
-        $this->middleware('auth', ['only' => ['create', 'store', 'edit', 'delete']]);
+        $this->middleware('auth', ['only' => ['create', 'store', 'edit', 'delete','update']]);
     }
 
     /**
@@ -23,7 +23,11 @@ class ProfileController extends Controller
      */
     public function index()
     {
+//
+
+
         $profiles = Profile::where('statue', 1)->get();
+
         return view('frontend.all_profile', compact('profiles'));
     }
 
@@ -92,7 +96,6 @@ class ProfileController extends Controller
             $profile->level = $request->level;
             $profile->photo = $request->photo;
             $profile->save();
-
             // redirect
             \Session::flash('message', 'تم بنجاح!');
             return \Redirect::to('/home');
@@ -148,8 +151,75 @@ class ProfileController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $rules = array(
+            'gen_exp'     => 'nullable',
+            'teach_time'  => 'nullable',
+            'teach_hours' => 'max:10',
+            'hour_rate'   => 'nullable',
+            'intro'       => 'required',
+            'gender'      => 'required',
+            'school'      => 'required',
+            'dbirth'      => 'required|date',
+            'age'         => 'required',
+            'photo'       => 'nullable',
+            'specialty'   => 'nullable',
+            'lang'        => 'required',
+            'level'       => 'nullable'
+        );
+
+        $validator = \Validator::make($request->all(), $rules);
+
+        if ($validator->fails()) {
+            return \Redirect::back()
+                ->withErrors($validator);
+        } else {
+            $request = $this->saveFiles($request);
+            $profile = Profile::find($id);
+            $profile->user_id = \Auth::user()->id;
+            $profile->statue = 0;
+            $profile->gen_exp = $request->gen_exp;
+            $profile->sch_exp = $request->sch_exp;
+            $profile->teach_time = $request->teach_time;
+            $profile->teach_hours = $request->teach_hours;
+            $profile->hour_rate = $request->hour_rate;
+            $profile->intro = $request->intro;
+            $profile->gender = $request->gender;
+            $profile->school = $request->school;
+            $profile->dbirth = $request->dbirth;
+            $profile->age = $request->age;
+            $profile->specialty = $request->specialty;
+            $profile->lang = $request->lang;
+            $profile->level = $request->level;
+            $profile->photo = $request->photo;
+            $profile->save();
+            // redirect
+            \Session::flash('message', 'تم بنجاح!');
+            return \Redirect::to('/home');
+
+        }
+
     }
+
+
+    public function activate($id)
+    {
+        $profile = Profile::find($id);
+        if ($profile) {
+            if ($profile->statue == 0) {
+                $profile->statue = '1';
+                $profile->save();
+                \Session::flash('message', 'تم تنشيط العضو');
+            } elseif ($profile->statue == 1) {
+                $profile->statue = '0';
+                $profile->save();
+                \Session::flash('message', 'تم تعليق العضو');
+            } else {
+                \Session::flash('message', 'لايمكن تعديل الحالة حاليا');
+            }
+        }
+        return redirect()->back();
+    }
+
 
     /**
      * Remove the specified resource from storage.

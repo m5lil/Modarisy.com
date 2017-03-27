@@ -36,25 +36,71 @@
                         </div>
 
                     </div>
+                    <h2 class="dede-h2">بياناتك</h2>
 
-                    <p>اللغة<span class="detils-p-2">: {{ Auth::user()->profile->lang }}</span></p>
-                    <hr>
-                    <p> السن <span class="detils-p-2">: {{ Auth::user()->profile->age }} عام</span></p>
-                    <hr>
-                    <p> البريد الإلكترونى <span class="detils-p-2">: {{ Auth::user()->email }}</span></p>
-                    <hr>
-                    <p> رقم الجوال <span class="detils-p-2">: {{ Auth::user()->phone }}</span></p>
-                    <hr>
-                    {{--<h2 class="dede-h2">رسالة سريعة</h2>--}}
-                    {{--<input type="text" placeholder="الاسم">--}}
-                    {{--<textarea>--}}
+                    {{ Form::model(Auth::user()->profile, array('route' => array('profile.update', Auth::user()->profile->id), 'method' => 'PUT','class' => 'form-horizontal','files' => true)) }}
+                    <div class="form-group">
+                        {{Form::label('intro', 'عن نفسك', ['class' => 'col-sm-4 control-label'])}}
+                        <div class="col-sm-8">
+                            {{Form::textarea('intro',null,['class' => 'form-control', 'style' => 'margin:0;'])}}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        {{Form::label('gender', 'النوع', ['class' => 'col-sm-4 control-label'])}}
+                        <div class="col-sm-8">
+                            {{Form::select('gender',[1=>'ذكر',2 =>'أنثى'],null,['class' => 'form-control'])}}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        {{Form::label('school', 'المدرسة', ['class' => 'col-sm-4 control-label'])}}
+                        <div class="col-sm-8">
+                            {{Form::text('school',null,['class' => 'form-control'])}}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        {{Form::label('dbirth', 'تاريخ الميلاد', ['class' => 'col-sm-4 control-label'])}}
+                        <div class="col-sm-8">
+                            {{Form::date('dbirth',null,['class' => 'form-control'])}}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        {{Form::label('age', 'السن', ['class' => 'col-sm-4 control-label'])}}
+                        <div class="col-sm-8">
+                            {{Form::text('age',null,['class' => 'form-control'])}}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        {{Form::label('photo', 'الصورة', ['class' => 'col-sm-4 control-label'])}}
+                        <div class="col-sm-8">
+                            {!! Form::file('photo') !!}
+                            {!! Form::hidden('photo_w', 250) !!}
+                            {!! Form::hidden('photo_h', 250) !!}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        {{Form::label('lang', 'اللغة', ['class' => 'col-sm-4 control-label'])}}
+                        <div class="col-sm-8">
+                            {{Form::select('lang',['arabic'=>'عربى','english' =>'English'],null,['class' => 'form-control'])}}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        {{Form::label('level', 'المرحلة التعليمية', ['class' => 'col-sm-4 control-label'])}}
+                        <div class="col-sm-8">
+                            <select name="level" class="form-control">
+                                <option selected disabled>{{Level(Auth::user()->profile->level)}}</option>
+                                <option value="1">الصف الأول الإبتدائى</option>
+                                <option value="2">الصف الثانى الإبتدائي</option>
+                                <option value="3">الصف الأول الإبتدائى</option>
+                                <option value="4">الصف الثانى الإبتدائي</option>
+                            </select>
 
-                    {{--</textarea>--}}
-                    {{--<input type="number"  >--}}
-                    {{--<label>--}}
-                    {{--<input type="checkbox"> تحديدالعنصر--}}
-                    {{--</label>--}}
-                    {{--<button>ارسال طلب</button>--}}
+                        </div>
+                    </div>
+
+                    {!! Form::submit('تعديل البيانات') !!}
+
+                    {!! Form::close() !!}
+
                 </div>
                 <div class="col-md-8">
                     <div class="last-mod-arsy">
@@ -90,16 +136,18 @@
 
                                             <h3><a href="#">{{$enquery->subject}}</a></h3>
                                             <p>{{$enquery->comment}}</p>
-                                            <p>الغرض من الطلب : <strong>{{$enquery->target}}</strong> |                                                الوقت المفضل :
+                                            <p>الغرض من الطلب : <strong>{{$enquery->target}}</strong> | الوقت المفضل :
                                                 <strong>{{$enquery->PreferedTime($enquery->preferred_time)}}</strong>
                                             </p>
                                             <hr>
                                             <ul class="list-inline">
-                                                    <a href="{{ url('/request/' . $enquery->id) . '/delete' }}"
-                                                       class="btn btn-danger btn1"> <i class="fa fa-trash-o"></i> </a>
+                                                <a href="{{ url('/request/' . $enquery->id) . '/delete' }}"
+                                                   class="btn btn-danger btn1"> <i class="fa fa-trash-o"></i> </a>
 
-                                                    <a href="{{ url('/applicants/' . $enquery->id) }}"
-                                                       class="btn btn-primary btn1"> <i class="fa fa-wpforms"></i> العروض المقدمة <span class="badge"> {{ count(\App\Applicant::where('enquiry_id',$enquery->id)->where('statue', 1)->get()) }}</span></a>
+                                                <a href="{{ url('/applicants/' . $enquery->id) }}"
+                                                   class="btn btn-primary btn1"> <i class="fa fa-wpforms"></i> العروض
+                                                    المقدمة <span
+                                                            class="badge"> {{ count(\App\Applicant::where('enquiry_id',$enquery->id)->where('statue', 1)->get()) }}</span></a>
 
                                                 <li>عدد الساعات : <span>{{$enquery->total_hours}} ساعة</span></li>
                                             </ul>
@@ -113,13 +161,53 @@
 
                                             <h3><a href="#">{{$applicant->enquiry->subject}}</a></h3>
                                             <p>{{$applicant->brief}}</p>
-                                            <p>الأستاذ /  {{$applicant->user->FullName()}}</p>
+                                            <p>الأستاذ / {{$applicant->user->FullName()}}</p>
                                             <hr>
                                             <ul class="list-inline">
-                                                    <a href="{{ url('/applicant/finish/' . $applicant->enquiry_id . '/' . $applicant->id) }}"
-                                                       class="btn btn-default btn1"> إنتهى الدرس </a>
-                                                    <a href="{{ url('/messages/' . $applicant->enquiry_id . '/' . $applicant->id) }}"
-                                                   class="btn btn-primary btn1"> الرسائل <span class="badge"> {{ count(\App\Message::where('enquiry_id',$applicant->enquiry_id)->where('read',0)->where('applicant_id', $applicant->id)->get()) }}</span></a>
+                                                <button class="btn btn-primary btn1" data-toggle="modal"
+                                                        data-target="#myModal"> إنتهى الدرس
+                                                </button>
+
+                                                <!-- Modal -->
+                                                <div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+                                                     aria-labelledby="myModalLabel">
+                                                    <div class="modal-dialog" role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-body text-center">
+                                                                {!! Form::open(array('action' => 'ApplicantController@finish', 'method' => 'POST')) !!}
+                                                                <input type="hidden" name="rating" class="rating"
+                                                                       value="1" data-filled="fa fa-star fa-3x"
+                                                                       data-empty="fa fa-star-o fa-3x"/>
+                                                                <input type="hidden" name="enquiry_id"
+                                                                       value="{{ $applicant->enquiry_id }}"/>
+
+                                                                <input type="hidden" name="applicant_id"
+                                                                       value="{{ $applicant->id }}"/>
+                                                                <br>
+                                                                <br>
+                                                                <input type="text" name="title" value="" class="input1"
+                                                                       placeholder="عنوان التقييم"/>
+                                                                <br>
+                                                                <textarea name="body" value="" class="input1"
+                                                                          style="height: 100px;"
+                                                                          placeholder="رأيك بصراحة"/></textarea>
+
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-default btn1"
+                                                                        data-dismiss="modal">إغلاق
+                                                                </button>
+                                                                <button type="submit" class="btn btn-primary btn1">حفظ
+                                                                </button>
+                                                            </div>
+                                                            {!! Form::close() !!}
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <a href="{{ url('/messages/' . $applicant->enquiry_id . '/' . $applicant->id) }}"
+                                                   class="btn btn-primary btn1"> الرسائل <span
+                                                            class="badge"> {{ count(\App\Message::where('enquiry_id',$applicant->enquiry_id)->where('read',0)->where('applicant_id', $applicant->id)->get()) }}</span></a>
 
                                                 <li>عدد الساعات : <span>{{$applicant->total_hours}} ساعة</span></li>
                                             </ul>
@@ -133,12 +221,14 @@
 
                                             <h3><a href="#">{{$applicant->enquiry->subject}}</a></h3>
                                             <p>{{$applicant->brief}}</p>
-                                            <p>الأستاذ /  {{$applicant->user->FullName()}}</p>
+                                            <p>الأستاذ / {{$applicant->user->FullName()}}</p>
                                             <hr>
                                             <ul class="list-inline">
-                                                <li>عدد الساعات : <span>{{$applicant->enquiry->total_hours}} ساعة</span></li>
+                                                <li>عدد الساعات : <span>{{$applicant->enquiry->total_hours}} ساعة</span>
+                                                </li>
                                                 <li>سعر الساعة : <span>${{$applicant->hour_price}} / ساعة</span></li>
-                                                <li>إجمالى السعر : <span>{{$applicant->enquiry->total_hours * $applicant->hour_price }} دولار</span></li>
+                                                <li>إجمالى السعر : <span>{{$applicant->enquiry->total_hours * $applicant->hour_price }}
+                                                        دولار</span></li>
                                             </ul>
 
                                         </div>

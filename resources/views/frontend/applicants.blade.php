@@ -57,6 +57,7 @@
 
                 </div>
             </div>
+            <!-- Button trigger modal -->
 
         </section>
     </section>

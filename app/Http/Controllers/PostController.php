@@ -83,7 +83,7 @@ class PostController extends Controller
     {
         $post = Post::find($id);
 //        $posts = $post->posts;
-//        return view('category',compact('posts'));
+        return view('frontend.post',compact('post'));
     }
 
     /**

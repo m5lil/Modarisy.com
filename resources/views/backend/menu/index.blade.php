@@ -59,6 +59,7 @@
                 {!! Form::text('order', old('order'), array('class'=>'form-control')) !!}
             </div>
             <div class="field">
+                <label>الرابط الرئيسيى (الأب)</label>
                 {!! Form::select('parent_id', $parents_menu , 0, array('class'=>'form-control')) !!}
             </div>
 
@@ -83,10 +84,13 @@
                         <td class="one wide">{{$value->order}}</td>
                         <td><strong>{{$value->title}}</strong><br/>
                             @if(in_array( $value->url  , \App\Page::pluck('slug')->toArray() ))
-                                &nbsp;&nbsp;&nbsp;صفحة :
+                                &nbsp;&nbsp;&nbsp;<strong>صفحة</strong> :
+                                <small>{{ $value->url }}</small>
+                            @elseif(strpos($value->url, 'section/') )
+                                &nbsp;&nbsp;&nbsp;<strong>قسم</strong> :
                                 <small>{{ $value->url }}</small>
                             @else
-                                &nbsp;&nbsp;&nbsp; http://{{$value->url}}
+                                &nbsp;&nbsp;&nbsp;<strong>رابط</strong> : http://{{$value->url}}
                             @endif
                         </td>
                         <td class="two wide">

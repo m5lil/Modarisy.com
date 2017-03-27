@@ -37,6 +37,11 @@
                     </div>
                 </div>
             @endforeach
+            <div class="field">
+                <label>عنوان الـ رابط</label>
+                <input name="slug" type="text"
+                       value="" placeholder="إسم القسم أو إختصار معبر لها باللغةالإنجليزية">
+            </div>
 
             <div class="field">
                 <select name="statue" class="ui dropdown">

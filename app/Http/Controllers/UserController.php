@@ -28,7 +28,8 @@ class UserController extends Controller
             $users = User::where('type', 3)->paginate(20);
             return view('backend.user.index', compact('users'));
         } elseif ($type == 'teachers') {
-            $teachers = Profile::paginate(20);
+            $teachers = User::where('type', 2)->paginate(20);
+
             return view('backend.user.index', compact('teachers'));
         }
     }
@@ -86,11 +87,14 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
+//        dd($request->all());
         $user = User::findOrFail($id);
-        if (null !== $user->roles()->first()) {
-            Bouncer::retract($user->roles()->pluck('name'))->from($user);
+        if (!empty($input['role'])){
+            if (null !== $user->roles()->first()) {
+                Bouncer::retract($user->roles()->pluck('name'))->from($user);
+            }
+            Bouncer::assign($request->role)->to($user);
         }
-        Bouncer::assign($request->role)->to($user);
         $input = $request->all();
         if (!empty($input['password'])) {
             $input['password'] = bcrypt($input['password']);
@@ -111,6 +115,9 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        return User::destroy($id);
+        User::destroy($id);
+        Session::flash('message', 'تم بنجاح!');
+        return redirect()->back();
+
     }
 }

@@ -69,6 +69,7 @@ class RegisterController extends Controller
     protected function create(array $data)
     {
 //        dd($data);
+        $data['type'] ? $type = $data['type'] : $type = 1;
         return User::create([
             'first_name' => $data['first_name'],
             'last_name' => $data['last_name'],
@@ -77,7 +78,7 @@ class RegisterController extends Controller
             'phone' => $data['phone'],
             'address' => $data['address'],
             'city' => $data['city'],
-            'type' => $data['type'],
+            'type' => $type,
             'activated' => 0
         ]);
 

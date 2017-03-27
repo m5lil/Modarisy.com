@@ -28,6 +28,7 @@ class HomeController extends Controller
      */
     public function index()
     {
+
         if (Auth::user()->type == 3) {
             $enquiries = Auth::user()->enquiries()
                 ->where('statue', 1)
@@ -43,10 +44,10 @@ class HomeController extends Controller
             $enquiries = Enquiry::where('material', \Auth::user()->profile->specialty)
                 ->where('statue', 1)
                 ->get();
-            if (Auth::user()->applicatns) {
+            if (Auth::user()->applicants) {
                 $progress_enquiries = Enquiry::where('teacher_id', Auth::user()->id)
                     ->where('statue', 2)
-                    ->get();;
+                    ->get();
                 $done_enquiries = Enquiry::where('teacher_id', Auth::user()->id)
                     ->where('statue', 3)
                     ->get();

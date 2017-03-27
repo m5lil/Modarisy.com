@@ -25,3 +25,16 @@ function PreferedTime($num)
         return 'فى أى وقت فى اليوم';
     }
 }
+
+function Level($num)
+{
+    if ($num == 1) {
+        return 'الصف الأول الإبتدائى';
+    } elseif ($num == 2) {
+        return 'الصف الثانى الإبتدائي';
+    } elseif ($num == 3) {
+        return 'الصف الأول الإبتدائى';
+    } elseif ($num == 4) {
+        return 'الصف الثانى الإبتدائي';
+    }
+}

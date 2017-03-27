@@ -51,7 +51,7 @@
                             </form>
                             <div style="clear: both;"></div>
                             <div class="text-center">
-                                <button onclick="location.href='{{url('/register')}}'" class="">
+                                <button onclick="location.href='{{url('/be_member')}}'" class="">
                                     إنشاء حساب جديد
                                 </button>
                             </div>

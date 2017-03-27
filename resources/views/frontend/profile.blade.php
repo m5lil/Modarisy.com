@@ -39,6 +39,7 @@
                         </div>
                     </div>
                     @if($profile->user->type == 2)
+                        <p>التقييم <span class="detils-p-2"><input type="hidden" class="rating" disabled="disabled" value="{{$profile->getRating()}}"/> {{$profile->getRating()}} ( {{  count($profile->reviews()->get())  }} تقييمات )</span></p>
                         <p>التخصص <span class="detils-p-2">: {{ $profile->specialty }} $ / ساعة </span></p>
                         <hr>
                         <p> سعر الساعة <span class="detils-p-2">: {{ $profile->hour_rate }} $ / ساعة </span></p>
@@ -120,8 +121,6 @@
                                                     </p>
                                                     <hr>
                                                     <ul class="list-inline">
-                                                        <a href="{{ url('/messages/' . $enquery->id . '/' . $enquery->applicant_id) }}"
-                                                           class="btn btn-primary btn"> الرسائل </a>
                                                         <li><a href="{{url('/profile'). '/' .$enquery->user->id}}">الطالب :
                                                                 <span>{{$enquery->user->FullName()}}</span></a></li>
                                                         <li>عدد الساعات : <span>{{$enquery->total_hours}} ساعة</span></li>
@@ -193,12 +192,6 @@
                                                 </p>
                                                 <hr>
                                                 <ul class="list-inline">
-                                                    <a href="{{ url('/request/' . $enquery->id) . '/delete' }}"
-                                                       class="btn btn-danger btn1"> <i class="fa fa-trash-o"></i> </a>
-
-                                                    <a href="{{ url('/applicants/' . $enquery->id) }}"
-                                                       class="btn btn-primary btn1"> <i class="fa fa-wpforms"></i> العروض المقدمة <span class="badge"> {{ count(\App\Applicant::where('enquiry_id',$enquery->id)->where('statue', 1)->get()) }}</span></a>
-
                                                     <li>عدد الساعات : <span>{{$enquery->total_hours}} ساعة</span></li>
                                                 </ul>
 
@@ -214,11 +207,6 @@
                                                 <p>الأستاذ /  {{$applicant->user->FullName()}}</p>
                                                 <hr>
                                                 <ul class="list-inline">
-                                                    <a href="{{ url('/applicant/finish/' . $applicant->enquiry_id . '/' . $applicant->id) }}"
-                                                       class="btn btn-default btn1"> إنتهى الدرس </a>
-                                                    <a href="{{ url('/messages/' . $applicant->enquiry_id . '/' . $applicant->id) }}"
-                                                       class="btn btn-primary btn1"> الرسائل <span class="badge"> {{ count(\App\Message::where('enquiry_id',$applicant->enquiry_id)->where('read',0)->where('applicant_id', $applicant->id)->get()) }}</span></a>
-
                                                     <li>عدد الساعات : <span>{{$applicant->total_hours}} ساعة</span></li>
                                                 </ul>
 
@@ -238,7 +226,6 @@
                                                     <li>سعر الساعة : <span>${{$applicant->hour_price}} / ساعة</span></li>
                                                     <li>إجمالى السعر : <span>{{$applicant->enquiry->total_hours * $applicant->hour_price }} دولار</span></li>
                                                 </ul>
-
                                             </div>
                                         </div>
                                     @endforeach

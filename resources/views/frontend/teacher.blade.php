@@ -33,32 +33,94 @@
                         </div>
 
                     </div>
+                    <p>التقييم <span class="detils-p-2"><input type="hidden" class="rating" disabled="disabled"
+                                                               value="{{Auth::user()->profile->getRating()}}"/> {{Auth::user()->profile->getRating()}}
+                            ( {{  count(Auth::user()->profile->reviews()->get())  }} تقييمات )</span></p>
 
-                    <p> خبرة <span class="detils-p-2">: {{ Auth::user()->gen_exp }} عام</span></p>
-                    <hr>
-                    <p>لغة التدريس<span class="detils-p-2">: {{ Auth::user()->profile->lang }}</span></p>
-                    <hr>
-                    <p> التخصص <span class="detils-p-2">: {{ Auth::user()->profile->specialty }}</span></p>
-                    <hr>
-                    <p> السن <span class="detils-p-2">: {{ Auth::user()->profile->age }} عام</span></p>
-                    <hr>
-                    <p> البريد الإلكترونى <span class="detils-p-2">: {{ Auth::user()->email }}</span></p>
-                    <hr>
-                    <p> رقم الجوال <span class="detils-p-2">: {{ Auth::user()->phone }} عام</span></p>
-                    <hr>
-                    <p> الوقت المناسب للتدريس <span class="detils-p-2">: {{ Auth::user()->profile->teach_time }} عام</span></p>
-                    <hr>
+                    {{ Form::model(Auth::user()->profile, array('route' => array('profile.update', Auth::user()->profile->id), 'method' => 'PUT','class' => 'form-horizontal','files' => true)) }}
+                    <div class="form-group">
+                        {{Form::label('gen_exp', 'سنوات الخبره', ['class' => 'col-sm-4 control-label'])}}
+                        <div class="col-sm-8">
+                            {{Form::text('gen_exp',null,['class' => 'form-control'])}}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        {{Form::label('teach_hours', 'وقت التعليم المناسب', ['class' => 'col-sm-4 control-label'])}}
+                        <div class="col-sm-8">
+                            <select name="teach_time" class="form-control">
+                                <option selected disabled>{{PreferedTime(Auth::user()->profile->teach_hours)}}</option>
+                                <option value="1">صباحا من 8ص وحتى 12م</option>
+                                <option value="2">منتصف اليوم من 12م وحتى 6م</option>
+                                <option value="3">مساءا من 6م وحتى 10م</option>
+                                <option value="4">فى أى وقت فى اليوم</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        {{Form::label('teach_time', 'عدد ساعات التدريس فى اليوم', ['class' => 'col-sm-4 control-label'])}}
+                        <div class="col-sm-8">
+                            {{Form::text('teach_hours',null,['class' => 'form-control'])}}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        {{Form::label('hour_rate', 'سعر الساعة', ['class' => 'col-sm-4 control-label'])}}
+                        <div class="col-sm-8">
+                            {{Form::text('hour_rate',null,['class' => 'form-control'])}}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        {{Form::label('intro', 'عن نفسك', ['class' => 'col-sm-4 control-label'])}}
+                        <div class="col-sm-8">
+                            {{Form::textarea('intro',null,['class' => 'form-control', 'style' => 'margin:0;'])}}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        {{Form::label('gender', 'النوع', ['class' => 'col-sm-4 control-label'])}}
+                        <div class="col-sm-8">
+                            {{Form::select('gender',[1=>'ذكر',2 =>'أنثى'],null,['class' => 'form-control'])}}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        {{Form::label('school', 'المدرسة', ['class' => 'col-sm-4 control-label'])}}
+                        <div class="col-sm-8">
+                            {{Form::text('school',null,['class' => 'form-control'])}}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        {{Form::label('dbirth', 'تاريخ الميلاد', ['class' => 'col-sm-4 control-label'])}}
+                        <div class="col-sm-8">
+                            {{Form::date('dbirth',null,['class' => 'form-control'])}}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        {{Form::label('age', 'السن', ['class' => 'col-sm-4 control-label'])}}
+                        <div class="col-sm-8">
+                            {{Form::text('age',null,['class' => 'form-control'])}}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        {{Form::label('photo', 'الصورة', ['class' => 'col-sm-4 control-label'])}}
+                        <div class="col-sm-8">
+                            {!! Form::file('photo') !!}
+                            {!! Form::hidden('photo_w', 250) !!}
+                            {!! Form::hidden('photo_h', 250) !!}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        {{Form::label('specialty', 'التخصص', ['class' => 'col-sm-4 control-label'])}}
+                        <div class="col-sm-8">
+                            {{Form::select('specialty',\App\Materials::pluck('title','slug'),null,['class' => 'form-control'])}}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        {{Form::label('lang', 'اللغة', ['class' => 'col-sm-4 control-label'])}}
+                        <div class="col-sm-8">
+                            {{Form::select('lang',['arabic'=>'عربى','english' =>'English'],null,['class' => 'form-control'])}}
+                        </div>
+                    </div>
+                    {!! Form::submit('تعديل البيانات') !!}
 
-                    {{--<h2 class="dede-h2">رسالة سريعة</h2>--}}
-                    {{--<input type="text" placeholder="الاسم">--}}
-                    {{--<textarea>--}}
-
-                    {{--</textarea>--}}
-                    {{--<input type="number"  >--}}
-                    {{--<label>--}}
-                    {{--<input type="checkbox"> تحديدالعنصر--}}
-                    {{--</label>--}}
-                    {{--<button>ارسال طلب</button>--}}
+                    {!! Form::close() !!}
                 </div>
                 <div class="col-md-8">
                     <div class="last-mod-arsy">
@@ -101,11 +163,11 @@
                                             </p>
                                             <hr>
                                             <ul class="list-inline">
-                                                @if (!Auth::user()->applicatns->where('enquiry_id', $enquery->id)->first() )
+                                                @if (!Auth::user()->applicants->where('enquiry_id', $enquery->id)->first() )
                                                     <a href="{{ url('/applicant/create/' . $enquery->id) }}"
                                                        class="btn btn-primary btn1"> تقدم بعرضك </a>
                                                 @else
-                                                    <a href="{{ url('/messages/' . $enquery->id . '/' . Auth::user()->applicatns->where('enquiry_id', $enquery->id)->first()->id) }}"
+                                                    <a href="{{ url('/messages/' . $enquery->id . '/' . Auth::user()->applicants->where('enquiry_id', $enquery->id)->first()->id) }}"
                                                        class="btn btn-primary btn1"> الرسائل </a>
                                                 @endif
                                                 <li><a href="{{url('/profile'). '/' .$enquery->user->id}}">الطالب :
@@ -167,8 +229,30 @@
 
 
                     </div>
+
+                    <div class="panel panel-default" style="margin-top: 20px;">
+                        <div class="panel-heading">التقييمات</div>
+
+                        <div class="panel-body">
+                            @foreach(Auth::user()->profile->reviews()->get() as $value)
+                                <div class="col-md-12 col-sm-12 col-xs-12 mix category-3"
+                                     style="margin: 10px;background-color: #fff;">
+                                    <div class="caarss ">
+                                        <h4>
+                                            {{$value->title}} - <small>{{$value->author->FullName()}}</small>
+                                        </h4>
+                                        <p>{{@$value->body}}</p>
+                                        <p><input type="hidden" readonly="readonly" class="rating" value="{{$value->rating}}">
+                                        </p>
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
+                    </div>
+
                 </div>
             </div>
+
         </div>
     </secrion>
     <!--owl-slider**********************************-->
