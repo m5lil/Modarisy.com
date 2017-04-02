@@ -202,7 +202,7 @@
 
 <script type="text/javascript">
     @if($errors->all())
-        notie.alert({text: '{{ Html::ul($errors->all(),['class' => 'ui list']) }}'});
+        notie.alert({text: '{{ Html::ul($errors->all(),['class' => 'list1']) }}',time: 8,});
     @endif
 
     @if (Session::has('message'))
@@ -278,13 +278,13 @@
                     <script type='text/javascript'>function init_map() {
                             var myOptions = {
                                 zoom: 10,
-                                center: new google.maps.LatLng(24.7135517, 46.67529569999999),
+                                center: new google.maps.LatLng( {{setting('lat')}}, {{setting('lng')}} ),
                                 mapTypeId: google.maps.MapTypeId.ROADMAP
                             };
                             map = new google.maps.Map(document.getElementById('gmap_canvas'), myOptions);
                             marker = new google.maps.Marker({
                                 map: map,
-                                position: new google.maps.LatLng(24.7135517, 46.67529569999999)
+                                position: new google.maps.LatLng( {{setting('lat')}}, {{setting('lng')}} )
                             });
                             infowindow = new google.maps.InfoWindow({content: '<strong>المنصوره ساميه الجمل</strong><br>Riyad, Saudi Arabia<br>'});
                             google.maps.event.addListener(marker, 'click', function () {
@@ -302,7 +302,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-6 col-sm-6 col-xs-12">
-                    <p class="footer-bottom-p">جميع الحقوق محفوظة لـ موقع مدرسى 2016</p>
+                    <p class="footer-bottom-p">{{setting('copyright')}}</p>
                 </div>
                 <div class="col-md-6 col-sm-6 col-xs-12">
                     <div class="footer-bottom-img">

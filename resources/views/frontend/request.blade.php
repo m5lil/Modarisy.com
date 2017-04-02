@@ -46,6 +46,7 @@
                             </select>
 
                             <input type="text" name="subject" value="{{ Cache::get('subject') }}" placeholder="موضوع الدرس">
+                            {{Form::select('subject',\App\Materials::pluck('title','slug'),Cache::get('subject'),['class' => 'form-control','placeholder'=>'موضوع الدرس'])}}
 
                             <textarea name="comment" id="" cols="30" rows="10" placeholder="ملاحظات"></textarea>
 

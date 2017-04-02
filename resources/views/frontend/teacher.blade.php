@@ -168,7 +168,7 @@
                                                        class="btn btn-primary btn1"> تقدم بعرضك </a>
                                                 @else
                                                     <a href="{{ url('/messages/' . $enquery->id . '/' . Auth::user()->applicants->where('enquiry_id', $enquery->id)->first()->id) }}"
-                                                       class="btn btn-primary btn1"> الرسائل </a>
+                                                       class="btn btn-primary btn1"> الرسائل  الرسائل <span class="badge"> {{ count(\App\Message::where('enquiry_id',$enquery->id)->where('read')->where('applicant_id', Auth::user()->applicants->where('enquiry_id', $enquery->id)->first()->id))->get()) }}</span></a>
                                                 @endif
                                                 <li><a href="{{url('/profile'). '/' .$enquery->user->id}}">الطالب :
                                                         <span>{{$enquery->user->FullName()}}</span></a></li>

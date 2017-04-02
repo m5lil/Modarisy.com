@@ -18,7 +18,7 @@ class UsersTableSeeder extends Seeder
             'password' => bcrypt('123123123'),
             'activated' => '1',
             'city' => '1',
-            'type' => '1',
+            'type' => '2',
             'address' => 'asd st.',
             'phone' => '123456789000',
             'created_at' => Carbon::now()->format('Y-m-d H:i:s')

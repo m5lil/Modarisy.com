@@ -1325,3 +1325,8 @@ last-mod-arsy .advertising2-car-2 .caarss p {
 .symbol-filled {
     background-color: black;
 }
+
+
+.list1{
+    list-style: none !important;
+}
