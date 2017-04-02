@@ -119,8 +119,15 @@ class SettingsTableseeder extends Seeder
             ],
             [
                 'id'       => 18,
-                'set_slug' => 'رابط خريطة جوجل',
-                'set_name' => 'google_map',
+                'set_slug' => 'خط العرض',
+                'set_name' => 'lat',
+                'value'    => '#',
+                'type'     => 1,
+            ],
+            [
+                'id'       => 21,
+                'set_slug' => 'خط الطول',
+                'set_name' => 'lng',
                 'value'    => '#',
                 'type'     => 1,
             ],
