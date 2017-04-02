@@ -10,3 +10,6 @@ Homestead.yaml
 .env
 /laradock/
 /public/uploads/
+app/Mail/UserEvent.php
+resources/views/emails/user/
+"\331\204\330\245\303\227]\303\227"
