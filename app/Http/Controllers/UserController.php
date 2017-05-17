@@ -116,7 +116,7 @@ class UserController extends Controller
     public function destroy($id)
     {
         User::destroy($id);
-        Session::flash('message', 'تم بنجاح!');
+        \Session::flash('message', 'تم بنجاح!');
         return redirect()->back();
 
     }

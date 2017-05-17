@@ -8,64 +8,61 @@
                 <div class="container">
                     <div class="row">
                         <div class="li-list">
-                            <a href="#" class="home ">الرئيسية > </a>
-                            <a href="#" class="conntact-my active">المدرسين المسجلين بالموقع </a>
+
+                            <a href="#" class="conntact-my active">@lang('main.offers') </a>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
-        <section class="with-us text-center">
-            <div class="container">
-                <div class="row">
-                    <div class="col-xs-12">
-                        <h2>
-                            <a href="#">العروض المقدمة</a>
-                        </h2>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <section class="modarsyy-1">
-            <div class="container">
-                <div class="row">
-                    <div class="col-sm-12 col-xs-12">
 
+        <br>
+        <br>
+
+        <div class="owl-slid-hite text-center">
+            <p>@lang('main.offers')</p>
+            <img src="{{url('/images/after.png')}}">
+        </div>
+
+
+
+        <div class="comming_offers">
+            <div class="container">
+                <div class="col-md-10 col-md-offset-1">
+                    @if(count($applicants))
                         @foreach($applicants as $value)
-                            <div class="col-md-12 col-sm-12 col-xs-12 mix category-3"
-                                 style="margin: 10px;background-color: #fff;">
-                                <div class="caarss ">
-                                    <h3>
-                                        <a href="{{url('profile/' . $value->user->id)}}"> {{$value->user->fullName()}}</a>
-                                    </h3>
-                                    <p>{{@$value->brief}}</p>
-                                    <hr>
-                                    <ul class="list-inline">
-                                        <a href="{{ url('/messages/' . $enquiry_id . '/' . $value->id) }}"
-                                           class="btn btn-primary btn1"> الرسائل <span class="badge"> {{ count(\App\Message::where('enquiry_id',$enquiry_id)->where('read')->where('applicant_id', $value->id)->get()) }}</span></a>
+                            <div class="inner_offers">
+                                <a href="{{url('profile/' . $value->user->id)}}"><h3>{{$value->user->fullName()}}</h3></a>
+                                <div class="text">{{@$value->brief}}</div><!-- text -->
+                                <div class="bottom">
+                                    <div class="col-md-2">
+                                        <a data-toggle="tooltip" data-placement="top" title="@lang('main.y_c_msg')" href="{{ url('/messages/' . $enquiry_id . '/' . $value->id) }}"><i
+                                                    class="fa fa-envelope"></i>
+                                            <span>{{ count(\App\Message::where('enquiry_id',$enquiry_id)->where('read', 0)->where('applicant_id', $value->id)->get()) }}</span></a>
+                                    </div><!-- md-2 -->
+
+                                    <div class="col-md-8">
+                                        ( ${{@$value->hour_price}} ) @lang('main.hour_rate')
+                                    </div><!-- md-9 -->
+
+                                    <div class="col-md-2">
                                         @if(\App\Enquiry::find($enquiry_id)->statue != 2)
-                                        <a href="{{ url('/applicant/accept/' . $enquiry_id . '/' . $value->id) }}"
-                                           class="btn btn-default btn1"> قبول العرض </a>
+                                            <a href="{{ url('/applicant/accept/' . $enquiry_id . '/' . $value->id) }}"><i class="fa fa-check-circle"></i> @lang('main.accept')</a>
                                         @endif
-                                        <li><span style="border: solid #ddd 2px; padding: 2px 10px; ">{{@$value->hour_price}}</span> دولار / ساعة</li>
-                                    </ul>
-                                </div>
-                            </div>
+                                    </div><!-- md-3 -->
+                                </div><!-- bottom -->
+                            </div><!-- inner_offers -->
                         @endforeach
+                    @else
+                    <div class="text-center">@lang('main.not_fond')</div>
+                    @endif
 
-                    </div>
+                </div><!-- offset -->
+            </div><!-- container -->
+        </div>
 
-                </div>
-            </div>
-            <!-- Button trigger modal -->
 
-        </section>
     </section>
-
-
-
-
-
 
 
 @endsection

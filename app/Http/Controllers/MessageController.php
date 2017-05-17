@@ -4,9 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Applicant;
 use App\Enquiry;
+use App\User;
 use Illuminate\Http\Request;
 use App\Message;
 use Auth;
+use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Mail;
 
 class MessageController extends Controller
 {
@@ -73,12 +76,18 @@ class MessageController extends Controller
             return \Redirect::to('messages')
                 ->withErrors($validator);
         } else {
-            $request = $this->saveFiles($request);
             $msg = new Message();
+            if (Input::file('attached')) {
+                $destinationPath = 'uploads'; // upload path
+                $extension = Input::file('attached')->getClientOriginalExtension(); // getting image extension
+                $fileName = rand(11111,99999).'.'.$extension; // renameing image
+                Input::file('attached')->move($destinationPath, $fileName); // uploading file to given path
+                $msg->attached = $fileName;
+            }
+
             $msg->user_id = \Auth::user()->id;
             $msg->enquiry_id = $request->enquiry_id;
             $msg->body = $request->body;
-            $msg->attached = $request->attached;
             $msg->applicant_id = $request->applicant_id;
             if(Auth::user()->type == 3){
                 $msg->to = Applicant::find($request->applicant_id)->user->id;
@@ -87,7 +96,13 @@ class MessageController extends Controller
             }
             $msg->save();
 
-                \Session::flash('message', 'تم بنجاح!');
+            Mail::send('emails.send', ['title' => 'لديك رسالة جديده', 'content' => 'لديك رسالة جديدة من ' , 'teacher' =>  \Auth::user()], function ($message) use ($msg)
+            {
+                $message->from('no-reply@modarisy.com', 'Modarisy Platform');
+                $message->to(User::find($msg->to)->email);
+            });
+
+            \Session::flash('message', 'تم بنجاح!');
             return \Redirect::back();
         }
     }

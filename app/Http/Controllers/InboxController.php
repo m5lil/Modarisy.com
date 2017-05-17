@@ -6,6 +6,7 @@ use Dotenv\Validator;
 use Illuminate\Http\Request;
 use App\Inbox;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 
 
 class InboxController extends Controller
@@ -15,6 +16,7 @@ class InboxController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
     public function index()
     {
         //
@@ -70,6 +72,57 @@ class InboxController extends Controller
             $msg->save();
             // redirect
             \Session::flash('message', 'تم إرسال رسالتك بنجاح!');
+            Mail::send('emails.send', ['title' => 'لديك رسالة جديده', 'content' => 'لديك رسالة جديدة  '], function ($message)
+            {
+                $message->from('no-reply@modarisy.com', 'Modarisy Platform');
+                $message->to('info@modarisy.com');
+            });
+
+
+            return \Redirect::to('/');
+        }
+
+    }
+
+    public function contact(Request $request)
+    {
+        $validator = \Validator::make($request->all(), [
+            'body' => 'required',
+            'subject' => 'required',
+        ]);
+        if ($validator->fails()) {
+            return \Redirect::to('/contact')
+                ->withErrors($validator);
+        } else {
+            $msg = New Inbox();
+            if (Auth::check()){
+                $msg->user_id = Auth::user()->id;
+                $msg->name = Auth::user()->FullName();
+                $msg->email = Auth::user()->email;
+                $msg->phone = Auth::user()->phone;
+                $msg->subject = $request->subject;
+                $msg->body = $request->body;
+                $msg->read = 0;
+
+            }else{
+
+                $msg->name = $request->name;
+                $msg->email = $request->email;
+                $msg->phone = $request->phone;
+                $msg->subject = $request->subject;
+                $msg->read = 0;
+                $msg->body = $request->body;
+            }
+            $msg->save();
+            Mail::send('emails.send', ['title' => 'لديك رسالة جديده', 'content' => 'لديك رسالة جديدة من ' . $msg->name], function ($message)
+            {
+                $message->from('no-reply@modarisy.com', 'Modarisy Platform');
+                $message->to('info@modarisy.com');
+            });
+
+
+            // redirect
+            \Session::flash('message', 'تم إرسال رسالتك بنجاح!');
             return \Redirect::to('/');
         }
 
@@ -119,8 +172,10 @@ class InboxController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function delete(Request $request)
     {
-        //
+        Inbox::find($request->id)->delete();
+        \Session::flash('message', 'تم الحذف س!');
+        return Redirect::to('dashboard/inbox');
     }
 }

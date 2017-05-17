@@ -172,5 +172,41 @@ i.fa.fa-comments {
     padding-right: 15px;
     padding-left: 15px;
 }
-    
+
 }
+
+.modarsyy-1 .form label.label{
+    border-radius: 20px 0px 0px 20px;
+}
+.modarsyy-1 .form input,.modarsyy-1 .form input[type="email"],.modarsyy-1 .form select{
+    padding-left:125px;
+}
+
+
+.caarss > span{
+    margin-right: 50px;
+    margin-left: 0;
+}
+
+.footer-social-icons h4{
+    float: left;
+}
+
+.social-icon {
+    float: right;
+}
+
+
+.user_hover img {
+    float: right;
+    margin-right: -7px;
+}
+
+.modarsyy-1 .form input[type="password"] {
+    padding: 0px 0 0 126px;
+}
+
+.inner_message .col-md-10 ul {
+    float: left;
+}
+

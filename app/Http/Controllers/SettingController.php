@@ -14,8 +14,15 @@ class SettingController extends Controller
      */
     public function index()
     {
-        $settings = Setting::all();
+
+        $settings = Setting::whereIn('type',[0,1,2])->get();
         return view('backend.settings', compact('settings'));
+    }
+
+    public function home_settings()
+    {
+        $settings = Setting::whereIn('type',[4,5])->get();
+        return view('backend.home_settings', compact('settings'));
     }
 
     /**

@@ -59,7 +59,7 @@
                       <td>{{$value->email}}</td>
                       <td>
                           <i class="circle icon
-                          @if ($value->profile->statue != 0)
+                          @if (@$value->profile->statue != 0)
                               green
                           @endif
                           "></i>
@@ -69,7 +69,7 @@
                           <a href = "{{'/dashboard/users/' . $value->id}}/edit" class="ui left blue mini attached edit_form button icon"><i class="edit icon"></i></a>
                           <a href="{{url('/dashboard/profiles/activate/') . '/' . $value->id}}"
                              class="ui right mini attached button icon"><i class="
-                    @if($value->profile->statue == 0)
+                    @if(@$value->profile->statue == 0)
                                       checkmark blue
                                   @else()
                                       ban
@@ -84,11 +84,11 @@
                     <tr>
                       <td class="collapsing">{{$value->id}}</td>
                       <td>{{$value->FullName()}}
-                      <td>{{$value->profile->specialty}}</td>
-                      <td>{{$value->profile->level}}</td>
+                      <td>{{@$value->profile->specialty}}</td>
+                      <td>{{@$value->profile->level}}</td>
                       <td>
                           <i class="circle icon
-                          @if ($value->profile->statue != 0)
+                          @if (@$value->profile->statue != 0)
                               green
                           @endif
                           "></i>
@@ -97,7 +97,7 @@
                           <a href = "{{'/dashboard/users/' . $value->id}}/edit" class="ui left blue mini attached edit_form button icon"><i class="edit icon"></i></a>
                           <a href="{{url('/dashboard/profiles/activate/') . '/' . $value->id}}"
                              class="ui right mini attached button icon"><i class="
-                    @if($value->profile->statue == 0)
+                                  @if(@$value->profile->statue == 0)
                                       checkmark blue
                                   @else()
                                       ban

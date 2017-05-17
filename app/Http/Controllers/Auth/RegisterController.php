@@ -55,7 +55,7 @@ class RegisterController extends Controller
             'last_name' => 'required|max:255',
             'email' => 'required|email|max:255|unique:users',
             'password' => 'required|min:6|confirmed',
-            'phone' => 'required|digits_between:10,15',
+            'phone' => 'required',
             'term' => 'accepted'
         ]);
     }
@@ -79,7 +79,7 @@ class RegisterController extends Controller
             'address' => $data['address'],
             'city' => $data['city'],
             'type' => $type,
-            'activated' => 0
+                'activated' => 0
         ]);
 
     }
@@ -93,14 +93,17 @@ class RegisterController extends Controller
 
     public function getSocialAuthCallback($provider=null, Request $request)
     {
+        if (!$request->has('code') || $request->has('denied')) {
+            return redirect('/');
+        }
         try {
             $user = Socialite::driver($provider)->user();
         } catch (Exception $e) {
-            return redirect('login/$provider');
+            return redirect('auth/$provider');
         }
         $authUser = $this->findOrCreateUser($user);
         Auth::login($authUser, true);
-        return redirect('/');
+        return redirect('/home');
     }
     /**
      * Return user if exists; create and return if doesn't
@@ -119,6 +122,7 @@ class RegisterController extends Controller
         return User::create([
             'first_name' => $name[0],
             'last_name' => $name[1],
+            'type' => 0,
             'email' => $socialUser->getEmail(),
             'social_id' => $socialUser->getId()
         ]);

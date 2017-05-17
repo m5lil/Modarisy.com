@@ -5,8 +5,12 @@ namespace App\Http\Controllers;
 use App\Applicant;
 use App\Enquiry;
 use App\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Profile;
+use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Validation\Rules\In;
 
 class ProfileController extends Controller
 {
@@ -55,25 +59,26 @@ class ProfileController extends Controller
     {
         $rules = array(
             'gen_exp'     => 'nullable',
-            'teach_time'  => 'nullable',
-            'teach_hours' => 'max:10',
+            'teach_hours'  => 'required',
             'hour_rate'   => 'nullable',
-            'intro'       => 'required',
+//            'intro'       => 'required',
             'gender'      => 'required',
-            'school'      => 'required',
-            'dbirth'      => 'required|date',
-            'age'         => 'required',
-            'photo'       => 'nullable',
+//            'school'      => 'required',
+            'dbirth'      => 'required|before:' . (Carbon::now()->subYears(13)->toDateString()),
+            'photo'       => 'image',
             'specialty'   => 'nullable',
-            'hear'        => 'required',
+//            'hear'        => 'required',
             'lang'        => 'required',
-            'level'       => 'nullable'
+//            'level'       => 'nullable',
+            'lat'            => 'required',
+
+
         );
 
         $validator = \Validator::make($request->all(), $rules);
 
         if ($validator->fails()) {
-            return \Redirect::back()
+            return \Redirect::back()->withInput()
                 ->withErrors($validator);
         } else {
             $request = $this->saveFiles($request);
@@ -89,15 +94,25 @@ class ProfileController extends Controller
             $profile->gender = $request->gender;
             $profile->school = $request->school;
             $profile->dbirth = $request->dbirth;
-            $profile->age = $request->age;
+            $profile->age = Carbon::parse($request->dbirth)->age;
             $profile->hear = $request->hear;
             $profile->specialty = $request->specialty;
             $profile->lang = $request->lang;
             $profile->level = $request->level;
             $profile->photo = $request->photo;
+            $profile->lat = $request->lat;
+            $profile->lng = $request->lng;
+//            dd($request);
             $profile->save();
             // redirect
             \Session::flash('message', 'تم بنجاح!');
+            Mail::send('emails.send', ['title' => 'أهلا ومرحبا بك فى مدرسي', 'content' => 'نشكرك على التسجيل فى موقع مدرسي ' ], function ($message) use ($profile)
+            {
+                $message->from('no-reply@modarisy.com', 'Modarisy Platform');
+                $message->subject('Modarisy Platform');
+                $message->to($profile->user->email);
+            });
+
             return \Redirect::to('/home');
 
         }
@@ -156,21 +171,22 @@ class ProfileController extends Controller
             'teach_time'  => 'nullable',
             'teach_hours' => 'max:10',
             'hour_rate'   => 'nullable',
-            'intro'       => 'required',
+//            'intro'       => 'required',
             'gender'      => 'required',
-            'school'      => 'required',
-            'dbirth'      => 'required|date',
-            'age'         => 'required',
-            'photo'       => 'nullable',
+//            'school'      => 'required',
+            'dbirth'      => 'required|before:' . (Carbon::now()->subYears(13)->toDateString()),
+            'photo'       => 'image',
             'specialty'   => 'nullable',
+//            'hear'        => 'required',
             'lang'        => 'required',
-            'level'       => 'nullable'
+//            'level'       => 'nullable',
+//            'lat'            => 'required',
         );
 
         $validator = \Validator::make($request->all(), $rules);
 
         if ($validator->fails()) {
-            return \Redirect::back()
+            return \Redirect::back()->withInput()
                 ->withErrors($validator);
         } else {
             $request = $this->saveFiles($request);
@@ -186,11 +202,13 @@ class ProfileController extends Controller
             $profile->gender = $request->gender;
             $profile->school = $request->school;
             $profile->dbirth = $request->dbirth;
-            $profile->age = $request->age;
+            $profile->age = Carbon::parse($request->dbirth)->age;
             $profile->specialty = $request->specialty;
             $profile->lang = $request->lang;
             $profile->level = $request->level;
-            $profile->photo = $request->photo;
+            if ($request->photo != null){
+                 $profile->photo = $request->photo;
+            }
             $profile->save();
             // redirect
             \Session::flash('message', 'تم بنجاح!');

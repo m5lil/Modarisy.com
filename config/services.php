@@ -29,16 +29,16 @@ return [
         'secret' => env('SPARKPOST_SECRET'),
     ],
 
-    'stripe' => [
-        'model' => App\User::class,
-        'key' => env('STRIPE_KEY'),
-        'secret' => env('STRIPE_SECRET'),
-    ],
-
     'facebook' => [
         'client_id' => '418325768507501',
         'client_secret' => 'baed30ac259ef4c3dc4481781e7789ee',
-        'redirect' => 'http://l54.dev/login/callback/facebook/',
+        'redirect' => 'https://modarisy.com/auth/facebook/callback',
+    ],
+
+    'linkedin' => [
+        'client_id' => '86dt84oxe028lx',
+        'client_secret' => 'FHDwZzDcb0tKqDIG',
+        'redirect' => 'https://modarisy.com/auth/linkedin/callback/',
     ],
 
 

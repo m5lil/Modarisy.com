@@ -21,8 +21,8 @@
                 {!! Form::select($setting->set_name,['rtl' => 'Right to left', 'ltr' => 'Left To Right'] , $setting->value , ['class' => 'form-control']) !!}
 
             @elseif($setting->set_name == 'fav_icon')
-                {!! Form::file($setting->set_name) !!}
-                <img src="{{url('/uploads/thumb/' . $setting->value)}}" alt="thumbnail">
+                {{--{!! Form::file($setting->set_name) !!}--}}
+                {{--<img src="{{url('/uploads/thumb/' . $setting->value)}}" alt="thumbnail">--}}
 
             @elseif($setting->set_name == 'logo')
                 {!! Form::file($setting->set_name) !!}

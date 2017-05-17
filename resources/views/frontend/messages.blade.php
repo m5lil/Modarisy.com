@@ -3,85 +3,114 @@
 @section('content')
     <!--slider***************************************-->
     <section class="modarsy-2">
-        <section class="with-us text-center">
-            <div class="container">
-                <div class="row">
-                    <div class="col-xs-12">
-                        <h2>
-                            <a href="#">الرسائل الخاصة بـ طلب {{ App\Enquiry::find($enquiry_id)->subject }}</a>
-                        </h2>
+        <section class="slider" style="height: 238px;">
+            <div class="slid" style="height: 238px;">
+                <div class="container">
+                    <div class="row">
+                        <div class="li-list">
+
+                            <a href="#"
+                               class="conntact-my active">@lang('main.messages_of')  {{ App\Enquiry::find($enquiry_id)->subject }}</a>
+                        </div>
                     </div>
                 </div>
             </div>
         </section>
-        <section class="modarsyy-1">
+
+        <br>
+
+        <div class="owl-slid-hite text-center">
+            <p>@lang('main.messages_of') {{ App\Enquiry::find($enquiry_id)->subject }}</p>
+            <img src="{{url('/images/after.png')}}">
+        </div>
+
+
+        <div class="special_messages">
+
             <div class="container">
-                <div class="row">
-                    <div class="col-sm-12 col-xs-12">
-                        <div class="form col-md-12 col-sm-12"
-                             style="width: inherit; margin: 10px;background-color: #fff;">
 
-                            {!! Form::open(array('action' => 'MessageController@store', 'method' => 'POST','files' => true)) !!}
+                <div class="col-md-8 col-md-offset-2">
+                    {!! Form::open(array('action' => 'MessageController@store', 'method' => 'POST','files' => true)) !!}
+                    <input type="hidden" name="enquiry_id" value="{{$enquiry_id}}">
 
-                            <input type="hidden" name="enquiry_id" value="{{$enquiry_id}}">
+                    <input type="hidden" name="applicant_id" value="{{$applicant_id}}">
 
-                            <input type="hidden" name="applicant_id" value="{{$applicant_id}}">
+                    <textarea name="body" placeholder="@lang('main.m_message_text')"></textarea>
 
-                            <textarea name="body" id="" cols="30" rows="10" placeholder="نص الرسالة"></textarea>
+                    <div class="file-upload">
+                        <label for="upload" class="file-upload__label"><i class="fa fa-image"></i> <span id="file_name">Upload</span> </label>
+                        <input id="upload" class="file-upload__input" type="file" name="attached" onchange ="getFileData(this);">
+                    </div><!-- file -->
 
-                            <input type="file" style="padding: 10px;" name="attached" placeholder="">
+                    <input type="submit" value="@lang('main.send')">
+                    </form>
 
-                            {!! Form::submit('ارسل') !!}
 
-                            {!! Form::close() !!}
-                        </div>
+                    @if(isset($messages))
+                        @if(count($messages))
+                            @foreach($messages as $message)
 
-                        @if(isset($messages))
-                            @if(count($messages))
-                                @foreach($messages as $message)
-                                    <div class="col-md-12 col-sm-12 col-xs-12 mix category-3"
-                                         style="margin: 10px;background-color:
-                                         @if($message->read == 0)
-                                                 #dbffd5;
-                                                 {{ \App\Message::find($message->id)->update(['read' => 1])}}
-                                         @else
-                                                 #fff;
-                                         @endif
+                                <div class="inner_message"
+                                     style="margin: 10px;border:1px solid
+                                     @if($message->read == 0)
+                                             #eaaa15 !important;
+                                             @if(Auth::user()->id == $message->to)
+                                     {{ \App\Message::find($message->id)->update(['read' => 1])}}
+                                             @endif
+                                     @endif
 
-                                                 ">
-                                        <div class="caarss ">
-                                            <h4>
-                                                <a href="{{url('profile/' . $message->user->id)}}"> {{@$message->user->fullName()}}</a>
-                                            </h4>
-                                            <hr>
-                                            <ul class="list-inline">
-                                                <li>{{@$message->body}}</li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                @endforeach
-                            @else
-                                <h2 class="text-center" style="margin-bottom: 150px;">لا توجد رسائل بعد</h2>
-                                <br/>
-                            @endif
+                                             ">
 
+                                <div class="col-md-2">
+                                        <i class="fa fa-envelope"></i>
+                                    </div><!-- md-3 -->
+
+                                    <div class="col-md-10">
+                                        <p>{{@$message->body}}</p>
+                                        <div class="bottom_message">
+                                            <div class="col-md-8">
+                                                <ul>
+                                                    <li><i class="fa fa-clock-o"></i> {{ \Date::parse($message->created_at)->diffForHumans() }}</li>
+                                                    <li><a href="{{url('profile/' . $message->user->id)}}"><i class="fa fa-user"></i>  {{@$message->user->fullName()}}</a></li>
+                                                </ul>
+                                            </div><!-- md-8 -->
+
+                                            <div class="col-md-4 red_special">
+                                                @if($message->attached)<a class="red_special" href="{{url('uploads/' . $message->attached)}} " download><i class="fa fa-file-zip-o"></i> Download</a>@endif
+
+                                            </div><!-- md-4 -->
+                                        </div><!-- bottom_message -->
+                                    </div><!-- md-9 -->
+                                </div><!-- inner_message -->
+                            @endforeach
                         @else
-                            <h2 class="text-center" style="margin-bottom: 150px;">لا توجد رسائل بعد</h2>
+                            <h2 class="text-center" style="margin-bottom: 150px;">@lang('main.m_nothing')</h2>
                             <br/>
                         @endif
 
-                    </div>
+                    @else
+                        <h2 class="text-center" style="margin-bottom: 150px;">@lang('main.m_nothing')</h2>
+                        <br/>
+                    @endif
 
-                </div>
-            </div>
 
-        </section>
+                </div><!-- offset -->
+
+            </div><!-- container -->
+        </div>
+
     </section>
 
 
 
 
-
+    <script !src="">
+        function getFileData(myFile){
+            var file = myFile.files[0];
+            var filename = file.name;
+            document.getElementById('file_name').innerHTML = filename;
+        }
+    </script>
 
 
 @endsection

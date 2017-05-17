@@ -98,8 +98,8 @@ return [
     */
 
     'custom'               => [
-        'attribute-name' => [
-            'rule-name' => 'custom-message',
+        'lat' => [
+            'required' => 'رجاء قم بإختيار موقعك على الخريطه',
         ],
     ],
 
@@ -144,6 +144,17 @@ return [
         'time'                  => 'الوقت',
         'available'             => 'مُتاح',
         'size'                  => 'الحجم',
+
+
+        'gen_exp'                  => 'سنوات الخبره',
+        'hour_rate'                  => 'الحجم',
+        'gender'                  => 'الحجم',
+        'dbirth'                  => 'الحجم',
+        'photo'                  => 'الحجم',
+        'specialty'                  => 'الحجم',
+        'lang'                  => 'الحجم',
+        'lat'                  => 'الحجم',
+
     ],
 
 ];

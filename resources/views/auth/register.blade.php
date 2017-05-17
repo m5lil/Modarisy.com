@@ -8,8 +8,8 @@
                 <div class="container">
                     <div class="row">
                         <div class="li-list">
-                            <a href="#" class="home ">الرئيسية</a>
-                            <a href="#" class="conntact-my active">نموذج التسجيل</a>
+
+                            <a href="#" class="conntact-my active">@lang('main.register_form')</a>
                         </div>
                     </div>
                 </div>
@@ -20,11 +20,7 @@
                 <div class="row">
                     <div class="col-xs-12">
                         <h2>
-                            <a href="#">سجل معنا الان</a>
-                            <p>هناك حقيقة مثبتة منذ زمن طويل وهي أن المحتوى المقروء لصفحة ما سيلهي القارئ عن التركيز على
-                                الشكل الخارجي للنص أو شكل توضع الفقرات في الصفحة التي يقرأها. ولذلك يتم استخدام طريقة
-                                لوريم إيبسوم أو شكل توضع الفقرات في الصفحة التي يقرأها. ولذلك يتم استخدام طريقة لوريم
-                                إيبسوم ....</p>
+                            <a href="#">@lang('main.singup_now') - @lang('main.type'. \Request::get('t') )</a>
                         </h2>
                     </div>
                 </div>
@@ -33,13 +29,13 @@
         <section class="modarsyy-1">
             <div class="container">
                 <div class="row">
-                    <div class="col-sm-12 col-xs-12">
+                    <div class="col-md-6 col-xs-12 col-md-offset-3">
                         <div class="form">
                         <form class="form-horizontal" role="form" method="POST" action="{{ url('/register') }}">
                             {{ csrf_field() }}
                             <input type="text" name="type" value="{{ \Request::get('t') }}" hidden>
-
-                                    <input id="first_name" type="text" class="form-control" name="first_name"  placeholder="الإسم الأول"
+                            <label class="label" for="first_name">@lang('main.firstname')</label>
+                                    <input id="first_name" type="text" class="form-control" name="first_name"
                                            value="{{ old('first_name') }}" required autofocus>
 
                                     @if ($errors->has('first_name'))
@@ -47,7 +43,8 @@
                                         <strong>{{ $errors->first('first_name') }}</strong>
                                     </span>
                                     @endif
-                                    <input id="last_name" type="text" class="form-control" name="last_name"  placeholder="الإسم الأخير"
+                            <label class="label" for="last_name">@lang('main.lastname')</label>
+                            <input id="last_name" type="text" class="form-control" name="last_name"
                                            value="{{ old('last_name') }}" required autofocus>
 
                                     @if ($errors->has('last_name'))
@@ -55,7 +52,8 @@
                                         <strong>{{ $errors->first('last_name') }}</strong>
                                     </span>
                                     @endif
-                                    <input id="email" type="email" class="form-control" name="email"  placeholder="البريد الإلكترونى"
+                            <label class="label" for="email">@lang('main.email')</label>
+                            <input id="email" type="email" class="form-control" name="email"
                                            value="{{ old('email') }}" required>
 
                                     @if ($errors->has('email'))
@@ -63,64 +61,67 @@
                                         <strong>{{ $errors->first('email') }}</strong>
                                     </span>
                                     @endif
-                                    <input id="password" type="password" class="form-control" name="password"  placeholder="كلمة المرور" required>
+                            <label class="label" for="password">@lang('main.password')</label>
+                            <input id="password" type="password" class="form-control" name="password"   required>
 
                                     @if ($errors->has('password'))
                                         <span class="help-block">
                                         <strong>{{ $errors->first('password') }}</strong>
                                     </span>
                                     @endif
-                                    <input id="password-confirm" type="password" class="form-control"  placeholder="تأكيد كلمة المرور"
+                            <label class="label" for="password-confirm">@lang('main.repeatpass')</label>
+                            <input id="password-confirm" type="password" class="form-control"
                                            name="password_confirmation" required>
-                                    <select id="city" class="form-control" name="city" required>
-                                        <option value="" disabled selected>المدينة</option>
-                                        <option value="Riyadh">Riyadh</option>
-                                        <option value="Dammam">Dammam</option>
-                                        <option value="Safwa">Safwa</option>
-                                        <option value="Al Qatif">Al Qatif</option>
-                                        <option value="Dhahran">Dhahran</option>
-                                        <option value="Al Faruq">Al Faruq</option>
-                                        <option value="Khobar">Khobar</option>
-                                        <option value="Jubail">Jubail</option>
-                                        <option value="Sayhat">Sayhat</option>
-                                        <option value="Jeddah">Jeddah</option>
-                                        <option value="Ta'if">Ta'if</option>
-                                        <option value="Mecca">Mecca</option>
-                                        <option value="Al Hufuf">Al Hufuf</option>
-                                        <option value="Medina">Medina</option>
-                                        <option value="Rahimah">Rahimah</option>
-                                        <option value="Rabigh">Rabigh</option>
-                                        <option value="Yanbu` al Bahr">Yanbu` al Bahr</option>
-                                        <option value="Abqaiq">Abqaiq</option>
-                                        <option value="Mina">Mina</option>
-                                        <option value="Ramdah">Ramdah</option>
-                                        <option value="Linah">Linah</option>
-                                        <option value="Abha">Abha</option>
-                                        <option value="Jizan">Jizan</option>
-                                        <option value="Al Yamamah">Al Yamamah</option>
-                                        <option value="Tabuk">Tabuk</option>
-                                        <option value="Sambah">Sambah</option>
-                                        <option value="Ras Tanura">Ras Tanura</option>
-                                        <option value="At Tuwal">At Tuwal</option>
-                                        <option value="Sabya">Sabya</option>
-                                        <option value="Buraidah">Buraidah</option>
-                                        <option value="Madinat Yanbu` as Sina`iyah">Madinat Yanbu` as Sina`iyah</option>
-                                        <option value="Hayil">Hayil</option>
-                                        <option value="Khulays">Khulays</option>
-                                        <option value="Khamis Mushait">Khamis Mushait</option>
-                                        <option value="Ra's al Khafji">Ra's al Khafji</option>
-                                        <option value="Najran">Najran</option>
-                                        <option value="Sakaka">Sakaka</option>
-                                        <option value="Al Bahah">Al Bahah</option>
-                                        <option value="Rahman">Rahman</option>
-                                        <option value="Jazirah">Jazirah</option>
+                            <label class="label" for="city">@lang('main.city')</label>
+                            <select id="city" class="form-control" name="city" required>
+                                        <option value="Riyadh - الرياض">Riyadh - الرياض</option>
+                                        <option value="Dammam - الدمام">Dammam - الدمام</option>
+                                        <option value="Safwa - صفوة">Safwa - صفوة</option>
+                                        <option value="Al Qatif - القطيف">Al Qatif - القطيف</option>
+                                        <option value="Dhahran - الظهران">Dhahran - الظهران</option>
+                                        <option value="Al Faruq - الفاروق">Al Faruq - الفاروق</option>
+                                        <option value="Khobar - الخبر">Khobar - الخبر</option>
+                                        <option value="Jubail - الجبيل">Jubail - الجبيل</option>
+                                        <option value="Sayhat - السايحات">Sayhat - السايحات</option>
+                                        <option value="Jeddah - جدة">Jeddah - جدة</option>
+                                        <option value="Ta'if - الطايف">Ta'if - الطايف</option>
+                                        <option value="Mecca - مكة">Mecca - مكة</option>
+                                        <option value="Al Hufuf -الهفوف">Al Hufuf -الهفوف</option>
+                                        <option value="Medina - المدية">Medina - المدية</option>
+                                        <option value="Rahimah - رحيمة">Rahimah - رحيمة</option>
+                                        <option value="Rabigh - غبر">Rabigh - غبر</option>
+                                        <option value="Yanbu` al Bahr - ينبوع البحر">Yanbu` al Bahr - ينبوع البحر</option>
+                                        <option value="Abqaiq - البقيع">Abqaiq - البقيع</option>
+                                        <option value="Mina - منا">Mina - منا</option>
+                                        <option value="Ramdah - الرمضة">Ramdah - الرمضة</option>
+                                        <option value="Linah - لينه">Linah - لينه</option>
+                                        <option value="Abha أبها">Abha أبها</option>
+                                        <option value="Jizan - جيزان">Jizan - جيزان</option>
+                                        <option value="Al Yamamah - اليمامة">Al Yamamah - اليمامة</option>
+                                        <option value="Tabuk - تبوك">Tabuk - تبوك</option>
+                                        <option value="Sambah - سمبة">Sambah - سمبة</option>
+                                        <option value="Ras Tanura - راس تنورة">Ras Tanura - راس تنورة</option>
+                                        <option value="At Tuwal - الطوال">At Tuwal - الطوال</option>
+                                        <option value="Sabya- صبياء">Sabya- صبياء</option>
+                                        <option value="Buraidah - بريدة">Buraidah - بريدة</option>
+                                        <option value="Madinat Yanbu` as Sina`iyah - ينبع الصناعية">Madinat Yanbu` as Sina`iyah - ينبع الصناعية</option>
+                                        <option value="Hayil - حائل">Hayil - حائل</option>
+                                        <option value="Khulays - خليص">Khulays - خليص</option>
+                                        <option value="Khamis Mushait - خميس مشيط‎‎">Khamis Mushait - خميس مشيط‎‎</option>
+                                        <option value="Ra's al Khafji - الخفجي">Ra's al Khafji - الخفجي</option>
+                                        <option value="Najran - نجران ">Najran - نجران </option>
+                                        <option value="Sakaka - سكاكا">Sakaka - سكاكا</option>
+                                        <option value="Al Bahah - الباحة‎‎">Al Bahah - الباحة‎‎</option>
+                                        <option value="Jazirah - الجزيرة">Jazirah - الجزيرة</option>
                                     </select>
                                     @if ($errors->has('city'))
                                         <span class="help-block">
                                             <strong>{{ $errors->first('city') }}</strong>
                                         </span>
                                     @endif
-                                    <input id="address" type="address" class="form-control" name="address"  placeholder="العنوان"
+                            <label class="label" for="address">@lang('main.adress')</label>
+
+                            <input id="address" type="text" class="form-control" name="address"
                                            value="{{ old('address') }}" required>
 
                                     @if ($errors->has('address'))
@@ -128,7 +129,9 @@
                                         <strong>{{ $errors->first('address') }}</strong>
                                     </span>
                                     @endif
-                                    <input id="phone" type="phone" class="form-control" name="phone"  placeholder="رقم الجوال"
+                            <label class="label" for="phone">@lang('main.phone')</label>
+
+                            <input style="direction: ltr;" id="phone" type="text" class="input-medium bfh-phone form-control"  data-format="05d ddd ddd-dddd" name="phone"
                                            value="{{ old('phone') }}" required>
 
                                     @if ($errors->has('phone'))
@@ -136,9 +139,9 @@
                                         <strong>{{ $errors->first('phone') }}</strong>
                                     </span>
                                     @endif
-                            <label for="term">
+                            <label  for="term">
                                 <input name="term" id="term" type="checkbox" value="1">
-                                <a href="{{ url('/terms') }}">أوافق على الشروط والأحكام</a>
+                                @lang('main.term')  <a href="{{ url('/terms') }}" target=" _blank">@lang('main.term_link') </a>
                             </label>
 
                                     @if ($errors->has('term'))
@@ -148,7 +151,7 @@
                                     @endif
 
                                     <button type="submit" class="btn btn-primary">
-                                        تسجيل
+                                        @lang('main.register')
                                     </button>
                         </form>
                         </div>

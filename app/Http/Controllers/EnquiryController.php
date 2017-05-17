@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Enquiry;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Mail;
 
 class EnquiryController extends Controller
 {
@@ -55,12 +56,10 @@ class EnquiryController extends Controller
 
     }
 
-    public function createRequest()
+    public function createRequest( Request $request)
     {
         if (\Auth::user()->type == 3) {
-            Cache::put('subject', Input::get('subject'), 2);
-            Cache::put('total_hours', Input::get('total_hours'), 2);
-            return view('frontend.request');
+            return view('frontend.request')->withInput($request->all());
         } elseif (\Auth::user()->type == 2) {
             \Session::flash('message', 'لا يمكنك إضافة طلب لأنك ليس طالب');
             return redirect('/');
@@ -68,6 +67,11 @@ class EnquiryController extends Controller
             \Session::flash('message', 'قم بالتسجيل أولا لتتمكن من إضافة طلب');
             return redirect('/register?t=3');
         }
+    }
+    
+    public function getRequest()
+    {
+        return view('frontend.request');
     }
 
     /**
@@ -79,11 +83,8 @@ class EnquiryController extends Controller
     public function store(Request $request)
     {
         $rules = array(
-            'total_hours'    => 'required',
-            'preferred_time' => 'required',
             'subject'        => 'required',
-            'target'         => 'required',
-            'comment'        => 'required',
+            'preferred_time' => 'required',
             'material'       => 'required',
             'lat'            => 'required',
         );
@@ -94,7 +95,7 @@ class EnquiryController extends Controller
         $validator = \Validator::make($request->all(), $rules, $messages);
 
         if ($validator->fails()) {
-            return \Redirect::back()
+            return \Redirect::back()->withInput()
                 ->withErrors($validator);
         } else {
             $enquire = new Enquiry();
@@ -141,11 +142,24 @@ class EnquiryController extends Controller
             if ($enquiry->statue == 0) {
                 $enquiry->statue = '1';
                 $enquiry->save();
-                \Session::flash('message', 'تم تنشيط العرض');
+                \Session::flash('message', 'تم تنشيط الطلب');
+                Mail::send('emails.send', ['title' => 'تم تفعيل الطلب الخاص بك', 'content' => 'تم الموافقه على الطلب المقدم من طرفكم وسوف نوافيكم بالعروض المقدمة من المدرسين قريبا '], function ($message) use ($enquiry)
+                {
+                    $message->from('no-reply@modarisy.com', 'Modarisy Platform');
+                    $message->to($enquiry->user->email);
+                });
+
             } elseif ($enquiry->statue == 1) {
                 $enquiry->statue = '0';
                 $enquiry->save();
                 \Session::flash('message', 'تم تعليق العرض');
+                Mail::send('emails.send', ['title' => 'تم تعليق الطلب الخاص بك', 'content' => 'تم إيقاف الطلب الخاص بك '], function ($message) use ($enquiry)
+                {
+                    $message->from('no-reply@modarisy.com', 'Modarisy Platform');
+                    $message->to($enquiry->user->email);
+                });
+
+
             } else {
                 \Session::flash('message', 'لايمكن تعديل الحالة حاليا');
             }
@@ -158,7 +172,7 @@ class EnquiryController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
+     * @param  \Illuminate\Http\Request $request$request->except('password')
      * @param  int $id
      * @return \Illuminate\Http\Response
      */

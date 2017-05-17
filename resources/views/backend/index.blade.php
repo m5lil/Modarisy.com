@@ -217,5 +217,30 @@
                 </div>
             </div>
         </a>
+
+        <a href="/dashboard/settings" class="card">
+            <div class="content">
+                <div class="header">إحصائية من إين سمعت عنا</div>
+                <div class="description">
+                    من خلال صديق {{ count(\App\Profile::where('hear','من خلال صديق')->get()) }}
+                    <br>
+                    من خلال محرك بحث {{ count(\App\Profile::where('hear','من خلال محرك بحث')->get()) }}
+                    <br>
+                    من خلال إعلان مطبوع {{ count(\App\Profile::where('hear','من خلال إعلان مطبوع')->get()) }}
+                    <br>
+                    من خلال البريد الإلكترونى {{ count(\App\Profile::where('hear','من خلال البريد الإلكترونى')->get()) }}
+                    <br>
+                    من خلال رسالة على جوالك {{ count(\App\Profile::where('hear','من خلال رسالة على جوالك')->get()) }}
+                    <br>
+                    <br>
+                </div>
+                {{--<div class="header">إحصائية من إين سمعت عنا</div>--}}
+                {{--<div class="description">--}}
+
+                {{--</div>--}}
+                </div>
+        </a>
+
+
     </div>
 @endsection

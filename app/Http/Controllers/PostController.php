@@ -46,6 +46,8 @@ class PostController extends Controller
             'title.*' => 'required',
             'body.*' => 'required',
             'category_id' => 'required',
+            'photo'       => 'image',
+
         ]);
         if ($validator->fails()) {
             return Redirect::to('dashboard/blog/posts')
@@ -111,6 +113,7 @@ class PostController extends Controller
             'title.*' => 'required',
             'body.*' => 'required',
             'category_id' => 'required',
+            'photo'       => 'image',
 
         ]);
         if ($validator->fails()) {

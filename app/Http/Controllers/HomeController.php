@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Applicant;
 use App\Enquiry;
+use App\Profile;
 use App\User;
 use Auth;
 use Illuminate\Http\Request;
@@ -31,7 +32,7 @@ class HomeController extends Controller
 
         if (Auth::user()->type == 3) {
             $enquiries = Auth::user()->enquiries()
-                ->where('statue', 1)
+                ->whereIn('statue', [1,0])
                 ->get();
             $applicants = Applicant::where('student_id', Auth::user()->id)
                 ->where('statue', 2)
@@ -56,15 +57,15 @@ class HomeController extends Controller
         }
     }
 
-    public function filter(Request $request, Enquiry $enquiries)
+    public function filter(Request $request, Profile $enquiries)
     {
 
-        if ($request->has('material')) {
-            $enquiries->where('material', $request->input('material'));
+        if ($request->has('specialty')) {
+            $enquiries = $enquiries->where('specialty', $request->input('specialty'));
         }
 
-        if ($request->has('preferred_time')) {
-            $enquiries->where('preferred_time', $request->input('preferred_time'));
+        if ($request->has('teach_time')) {
+            $enquiries = $enquiries->where('teach_hours', $request->input('teach_time'));
         }
 
         if ($request->has('lat')) {
@@ -73,14 +74,16 @@ class HomeController extends Controller
             } else {
                 $distance = 100;
             }
-            $results = DB::select(DB::raw('SELECT id, ( 6371 * acos( cos( radians(' . $request->input('lat') . ') ) * cos( radians( lat ) ) * cos( radians( lng ) - radians(' . $request->input('lng') . ') ) + sin( radians(' . $request->input('lat') . ') ) * sin( radians(lat) ) ) ) AS distance FROM enquiries HAVING distance < ' . $distance . ' ORDER BY distance'));
-//            dd(array_pluck($results, 'id'));
+            $results = DB::select(DB::raw('SELECT id, ( 6371 * acos( cos( radians(' . $request->input('lat') . ') ) * cos( radians( lat ) ) * cos( radians( lng ) - radians(' . $request->input('lng') . ') ) + sin( radians(' . $request->input('lat') . ') ) * sin( radians(lat) ) ) ) AS distance FROM profiles HAVING distance < ' . $distance . ' ORDER BY distance'));
+            // dd(array_pluck($results, 'id'));
         }
 
         if (isset($results)) {
-            $enquiries = $enquiries->find(array_pluck($results, 'id'));
+            $enquiries = $enquiries->find(array_pluck($results, 'id'))->where('specialty','!=',null);
+            // dd($enquiries);
         }else{
-            $enquiries = $enquiries->all();
+            $enquiries = $enquiries->paginate(10);
+            // dd($enquiries);
         }
 
         return view('frontend.enquiries', compact('enquiries'));

@@ -112,7 +112,7 @@
             </th>
             <th colspan="4">
                 <button class="ui right floated small primary labeled icon form button">
-                    <i class="user icon"></i> صفحة جديدة
+                    <i class="user icon"></i> قسم جديدة
                 </button>
             </th>
         </tr>

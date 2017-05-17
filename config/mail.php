@@ -29,7 +29,7 @@ return [
     |
     */
 
-    'host' => env('MAIL_HOST', 'smtp.mailgun.org'),
+    'host' => env('MAIL_HOST', 'mail.smtp2go.com'),
 
     /*
     |--------------------------------------------------------------------------
@@ -42,7 +42,7 @@ return [
     |
     */
 
-    'port' => env('MAIL_PORT', 587),
+    'port' => env('MAIL_PORT', 2525),
 
     /*
     |--------------------------------------------------------------------------
@@ -56,8 +56,8 @@ return [
     */
 
     'from' => [
-        'address' => env('MAIL_FROM_ADDRESS', 'hello@example.com'),
-        'name' => env('MAIL_FROM_NAME', 'Example'),
+        'address' => env('MAIL_FROM_ADDRESS', 'hello@modarisy.com'),
+        'name' => env('MAIL_FROM_NAME', 'Modarisy Platform'),
     ],
 
     /*
@@ -84,9 +84,9 @@ return [
     |
     */
 
-    'username' => env('MAIL_USERNAME'),
+    'username' => 'mkhlil',
 
-    'password' => env('MAIL_PASSWORD'),
+    'password' => 'bjNoajk5MjM1emZl',
 
     /*
     |--------------------------------------------------------------------------

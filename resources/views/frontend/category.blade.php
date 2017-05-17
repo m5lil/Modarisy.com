@@ -8,44 +8,53 @@
             <div class="container">
                 <div class="row">
                     <div class="li-list">
-                        <a href="#" class="home ">الرئيسية</a>
-                        <a href="#" class="conntact-my active">مقالات  {{ $category_name }}</a>
+
+                        <a href="#" class="conntact-my active">{{ $category_name }}</a>
                     </div>
                 </div>
             </div>
         </div>
     </section>
-    <section class="with-us">
+    <div class="questions">
         <div class="container">
-            <div class="row">
-                <div class="col-xs-12">
-                    @foreach($posts as $value)
-                        <div class="col-md-12 col-sm-12 col-xs-12 mix category-3"
-                             style="margin: 10px;background-color: #eee;">
-                            <div class="caarss ">
-                                <h3>
-                                    <a href="{{url('post/' . $value->id)}}"> {{$value->title}}</a>
-                                </h3>
-                                <p>{{ str_limit(strip_tags($value->body), 150, '...') }}</p>
-                                <hr>
-                                <ul class="list-inline">
-                                    <li>أنشأ منذ {{ \Date::parse($value->created_at)->diffForHumans() }}</li>
-                                </ul>
-                            </div>
-                        </div>
-                    @endforeach
-                </div>
-            </div>
-        </div>
-    </section>
+            <div class="col-md-12 pull-left">
+                @foreach($posts as $value)
+
+                <div class="inner">
+
+                    <div class="col-md-3">
+                        @if($value->photo)
+                            <img src="{{url('/uploads/') . '/' .$value->photo }}">
+                        @else
+                            <img src="{{url('images/default.jpg')}}">
+                        @endif
+
+                    </div><!-- md-3 -->
+
+                    <div class="col-md-9">
+                        <h3> <a href="{{url('post/' . $value->id)}}"> {{$value->title}}</a></h3>
+                        <div class="text">{{ str_limit(strip_tags($value->body), 150, '...') }}</div><!-- text -->
+
+
+                        <div class="time">
+                            <i class="fa fa-clock-o"></i> {{ \Date::parse($value->created_at)->diffForHumans() }}
+                        </div><!-- time -->
+
+                    </div><!-- md-9 -->
+                </div><!-- inner -->
+                @endforeach
+
+            </div><!-- md-12 -->
+        </div><!-- container -->
+    </div>
     @else
         <section class="slider" style="height: 238px;">
             <div class="slid" style="height: 238px;">
                 <div class="container">
                     <div class="row">
                         <div class="li-list">
-                            <a href="#" class="home ">الرئيسية</a>
-                            <a href="#" class="conntact-my active">لا يوجد مقالات فى هذا القسم</a>
+
+                            <a href="#" class="conntact-my active">Ooooops, Nothing Here</a>
                         </div>
                     </div>
                 </div>

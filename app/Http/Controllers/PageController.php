@@ -46,7 +46,8 @@ class PageController extends Controller
         $validator = Validator::make($request->all(), [
             'title.*' => 'required',
             'body.*' => 'required',
-            'slug' => 'required'
+            'slug' => 'required',
+            'photo'       => 'image|mimes:jpeg,jpg,png',
         ]);
         if ($validator->fails()) {
             return Redirect::to('dashboard/pages')
@@ -111,7 +112,9 @@ class PageController extends Controller
         $validator = Validator::make($request->all(), [
             'title.*' => 'required',
             'body.*' => 'required',
-            'slug' => 'required'
+            'slug' => 'required',
+            'photo'       => 'image|mimes:jpeg,jpg,png',
+
         ]);
         if ($validator->fails()) {
             return Redirect::to('dashboard/pages')

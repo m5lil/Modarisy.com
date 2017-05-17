@@ -163,3 +163,10 @@ i.fa.fa-comments {
 }
 	
 }
+.left_header > li {
+    float: left;
+}
+
+.comming_offers .bottom span{
+    right:18px;
+}

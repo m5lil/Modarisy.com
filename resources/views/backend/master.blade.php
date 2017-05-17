@@ -30,11 +30,15 @@
         <i class="options blue icon"></i> الإعدادت العامة
     </a>
 
+    <a href="/dashboard/home_settings" class="item">
+        <i class="options blue icon"></i> إعدادات الصفحة الرئيسية
+    </a>
+
     <a href="/dashboard/inbox" class="item">
         <i class="inbox blue icon"></i> البريد الوارد
     </a>
     <a href="/dashboard/pages" class="item">
-        <i class="inbox blue icon"></i> الصفحات</a>
+        <i class="file blue icon"></i> الصفحات</a>
 
     <div class="ui item title">
         <i class="dropdown icon"></i> الأعضاء والصلاحيات
@@ -112,6 +116,14 @@
         <i class="book blue icon"></i> المواد
     </a>
 
+    <a href="/dashboard/edulevels" class="item">
+        <i class="book blue icon"></i> المراحل التعليمية
+    </a>
+
+    <a href="/dashboard/testimonials" class="item">
+        <i class="comment blue icon"></i> آراء العملاء
+    </a>
+
 
 </div>
 <div class="pusher" style="">
@@ -128,6 +140,9 @@
                                 </a>
                                 <a href="/dashboard/settings" class="item">
                                     <i class="options icon blue"></i> إعدادت الموقع
+                                </a>
+                                <a href="/dashboard/home_settings" class="item">
+                                    <i class="options icon blue"></i> إعدادت الصفحة الرئيسية
                                 </a>
                             </div>
                         </div>

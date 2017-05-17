@@ -28,6 +28,8 @@ class Profile extends Model
         'lang',
         'level',
         'photo',
+        'lat',
+        'lng',
     ];
 
 
@@ -35,6 +37,12 @@ class Profile extends Model
 	{
 		return $this->belongsTo('App\User');
 	}
+
+//    public function newQuery()
+//    {
+//        return parent::newQuery()->where('statue', '!=', 0);
+//    }
+
 
 
 }

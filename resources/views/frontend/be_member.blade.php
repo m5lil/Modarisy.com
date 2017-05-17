@@ -8,8 +8,8 @@
                 <div class="container">
                     <div class="row">
                         <div class="li-list">
-                            <a href="#" class="home ">الرئيسية</a>
-                            <a href="#" class="conntact-my active">نموذج التسجيل</a>
+
+                            <a href="#" class="conntact-my active">@lang('main.register')</a>
                         </div>
                     </div>
                 </div>
@@ -20,8 +20,7 @@
                 <div class="row">
                     <div class="col-xs-12">
                         <h2>
-                            <a href="#">سجل معنا الان</a>
-                            <p>هناك حقيقة مثبتة منذ زمن طويل وهي أن المحتوى المقروء لصفحة ما سيلهي القارئ عن التركيز على الشكل الخارجي للنص أو شكل توضع الفقرات في الصفحة التي يقرأها. ولذلك يتم استخدام طريقة لوريم إيبسوم  أو شكل توضع الفقرات في الصفحة التي يقرأها. ولذلك يتم استخدام طريقة لوريم إيبسوم ....</p>
+                            <a href="#">@lang('main.register')</a>
                         </h2>
                     </div>
                 </div>
@@ -33,19 +32,32 @@
                     <div class="col-sm-6 col-xs-12">
 
                         <div class="forme">
-                            <a href="{{ url('/register?t=3') }}"> تسجيل كطالب</a>
+                            <a style="margin-bottom:12px" href="{{ url('/register?t=3') }}"> @lang('main.stu_reg')</a>
                         </div>
 
                     </div>
                     <div class="col-sm-6 col-xs-12">
 
                         <div class="forme">
-                            <a href="{{ url('/register?t=2') }}">تسجيل كمدرس</a>
+                            <a style="margin-bottom:12px" href="{{ url('/register?t=2') }}">@lang('main.teach_reg')</a>
                         </div>
 
                     </div>
 
                     <hr>
+
+                </div>
+                <div class="row">
+                    <div class="col-sm-6 col-xs-12 col-sm-offset-3">
+                        <div class="footer-social-icons">
+                            <h4>@lang('main.or_login_with')</h4>
+                            <ul class="social-icons">
+                                <li><a href="{{url('/auth/facebook')}}" class="social-icon"> <i class="fa fa-facebook"></i></a></li>
+                                <li><a href="{{url('/auth/linkedin')}}" class="social-icon"> <i class="fa fa-linkedin"></i></a></li>
+                            </ul>
+                        </div>
+
+                    </div>
 
                 </div>
             </div>

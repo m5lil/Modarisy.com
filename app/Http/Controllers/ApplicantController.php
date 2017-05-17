@@ -8,6 +8,7 @@ use App\Applicant;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Mail;
 
 class ApplicantController extends Controller
 {
@@ -44,6 +45,7 @@ class ApplicantController extends Controller
         } elseif ($type == 'done') {
             $applicants = Applicant::where('statue', 3)->paginate(20);
         }
+
         return view('backend.applicant.index', compact('applicants'));
     }
 
@@ -83,7 +85,7 @@ class ApplicantController extends Controller
         $validator = \Validator::make($request->all(), $rules);
 
         if ($validator->fails()) {
-            return \Redirect::back()
+            return \Redirect::back()->withInput()
                 ->withErrors($validator);
         } else {
             $enquire = new Applicant();
@@ -105,22 +107,30 @@ class ApplicantController extends Controller
 
     public function accept($enquiry_id, $applicant_id)
     {
-        $accept = Enquiry::findOrFail($enquiry_id);
-        $applicant = Applicant::find($applicant_id);
-        $teacher_id = Applicant::find($applicant_id)->user->id;
-        if ($accept) {
-            $accept->applicant_id = $applicant_id;
-            $accept->statue = 2;
-            $accept->teacher_id = $teacher_id;
-            $accept->save();
+        if(Auth::user()->id == Enquiry::findOrFail($enquiry_id)->user_id) {
+            $accept = Enquiry::findOrFail($enquiry_id);
+            $applicant = Applicant::find($applicant_id);
+            $teacher_id = Applicant::find($applicant_id)->user->id;
+            if ($accept) {
+                $accept->applicant_id = $applicant_id;
+                $accept->statue = 2;
+                $accept->teacher_id = $teacher_id;
+                $accept->save();
 
-            $applicant->statue = 2;
-            $applicant->student_id = Auth::user()->id;
-            $applicant->save();
+                $applicant->statue = 2;
+                $applicant->student_id = Auth::user()->id;
+                $applicant->save();
 
-            \Session::flash('message', 'تم الموافقة بنجاح');
-            return \Redirect::to('/messages' . '/' . $enquiry_id . '/' . $applicant_id);
+                Mail::send('emails.send', ['title' => 'تم قبول العرض', 'content' => 'مبروك تم قبول العرض الخاص بك  '], function ($message) use ($applicant) {
+                    $message->from('no-reply@modarisy.com', 'Modarisy Platform');
+                    $message->to($applicant->user->email);
+                });
 
+
+                \Session::flash('message', 'تم الموافقة بنجاح');
+                return \Redirect::to('/messages' . '/' . $enquiry_id . '/' . $applicant_id);
+
+            }
         }
 
     }
@@ -180,6 +190,19 @@ class ApplicantController extends Controller
                 $applicant->statue = '1';
                 $applicant->save();
                 \Session::flash('message', 'تم تنشيط العرض');
+
+                Mail::send('emails.send', ['title' => 'تم تفعيل العرض الخاص بك', 'content' => 'تم الموافقه على العرض المقدم من طرفكم '], function ($message) use ($applicant)
+                {
+                    $message->from('no-reply@modarisy.com', 'Modarisy Platform');
+                    $message->to($applicant->user->email);
+                });
+
+                Mail::send('emails.send', ['title' => 'لديك عرض جديد', 'content' => 'لديك عرض من ' , 'teacher' => $applicant->user], function ($message) use ($applicant)
+                {
+                    $message->from('no-reply@modarisy.com', 'Modarisy Platform');
+                    $message->to(Enquiry::find($applicant->enquiry_id)->user->email);
+                });
+
             } elseif ($applicant->statue == 1) {
                 $applicant->statue = '0';
                 $applicant->save();
@@ -188,6 +211,7 @@ class ApplicantController extends Controller
                 \Session::flash('message', 'لايمكن تعديل الحالة حاليا');
             }
         }
+
         return redirect()->back();
 
 

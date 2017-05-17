@@ -38,7 +38,7 @@ return [
     |
     */
 
-    'debug' => env('APP_DEBUG', false),
+    'debug' => env('APP_DEBUG', true),
 
     /*
     |--------------------------------------------------------------------------
@@ -51,7 +51,7 @@ return [
     |
     */
 
-    'url' => env('APP_URL', 'http://localhost'),
+    'url' => env('APP_URL', 'http://modarisy.com'),
 
     /*
     |--------------------------------------------------------------------------
@@ -79,6 +79,7 @@ return [
 
     'locale' => 'ar',
 
+
     /*
     |--------------------------------------------------------------------------
     | Application Fallback Locale
@@ -90,7 +91,7 @@ return [
     |
     */
 
-    'fallback_locale' => 'en',
+    'fallback_locale' => 'ar',
 
     /*
     |--------------------------------------------------------------------------
@@ -103,7 +104,7 @@ return [
     |
     */
 
-    'key' => env('APP_KEY'),
+    'key' => env('APP_KEY','base64:bd2udl1ijL5QTitrZUXva/CJ/l/IKzPBezM562zfhWw='),
 
     'cipher' => 'AES-256-CBC',
 
@@ -175,6 +176,9 @@ return [
         Dimsav\Translatable\TranslatableServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
         BrianFaust\Reviewable\ReviewableServiceProvider::class,
+        Mcamara\LaravelLocalization\LaravelLocalizationServiceProvider::class,
+
+
 
         /*
          * Application Service Providers...
@@ -239,13 +243,11 @@ return [
         'Socialite' => Laravel\Socialite\Facades\Socialite::class,
         'Bouncer' => Silber\Bouncer\BouncerFacade::class,
         'Image' => Intervention\Image\Facades\Image::class,
-
-
+        'LaravelLocalization'	=> Mcamara\LaravelLocalization\Facades\LaravelLocalization::class,
     ],
 
-    /*
-     * Added by Mahmoud Khalil...
-     */
+
+
 
 
 //    'offlineAccessList' => [

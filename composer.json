@@ -16,6 +16,8 @@
         "laravel/socialite": "^3.0",
         "laravel/tinker": "~1.0",
         "laravelcollective/html": "^5.4.0",
+        "mcamara/laravel-localization": "^1.2",
+        "paypal/rest-api-sdk-php": "*",
         "silber/bouncer": "v1.0.0-beta.2"
     },
     "require-dev": {

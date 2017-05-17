@@ -8,8 +8,7 @@
                 <div class="container">
                     <div class="row">
                         <div class="li-list">
-                            <a href="#" class="home ">الرئيسية > </a>
-                            <a href="#" class="conntact-my active">المدرسين المسجلين بالموقع </a>
+                            <a href="#" class="conntact-my active">@lang('main.teachers_who_subscribed') </a>
                         </div>
                     </div>
                 </div>
@@ -20,7 +19,7 @@
                 <div class="row">
                     <div class="col-xs-12">
                         <h2>
-                            <a href="#">قائمة بملفات الأعضاء المدرسين</a>
+                            <a href="#">@lang('main.teachers_who_subscribed')</a>
                         </h2>
                     </div>
                 </div>
@@ -39,8 +38,8 @@
                                 <hr>
                                 <ul class="list-inline">
                                     <li>{{@$profile->hour_rate}}$ / ساعة</li>
-                                    <li>سنوات الخبرة : <strong>{{@$profile->gen_exp}}</strong></li>
-                                    <li>التخصص : <strong>{{@$profile->specialty}}</strong></li>
+                                    <li>@lang('main.exp_years') : <strong>{{@$profile->gen_exp}}</strong></li>
+                                    <li>@lang('main.speci') : <strong>{{@$profile->specialty}}</strong></li>
                                 </ul>
                             </div>
                         </div>

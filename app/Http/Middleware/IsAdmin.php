@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use PhpParser\Node\Stmt\Return_;
 
 class IsAdmin
 {
@@ -20,6 +21,7 @@ class IsAdmin
     {
         if (!\Auth::user()->isAn('admin')) {
 //            \App::abort(404);
+//            return redirect('/login');
         }
         return $next($request);
     }

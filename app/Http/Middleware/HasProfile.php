@@ -16,7 +16,10 @@ class HasProfile
     public function handle($request, Closure $next)
     {
         if(!\Auth::user()->profile) {
-            return \Redirect::to('/profile/create');
+            if (\Auth::user()->type == 0)
+                return \Redirect::to('/choosetype');
+            else
+                return \Redirect::to('/profile/create');
         }
 
         return $next($request);

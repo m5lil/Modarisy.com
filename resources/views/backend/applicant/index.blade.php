@@ -47,11 +47,11 @@
                 <td class="collapsing">
                     {{$value->id}}
                 </td>
-                <td><strong>{{$value->enquiry->subject}}</strong></td>
+                <td><strong>{{@$value->enquiry->subject}}</strong></td>
                 <td>{{$value->Statue($value->statue)}}</td>
                 <td>{{$value->hour_price}}</td>
-                <td>{{$value->enquiry->user->FullName()}}</td>
-                <td>{{$value->user->FullName()}}</td>
+                <td>{{@$value->enquiry->user->first_name}}</td>
+                <td>{{@$value->user->first_name}}</td>
                 <td>{{ \Date::parse($value->created_at)->diffForHumans() }}</td>
                 <td class="two wide">
                     <a href="{{url('/dashboard/applicant/') . '/' . $value->id . '/delete'}}"
