@@ -40,7 +40,7 @@
                         </div>
                     </div>
                     <p> @lang('main.share') :
-                    <pre onClick="this.select();">http://modarisy.com/profile/{{Request::segment(3)}}</pre>
+                    <pre data-toggle="tooltip" title="Click To Copy">http://modarisy.com/profile/{{Request::segment(3)}}</pre>
                     <ul class="share-buttons">
                       <li><a href="https://www.facebook.com/sharer/sharer.php?u=http://modarisy.com/profile/{{Request::segment(3)}}&t=" title="Share on Facebook" target="_blank" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(document.URL) + '&t=' + encodeURIComponent(document.URL)); return false;"><img alt="Share on Facebook" src="{{url('/')}}/images/flat_web_icon_set/black/Facebook.png"></a></li>
                       <li><a href="https://twitter.com/intent/tweet?source=http://modarisy.com/profile/{{Request::segment(3)}}&text=:%20http%3A%2F%2Fmodarisy.com" target="_blank" title="Tweet" onclick="window.open('https://twitter.com/intent/tweet?text=' + encodeURIComponent(document.title) + ':%20'  + encodeURIComponent(document.URL)); return false;"><img alt="Tweet" src="{{url('/')}}/images/flat_web_icon_set/black/Twitter.png"></a></li>
@@ -270,5 +270,24 @@
 
         </div>
     </secrion>
+
+    <script !src="">
+        $(document).on('click', 'pre', function () {
+            $(this).select();
+            var text = this,
+                range, selection;
+                selection = window.getSelection();
+                range = document.createRange();
+                range.selectNodeContents(text);
+                selection.removeAllRanges();
+                selection.addRange(range);
+            document.execCommand("copy");
+
+            $(this).attr("data-original-title", "Copied!");
+
+
+
+        });
+    </script>
     <!--owl-slider**********************************-->
 @endsection

@@ -82,13 +82,13 @@
                             </div>
                         </div>
                         <hr>
-                        {{--
-                        <div class="form-group">--}}
-                            {{--{{Form::label('dbirth', __('main.bd'), ['class' => 'col-sm-4 control-label'])}}--}}
-                            {{--<div class="col-sm-8">--}}
-                                {{--{{Form::date('dbirth',null,['class' => 'form-control editable'])}}--}}
-                            {{--</div>--}}
-                        {{--</div>--}}
+
+                        <div class="form-group">
+                            {{Form::label('dbirth', __('main.bd'), ['class' => 'col-sm-4 control-label'])}}
+                            <div class="col-sm-8">
+                                {{Form::date('dbirth',null,['class' => 'form-control editable'])}}
+                            </div>
+                        </div>
                         {{--
                         <div class="form-group">--}}
                         {{--{{Form::label('age', 'السن', ['class' => 'col-sm-4 control-label'])}}--}}

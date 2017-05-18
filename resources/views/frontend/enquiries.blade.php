@@ -8,7 +8,6 @@
                 <div class="container">
                     <div class="row">
                         <div class="li-list">
-
                             <a href="#" class="conntact-my active">@lang('main.the_teachers') </a>
                         </div>
                     </div>
@@ -53,7 +52,7 @@
                                                 <li @if( null == $value->teach_hours) class="hidden" @endif>@lang('main.appropriate_time') <span class="t_hours">{{@PreferedTime($value->teach_hours)}}</span> </li>
                                                 <li @if( null == $value->specialty) class="hidden" @endif>@lang('main.speci') <span class="t_hours">{{@spec($value->specialty)}}</span></li>
                                                 <li @if( null == $value->dbirth) class="hidden" @endif>@lang('main.age') <span class="t_hours">{{Carbon\Carbon::parse($value->dbirth)->age}}</span> </li>
-                                                <li @if( null == $value->hour_rate) class="hidden" @endif>@lang('main.hour_rate') <span class="t_hours">{{$value->hour_rate}}</span> </li>
+                                                <li @if( null == $value->hour_rate) class="hidden" @endif><span class="t_hours">{{$value->hour_rate}}</span> @lang('main.hour_rate') </li>
                                             </ul>
                                         </div>
                                     </div>
@@ -69,11 +68,5 @@
 
         </section>
     </section>
-
-
-
-
-
-
 
 @endsection

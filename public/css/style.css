@@ -175,15 +175,37 @@ section.slider {
     width: 100%;
 
 }
-
 .cors {
     width: 500px;
-    height: 400px;
+    height: 420px;
     overflow: hidden;
     margin-top: 49px;
     background: rgba(0, 0, 0, 0.43);
     border-radius: 7px;
     padding: 30px;
+    text-align: center;
+
+}
+
+input[type=date]::-webkit-inner-spin-button {
+    display: none;
+}
+input[type=date]::-webkit-calendar-picker-indicator {
+    font-size: 18px;
+}
+input[type=select]::-webkit-picker-indicator {
+    font-size: 18px;
+}
+
+
+
+input[type="file"]::-webkit-file-upload-button{
+    background-color: rgba(255,255,255,0.7);;
+    border:none;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+    box-shadow: 0;
 }
 
 button.btn.dropdown-toggle.btn-info {
@@ -241,6 +263,8 @@ button.se {
     width: 280px;
     height: 50px;
     color: #000;
+
+    margin-top:10px !important;
     font-family: DroidKufi-Bold;
     font-size: 16px;
     background: #fdb813;

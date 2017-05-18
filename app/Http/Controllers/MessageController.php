@@ -47,6 +47,8 @@ class MessageController extends Controller
                     ->get();
                 $messages = $student_messages->merge($teacher_messages)->sortByDesc('created_at');
 //            dd($student_id);
+            }else{
+                abort(405);
             }
             return view('frontend.messages',compact('messages','enquiry_id','applicant_id'));
 

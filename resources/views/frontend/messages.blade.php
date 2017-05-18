@@ -8,7 +8,6 @@
                 <div class="container">
                     <div class="row">
                         <div class="li-list">
-
                             <a href="#"
                                class="conntact-my active">@lang('main.messages_of')  {{ App\Enquiry::find($enquiry_id)->subject }}</a>
                         </div>

@@ -15,9 +15,8 @@
 
 <body>
 <div class="cover">
-    <h1>عذرا <small> هناك خطأ بسيط</small></h1>
-    <p class="lead">يوجد خطأ ما .. رجاء المحاولة مره أخرى أو بطريقه أخرى
-    </p>
+    <h1>عذرا <small>@lang('errors.405')</small></h1>
+    <p class="lead">@lang('errors.405_msg')</p>
 
     <script !src="">
         setTimeout(function () {

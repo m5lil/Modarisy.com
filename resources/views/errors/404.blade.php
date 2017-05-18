@@ -15,8 +15,8 @@
 
 <body>
 <div class="cover">
-    <h1>عذرا <small> لا توجد صفحه بهذا الرابط</small></h1>
-    <p class="lead">لم نقوم بإنشاء أى صفحه على هذا الرابط ..</p>
+    <h1>عذرا <small> @lang('errors.404')</small></h1>
+    <p class="lead">@lang('errors.404_msg')</p>
 
     <script !src="">
         setTimeout(function () {

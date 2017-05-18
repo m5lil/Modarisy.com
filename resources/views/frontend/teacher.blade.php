@@ -22,8 +22,8 @@
                         <div class="col-md-6 col-sm-6 col-xs-12">
                             <div class="slid-detils-img">
                                 @if(Auth::user()->profile->photo)
-                                        <img class="slid-detils"  src="{{url('/uploads/' . Auth::user()->profile->photo)}}"
-                                             alt="thumbnail">
+                                    <img class="slid-detils" src="{{url('/uploads/' . Auth::user()->profile->photo)}}"
+                                         alt="thumbnail">
                                     <div class="file-upload" style="bottom: 90px; left: -10px;">
                                         {!! Form::file('photo',['class' => 'file-upload__input','onchange' =>'uploadform();', 'form' => 'formm']) !!}
                                         {!! Form::hidden('photo_w', 250) !!}
@@ -44,87 +44,104 @@
 
                     </div>
 
-                    <p>@lang('main.the_rate') <span class="detils-p-2"><input type="hidden" class="rating"
-                                                                              disabled="disabled"
-                                                                              value="{{Auth::user()->profile->getRating()}}"/> {{Auth::user()->profile->getRating()}}
-                            ( {{  count(Auth::user()->profile->reviews()->get())  }} @lang('main.rates') )</span></p>
 
-                    {{ Form::model(Auth::user()->profile, array('route' => array('profile.update', Auth::user()->profile->id), 'method' => 'PUT','id'=>'formm','class' => 'form-horizontal','files' => true)) }}
-                    <div class="form-group">
-                        {{Form::label('gen_exp', __('main.p_exp_years'), ['class' => 'col-sm-4 control-label'])}}
-                        <div class="col-sm-8">
-                            {{Form::text('gen_exp',null,['class' => 'form-control'])}}
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        {{Form::label('teach_hours', __('main.appropriate_time'), ['class' => 'col-sm-4 control-label'])}}
-                        <div class="col-sm-8">
-                            <select name="teach_time" class="form-control">
-                                <option selected disabled>{{PreferedTime(Auth::user()->profile->teach_hours)}}</option>
-                                <option value="1">@lang('main.morning')</option>
-                                <option value="2">@lang('main.half_day')</option>
-                                <option value="3">@lang('main.night')</option>
-                                <option value="4">@lang('main.all_time')</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        {{Form::label('teach_time', __('main.hours_by_day'), ['class' => 'col-sm-4 control-label'])}}
-                        <div class="col-sm-8">
-                            {{Form::text('teach_hours',null,['class' => 'form-control'])}}
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        {{Form::label('hour_rate', __('main.hour_rate'), ['class' => 'col-sm-4 control-label'])}}
-                        <div class="col-sm-8">
-                            {{Form::text('hour_rate',null,['class' => 'form-control'])}}
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        {{Form::label('intro', __('main.about_u'), ['class' => 'col-sm-4 control-label'])}}
-                        <div class="col-sm-8">
-                            {{Form::textarea('intro',null,['class' => 'form-control', 'style' => 'margin:0;'])}}
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        {{Form::label('gender', __('main.sex'), ['class' => 'col-sm-4 control-label'])}}
-                        <div class="col-sm-8">
-                            {{Form::select('gender',[1=>__('main.male'),2 =>__('main.female')],null,['class' => 'form-control'])}}
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        {{Form::label('school', __('main.np_school'), ['class' => 'col-sm-4 control-label'])}}
-                        <div class="col-sm-8">
-                            {{Form::text('school',null,['class' => 'form-control'])}}
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        {{Form::label('dbirth', __('main.bd'), ['class' => 'col-sm-4 control-label'])}}
-                        <div class="col-sm-8">
-                            {{Form::date('dbirth',null,['class' => 'form-control'])}}
-                        </div>
-                    </div>
-                    {{--<div class="form-group">--}}
-                    {{--{{Form::label('age', 'السن', ['class' => 'col-sm-4 control-label'])}}--}}
-                    {{--<div class="col-sm-8">--}}
-                    {{--{{Form::number('age',null,['class' => 'form-control'])}}--}}
-                    {{--</div>--}}
-                    {{--</div>--}}
-                    <div class="form-group">
-                        {{Form::label('specialty', __('main.speci'), ['class' => 'col-sm-4 control-label'])}}
-                        <div class="col-sm-8">
-                            {{Form::select('specialty',\App\Materials::pluck('title','slug'),null,['class' => 'form-control'])}}
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        {{Form::label('lang', __('main.lang'), ['class' => 'col-sm-4 control-label'])}}
-                        <div class="col-sm-8">
-                            {{Form::select('lang',['arabic'=>'عربى','english' =>'English'],null,['class' => 'form-control'])}}
-                        </div>
-                    </div>
-                    {!! Form::submit(__('main.chng_details')) !!}
+                    <div class="blue infos_3">
 
-                    {!! Form::close() !!}
+
+                        {{ Form::model(Auth::user()->profile, array('route' => array('profile.update', Auth::user()->profile->id), 'method' => 'PUT','id'=>'formm','class' => 'form-horizontal','files' => true)) }}
+                        <div class="form-group">
+                            <div class="col-sm-12">
+                               <input type="hidden" class="rating" disabled="disabled" value="{{Auth::user()->profile->getRating()}}"/> {{Auth::user()->profile->getRating()}} ( {{  count(Auth::user()->profile->reviews()->get())  }} @lang('main.rates') )
+                            </div>
+                        </div>
+                        <hr>
+
+                        <div class="form-group">
+                            <div class="col-sm-12">
+                                {{Form::textarea('intro',null,['class' => 'form-control editable', 'style' => 'margin:0;'])}}
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="form-group">
+                            {{Form::label('gen_exp', __('main.p_exp_years'), ['class' => 'col-sm-4 control-label'])}}
+                            <div class="col-sm-8">
+                                {{Form::text('gen_exp',null,['class' => 'form-control editable'])}}
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="form-group">
+                            {{Form::label('teach_hours', __('main.appropriate_time'), ['class' => 'col-sm-4 control-label'])}}
+                            <div class="col-sm-8">
+                                <select name="teach_time" class="form-control editable">
+                                    <option selected
+                                            disabled>{{PreferedTime(Auth::user()->profile->teach_hours)}}</option>
+                                    <option value="1">@lang('main.morning')</option>
+                                    <option value="2">@lang('main.half_day')</option>
+                                    <option value="3">@lang('main.night')</option>
+                                    <option value="4">@lang('main.all_time')</option>
+                                </select>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="form-group">
+                            {{Form::label('teach_time', __('main.hours_by_day'), ['class' => 'col-sm-4 control-label'])}}
+                            <div class="col-sm-8">
+                                {{Form::text('teach_hours',null,['class' => 'form-control editable'])}}
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="form-group">
+                            {{Form::label('hour_rate', __('main.hour_rate'), ['class' => 'col-sm-4 control-label'])}}
+                            <div class="col-sm-8">
+                                {{Form::text('hour_rate',null,['class' => 'form-control editable'])}}
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="form-group">
+                            {{Form::label('gender', __('main.sex'), ['class' => 'col-sm-4 control-label'])}}
+                            <div class="col-sm-8">
+                                {{Form::select('gender',[1=>__('main.male'),2 =>__('main.female')],null,['class' => 'form-control editable'])}}
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="form-group">
+                            {{Form::label('school', __('main.np_school'), ['class' => 'col-sm-4 control-label'])}}
+                            <div class="col-sm-8">
+                                {{Form::text('school',null,['class' => 'form-control editable'])}}
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="form-group">
+                            {{Form::label('dbirth', __('main.bd'), ['class' => 'col-sm-4 control-label'])}}
+                            <div class="col-sm-8">
+                                {{Form::date('dbirth',null,['class' => 'form-control editable'])}}
+                            </div>
+                        </div>
+                        <hr>
+                        {{--<div class="form-group">--}}
+                        {{--{{Form::label('age', 'السن', ['class' => 'col-sm-4 control-label'])}}--}}
+                        {{--<div class="col-sm-8">--}}
+                        {{--{{Form::number('age',null,['class' => 'form-control editable'])}}--}}
+                        {{--</div>--}}
+                        {{--</div>--}}
+                        <div class="form-group">
+                            {{Form::label('specialty', __('main.speci'), ['class' => 'col-sm-4 control-label'])}}
+                            <div class="col-sm-8">
+                                {{Form::select('specialty',\App\Materials::pluck('title','slug'),null,['class' => 'form-control editable'])}}
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="form-group">
+                            {{Form::label('lang', __('main.lang'), ['class' => 'col-sm-4 control-label'])}}
+                            <div class="col-sm-8">
+                                {{Form::select('lang',['arabic'=>'عربى','english' =>'English'],null,['class' => 'form-control editable'])}}
+                            </div>
+                        </div>
+                        {!! Form::submit(__('main.chng_details')) !!}
+
+                        {!! Form::close() !!}
+
+                    </div>
                 </div>
                 <div class="col-md-8">
                     <div class="last-mod-arsy">
@@ -195,12 +212,12 @@
                                                 <strong>{{PreferedTime($enquery->preferred_time)}}</strong>
                                             </span>
                                                 <hr>
-                                            <a href="{{ url('/messages/' . $enquery->id . '/' . $enquery->applicant_id) }}"
-                                               class="btn btn-primary btn1"> @lang('main.msgs') </a>
+                                                <a href="{{ url('/messages/' . $enquery->id . '/' . $enquery->applicant_id) }}"
+                                                   class="btn btn-primary btn1"> @lang('main.msgs') </a>
 
-                                            <a href="{{url('/profile'). '/' .$enquery->user->id}}">
-                                                <span class="circle">{{$enquery->user->FullName()}}</span></a>
-                                            <span class="circle">{{$enquery->total_hours}} @lang('main.hour')</span>
+                                                <a href="{{url('/profile'). '/' .$enquery->user->id}}">
+                                                    <span class="circle">{{$enquery->user->FullName()}}</span></a>
+                                                <span class="circle">{{$enquery->total_hours}} @lang('main.hour')</span>
 
 
                                             </div>
@@ -260,7 +277,7 @@
     </secrion>
 
     <script>
-        function uploadform(){
+        function uploadform() {
             document.getElementById('formm').submit();
         }
     </script>
